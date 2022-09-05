@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SalesChecker</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<button class="button button5" onclick="location.href= '/productfind'" type="button">
+    Termék keresés</button>
+<button class="button button5" onclick="location.href= '/income'" type="button">
+    Éves forgalom</button>
+<button class="button button5" onclick="location.href= '/soldproductsnumber'" type="button">
+    Össz eladott termék</button>
+<button class="button button5" onclick="location.href= '/bestsoldproduct'" type="button">
+    Legtöbbet eladott termék</button>
+<button class="button button5" onclick="location.href= '/worstsellingproduct'" type="button">
+    Legkevesebbet értékesített termék</button>
+<button class="button button5" onclick="location.href= '/fil_val_asc'" type="button">
+    Terméklista rendezve</button>
+
+
+<h3 style="background-color: #04AA6D;color: white">A legtöbbet eladott termék:</h3>
+<p style="margin: 10px"><span data-th-text="${product}"></span></p>
+
+
+
+</body>
+</html>

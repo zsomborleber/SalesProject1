@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <title>SalesChecker</title>
+
+</head>
+<button class="button button5" onclick="location.href= '/productfind'" type="button">
+    Termék keresés</button>
+<button class="button button5" onclick="location.href= '/income'" type="button">
+    Éves forgalom</button>
+<button class="button button5" onclick="location.href= '/soldproductsnumber'" type="button">
+    Össz eladott termék</button>
+<button class="button button5" onclick="location.href= '/bestsoldproduct'" type="button">
+    Legtöbbet eladott termék</button>
+<button class="button button5" onclick="location.href= '/worstsellingproduct'" type="button">
+    Legkevesebbet értékesített termék</button>
+<button class="button button5" onclick="location.href= '/fil_val_asc'" type="button">
+    Terméklista rendezve</button>
+
+
+
+
+<br>
+<br>
+<h3>Termék keresése:</h3>
+<form data-th-action="@{/productfind}" data-th-object="${form}" method="post">
+    <table>
+        <tr>
+            <th>EAN code:</th>
+            <td><input type="text" data-th-field="*{id}" /></td>
+        </tr>
+        <tr>
+            <th>Termék név:</th>
+            <td><input type="text" data-th-field="*{articleName}" /></td>
+        </tr>
+        <tr>
+            <th>Cikkszám:</th>
+            <td><input type="text" data-th-field="*{articleNumber}" /></td>
+        </tr>
+        <tr>
+            <th>Beszállító:</th>
+            <td><input type="text" data-th-field="*{supplier}" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button class="button button5"; type="submit">Keresés</button></td>
+        </tr>
+    </table>
+</form>
+<h3>Keresési eredmény: </h3>
+<table>
+    <tr>
+        <th>Cikkszám</th>
+        <th>EAN kód</th>
+        <th>Terméknév</th>
+        <th>Mennyiség</th>
+        <th>Érték</th>
+        <th>Beszállító</th>
+    </tr>
+    <tr data-th-each="question: ${questions}">
+        <td data-th-text="${question.articleNumber}"></td>
+        <td data-th-text="${question.EANCode}"></td>
+        <td data-th-text="${question.articleName}"></td>
+        <td data-th-text="${question.quantity}"></td>
+        <td data-th-text="${question.value}"></td>
+        <td data-th-text="${question.supplier}"></td>
+
+    </tr>
+</table>
+</html>
