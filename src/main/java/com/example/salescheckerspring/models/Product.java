@@ -39,6 +39,8 @@ public class Product {
         this.year = year;
     }
 
+
+
     public Long getArticleNumber() {
         return articleNumber;
     }

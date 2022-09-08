@@ -40,6 +40,15 @@ public class ProductPast {
         this.year = year;
     }
 
+    public ProductPast(Long articleNumber, long EANCode, String articleName, int quantity, int value, String supplier) {
+        this.articleNumber = articleNumber;
+        this.EANCode = EANCode;
+        this.articleName = articleName;
+        this.quantity = quantity;
+        this.value = value;
+        this.supplier = supplier;
+    }
+
     public Long getId() {
         return id;
     }
