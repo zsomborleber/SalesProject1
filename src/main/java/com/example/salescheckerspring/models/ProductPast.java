@@ -1,7 +1,13 @@
 package com.example.salescheckerspring.models;
 
-public class ProductPast {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+public class ProductPast {
+@Id
+@GeneratedValue
     private Long id;
 
     private  Long articleNumber;
