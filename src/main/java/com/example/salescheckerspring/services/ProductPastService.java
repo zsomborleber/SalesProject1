@@ -33,7 +33,8 @@ public class ProductPastService {
                 int quantity = Integer.parseInt(pieces[3].replaceAll(" ", ""));
                 int value = Integer.parseInt(pieces[4].replaceAll(" ", ""));
                 String supplier = pieces[5];
-                ProductPast product = new ProductPast(articleNumber, EANCode, articleName, quantity, value, supplier);
+                int year = Integer.parseInt(pieces[6]);
+                ProductPast product = new ProductPast(articleNumber, EANCode, articleName, quantity, value, supplier,year);
                 products.add(product);
             }
             br.close();
