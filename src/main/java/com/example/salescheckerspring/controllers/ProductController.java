@@ -12,16 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProductController {
 
     private ProductPastService productPastService;
-    private ProductPastRepository productPastRepository;
 
-    public ProductController(ProductPastService productPastService, ProductPastRepository productPastRepository) {
+    public ProductController(ProductPastService productPastService) {
         this.productPastService = productPastService;
-        this.productPastRepository = productPastRepository;
     }
 
     @GetMapping(value={"/","/index"})
     private String index(Model model){
-        productPastRepository.saveAll(productPastService.getProducts());
+        productPastService.saveProducts();
         return "index";
     }
 }

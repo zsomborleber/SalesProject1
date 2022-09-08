@@ -2,6 +2,7 @@ package com.example.salescheckerspring.services;
 
 import com.example.salescheckerspring.models.Product;
 import com.example.salescheckerspring.models.ProductPast;
+import com.example.salescheckerspring.repos.ProductPastRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -11,6 +12,12 @@ import java.util.List;
 
 @Service
 public class ProductPastService {
+
+    private ProductPastRepository productPastRepository;
+
+    public ProductPastService(ProductPastRepository productPastRepository) {
+        this.productPastRepository = productPastRepository;
+    }
 
     public List<ProductPast> getProducts(){
         List<ProductPast> products = new ArrayList<>();
@@ -34,6 +41,10 @@ public class ProductPastService {
             System.out.println("Error" + exception);
         }
         return products;
+    }
+
+    public void saveProducts (){
+        productPastRepository.saveAll(getProducts());
     }
 
 }
