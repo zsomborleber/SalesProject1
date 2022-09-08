@@ -16,6 +16,10 @@ public class Admin {
 
     private String email;
 
+    public Admin() {
+
+    }
+
     public Admin(String username, String password, String email) {
         this.username = username;
         this.password = password;
@@ -26,9 +30,6 @@ public class Admin {
         Id = id;
     }
 
-    public Admin() {
-
-    }
 
     public Long getId() {
         return Id;
