@@ -26,6 +26,11 @@ public class UserController {
         return "home";
     }
 
+    @GetMapping(value = {"/login", "/bejelentkezes"})
+    public String getLoginPage() {
+        return "login";
+    }
+
 
     @GetMapping("/register")
     public String registerForm(Model model) {
