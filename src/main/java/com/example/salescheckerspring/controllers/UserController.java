@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class UserController {
     private UserService userService;
@@ -16,6 +18,12 @@ public class UserController {
     public UserController(UserService userService, WebSecurityConfig webSecurityConfig) {
         this.userService = userService;
         this.webSecurityConfig = webSecurityConfig;
+    }
+    @GetMapping("/home")
+    public String home(Model model) {
+        List<User> users = userService.findAllUser();
+        model.addAttribute("users",users);
+        return "home";
     }
 
 

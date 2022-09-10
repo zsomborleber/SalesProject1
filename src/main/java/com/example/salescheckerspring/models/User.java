@@ -124,4 +124,5 @@ public class User  implements UserDetails {
     public void setTaxNumber(Long taxNumber) {
         this.taxNumber = taxNumber;
     }
+
 }

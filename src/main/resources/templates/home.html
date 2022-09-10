@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+</head>
+<body>
+<div>
+  <div>
+    <form th:action="@{/logout}" method="post">
+      <p>
+        Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
+      </p>
+      <input type="submit" value="Sign Out">
+    </form>
+  </div>
+</div>
+</body>
+</html>
