@@ -31,7 +31,7 @@ public class UserController {
         model.addAttribute("users",users);
         return "home";
     }
-    @ResponseStatus()
+
     @GetMapping(value = {"/login", "/bejelentkezes"})
     public String getLoginPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -39,7 +39,7 @@ public class UserController {
 
             return "login";
         }
-        return "redirect:/";
+        return "loggedin";
     }
 
 
