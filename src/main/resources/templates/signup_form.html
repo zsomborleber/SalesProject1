@@ -10,59 +10,61 @@
 </div>
 <div>
     <form data-th-action="@{/register}" method="post"
-        data-th-object="${user}"></form>
-    <div>
+        data-th-object="${user}">
         <div>
-            <label>Cég név:</label>
             <div>
-                <input type="text" data-th-field="*{companyName}" />
+                <label>Cég név:</label>
+                <div>
+                    <input type="text" data-th-field="*{companyName}" />
+                </div>
             </div>
         </div>
-    </div>
-    <div>
         <div>
-            <label>Felhasználó név:</label>
             <div>
-                <input type="text" data-th-field="*{username}" required/>
+                <label>Felhasználó név:</label>
+                <div>
+                    <input type="text" data-th-field="*{username}" required/>
+                </div>
             </div>
         </div>
-    </div>
-    <div>
         <div>
-            <label>Jelszó:</label>
             <div>
-                <input type="password" data-th-field="*{password}" required/>
+                <label>Jelszó:</label>
+                <div>
+                    <input type="password" data-th-field="*{password}" required/>
+                </div>
             </div>
         </div>
-    </div>
-    <div>
         <div>
-            <label>Cím:</label>
             <div>
-                <input type="text" data-th-field="*{address}" required/>
+                <label>Cím:</label>
+                <div>
+                    <input type="text" data-th-field="*{address}" required/>
+                </div>
             </div>
         </div>
-    </div>
-    <div>
         <div>
-            <label>E-mail:</label>
             <div>
-                <input type="email" data-th-field="*{email}" required/>
+                <label>E-mail:</label>
+                <div>
+                    <input type="email" data-th-field="*{email}" required/>
+                </div>
             </div>
         </div>
-    </div>
-    <div>
         <div>
-            <label>Adószám:</label>
             <div>
-                <input type="text" data-th-field="*{taxNumber}" required/>
+                <label>Adószám:</label>
+                <div>
+                    <input type="text" data-th-field="*{taxNumber}" required/>
+                </div>
             </div>
         </div>
-    </div>
-    <div>
-        <button type="submit">Regisztráció</button>
-        <span>Már regisztráltál?<a href="/"th:href="@{/login}">Jelentkezz be itt</a></span>
-    </div>
+        <div>
+            <button type="submit">Regisztráció</button>
+            <span>Már regisztráltál?<a href="/"th:href="@{/login}">Jelentkezz be itt</a></span>
+        </div>
+    </form>
+
 </div>
 </body>
 </html>
