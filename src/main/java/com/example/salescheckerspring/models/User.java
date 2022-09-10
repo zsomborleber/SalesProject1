@@ -1,5 +1,6 @@
 package com.example.salescheckerspring.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,11 +11,17 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(nullable = false)
     private String companyName;
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String address;
+    @Column(nullable = false,unique = true)
     private String email;
+    @Column(nullable = false)
     private Long taxNumber;
 
     public void setId(Long id) {
