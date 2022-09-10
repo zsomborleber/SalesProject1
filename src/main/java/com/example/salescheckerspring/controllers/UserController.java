@@ -3,7 +3,6 @@ package com.example.salescheckerspring.controllers;
 import com.example.salescheckerspring.Configs.WebSecurityConfig;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.services.UserService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,25 +13,25 @@ public class UserController {
     private UserService userService;
     private WebSecurityConfig webSecurityConfig;
 
-    public UserController(UserService userService,WebSecurityConfig webSecurityConfig) {
+    public UserController(UserService userService, WebSecurityConfig webSecurityConfig) {
         this.userService = userService;
         this.webSecurityConfig = webSecurityConfig;
     }
 
 
     @GetMapping("/register")
-    public String registerForm(Model model){
-        model.addAttribute("user",new User());
+    public String registerForm(Model model) {
+        model.addAttribute("user", new User());
         return "signup_form";
     }
+
     @PostMapping("/process-register")
     public String processRegistration(User user) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodedPassword = encoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        userService.saveUser(user);
-        return "register_success";
+        if (!(userService.isEmailAlreadyInUse(user))) {
+            userService.saveUser(user);
+
+            return "redirect:/login";
+        }
+        return "/signup_form";
     }
-
-
 }

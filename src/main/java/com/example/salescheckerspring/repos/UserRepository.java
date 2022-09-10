@@ -3,6 +3,10 @@ package com.example.salescheckerspring.repos;
 import com.example.salescheckerspring.models.User;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends CrudRepository<User,Long> {
-    User findAllByEmail(String email);
+
+    Optional<User> findByEmail(String email);
 }
+
