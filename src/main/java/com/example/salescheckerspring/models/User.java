@@ -21,8 +21,6 @@ public class User  implements UserDetails {
     @Column(nullable = false)
     private String companyName;
     @Column(nullable = false)
-    private String username;
-    @Column(nullable = false)
     private String password;
     @Column(nullable = false)
     private String address;
@@ -42,9 +40,8 @@ public class User  implements UserDetails {
     public User() {
     }
 
-    public User(String companyName, String username, String password, String address, String email, Long taxNumber) {
+    public User(String companyName, String password, String address, String email, Long taxNumber) {
         this.companyName = companyName;
-        this.username = username;
         this.password = password;
         this.address = address;
         this.email = email;
@@ -57,10 +54,6 @@ public class User  implements UserDetails {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
 
@@ -87,10 +80,6 @@ public class User  implements UserDetails {
         return this.companyName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
@@ -102,6 +91,11 @@ public class User  implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
     }
 
     public void setPassword(String password) {
