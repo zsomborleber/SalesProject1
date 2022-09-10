@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <link rel="stylesheet" href="../static/registerloginstyle.css">
 </head>
 <body>
 <div>
-    <h1>Regisztráció</h1>
 </div>
 <div>
     <form data-th-action="@{/process-register}" method="post"
         data-th-object="${user}">
+        <h3>Regisztráció</h3>
         <div>
             <div>
                 <label>Cég név:</label>
@@ -60,11 +61,11 @@
             </div>
         </div>
         <div>
-            <input  class="btn" type="submit" value="Regisztráció">
+            <button >Regisztráció</button>
             <span>Már regisztráltál?<a href="/"th:href="@{/login}">Jelentkezz be itt</a></span>
         </div>
     </form>
-
 </div>
+
 </body>
 </html>
