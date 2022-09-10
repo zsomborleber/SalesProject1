@@ -3,10 +3,16 @@ package com.example.salescheckerspring.controllers;
 import com.example.salescheckerspring.configs.WebSecurityConfig;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.services.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -25,10 +31,15 @@ public class UserController {
         model.addAttribute("users",users);
         return "home";
     }
-
+    @ResponseStatus()
     @GetMapping(value = {"/login", "/bejelentkezes"})
     public String getLoginPage() {
-        return "login";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+
+            return "login";
+        }
+        return "redirect:/";
     }
 
 
