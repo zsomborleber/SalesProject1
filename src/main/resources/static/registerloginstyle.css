@@ -40,12 +40,12 @@ body{
     bottom: -80px;
 }
 form{
-    height: 870px;
+    height: 675px;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
-    top: 450px;
+    top: 380px;
     left: 50%;
     border-radius: 10px;
     backdrop-filter: blur(10px);
@@ -69,13 +69,13 @@ form h3{
 
 label{
     display: block;
-    margin-top: 30px;
+    margin-top: 10px;
     font-size: 16px;
     font-weight: 500;
 }
 input{
     display: block;
-    height: 40px;
+    height: 30px;
     width: 100%;
     background-color: rgba(255,255,255,0.07);
     border-radius: 3px;
