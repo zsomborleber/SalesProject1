@@ -1,6 +1,6 @@
 package com.example.salescheckerspring.controllers;
 
-import com.example.salescheckerspring.Configs.WebSecurityConfig;
+import com.example.salescheckerspring.configs.WebSecurityConfig;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.services.UserService;
 import org.springframework.stereotype.Controller;
