@@ -72,10 +72,10 @@ public class UserService implements UserDetailsService {
     public void sendVerificationEmail(User user,String siteUrl) throws UnsupportedEncodingException, MessagingException {
         String subject = "Please verify your registration";
         String senderName = "Point of Sale Team";
-        String mailContent = "<p>Dear" + user.getCompanyName() + "</p>";
+        String mailContent = "<p>Dear " + user.getCompanyName() + "</p>";
         mailContent += "<p>Please click the link below to verify to your registration:</p>";
-        String verifyUrl = siteUrl + "/verify?code=" + user.getVerificationCode();
-        mailContent += "<h3><a =\"href=" + verifyUrl + "\">Verify</a></h3>";
+        String verifyUrl = siteUrl + "/";
+        mailContent += "<h3><a href=\"" + verifyUrl + "\">Verify</a></h3>";
         mailContent += "<p>Thank you<br>The Point of Sale Team </p>";
 
         MimeMessage message = mailSender.createMimeMessage();
