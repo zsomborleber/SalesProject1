@@ -81,7 +81,7 @@ public class UserService implements UserDetailsService {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom("leberzsombor96@gmail.com",senderName);
+        helper.setFrom("pointofsales2022@gmail.com",senderName);
         helper.setTo(user.getEmail());
         helper.setSubject(subject);
         helper.setText(mailContent,true);
