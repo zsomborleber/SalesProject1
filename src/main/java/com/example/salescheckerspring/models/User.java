@@ -29,6 +29,8 @@ public class User  implements UserDetails {
     @Column(nullable = false)
     private Long taxNumber;
 
+    private Roles role;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -84,9 +86,17 @@ public class User  implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 
-        list.add(new SimpleGrantedAuthority("USER"));
+        list.add(new SimpleGrantedAuthority(role.name()));
 
         return list;
+    }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
     }
 
     public String getPassword() {

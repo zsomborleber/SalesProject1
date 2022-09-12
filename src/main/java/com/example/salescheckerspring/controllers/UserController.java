@@ -1,6 +1,7 @@
 package com.example.salescheckerspring.controllers;
 
 import com.example.salescheckerspring.configs.WebSecurityConfig;
+import com.example.salescheckerspring.models.Roles;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,7 @@ public class UserController {
     @PostMapping("/process-register")
     public String processRegistration(User user) {
         if (!(userService.isEmailAlreadyInUse(user))) {
+            user.setRole(Roles.USER);
             userService.saveUser(user);
 
             return "redirect:/login";
