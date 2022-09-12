@@ -2,12 +2,16 @@ package com.example.salescheckerspring.controllers;
 
 import com.example.salescheckerspring.configs.WebSecurityConfig;
 import com.example.salescheckerspring.models.User;
+import com.example.salescheckerspring.models.Utility;
 import com.example.salescheckerspring.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -39,12 +43,16 @@ public class UserController {
     }
 
     @PostMapping("/process-register")
-    public String processRegistration(User user) {
-        if (!(userService.isEmailAlreadyInUse(user))) {
+    public String processRegistration(User user, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+        String siteUrl = Utility.getSiteUrl(request);
+        userService.sendVerificationEmail(user,siteUrl);
+
+       if (!(userService.isEmailAlreadyInUse(user))) {
             userService.saveUser(user);
 
-            return "redirect:/login";
+            return "register_success";
         }
-        return "/signup_form";
+       return "redirect:/login";
+
     }
 }

@@ -31,6 +31,10 @@ public class User  implements UserDetails {
     @Column(nullable = false)
     private Long taxNumber;
 
+    private boolean enabled;
+    @Column(name = "verification_code", updatable = false)
+    private String verificationCode;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -42,13 +46,26 @@ public class User  implements UserDetails {
     public User() {
     }
 
-    public User(String companyName, String username, String password, String address, String email, Long taxNumber) {
+    public User(String companyName, String username, String password, String address, String email, Long taxNumber,boolean enabled) {
         this.companyName = companyName;
         this.username = username;
         this.password = password;
         this.address = address;
         this.email = email;
         this.taxNumber = taxNumber;
+        this.enabled = enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 
     public String getCompanyName() {

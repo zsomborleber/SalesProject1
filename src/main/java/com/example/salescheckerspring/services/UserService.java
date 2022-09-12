@@ -1,31 +1,51 @@
 package com.example.salescheckerspring.services;
 
 
+
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.repos.UserRepository;
+import net.bytebuddy.utility.RandomString;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
+
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 
-import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private JavaMailSender mailSender;
 
-    private PasswordEncoder passwordEncoder;
+    private User user;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder
+                       ,BCryptPasswordEncoder bCryptPasswordEncoder,
+                       JavaMailSender mailSender) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.mailSender = mailSender;
+
     }
+
 
     public List<User> findAllUser(){
         return (List<User>) userRepository.findAll();
@@ -38,9 +58,35 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void saveUser(User user) {
+    public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        user.setEnabled(false);
+
+        String randomCode = RandomString.make(64);
+        user.setVerificationCode(randomCode);
+
+        return userRepository.save(user);
+
+    }
+
+    public void sendVerificationEmail(User user,String siteUrl) throws UnsupportedEncodingException, MessagingException {
+        String subject = "Please verify your registration";
+        String senderName = "Point of Sale Team";
+        String mailContent = "<p>Dear" + user.getCompanyName() + "</p>";
+        mailContent += "<p>Please click the link below to verify to your registration:</p>";
+        String verifyUrl = siteUrl + "/verify?code=" + user.getVerificationCode();
+        mailContent += "<h3><a =\"href=" + verifyUrl + "\">Verify</a></h3>";
+        mailContent += "<p>Thank you<br>The Point of Sale Team </p>";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("leberzsombor96@gmail.com",senderName);
+        helper.setTo(user.getEmail());
+        helper.setSubject(subject);
+        helper.setText(mailContent,true);
+
+        mailSender.send(message);
     }
 
     public boolean isEmailAlreadyInUse(User newuser) {
@@ -54,4 +100,7 @@ public class UserService implements UserDetailsService {
 
         return false;
     }
+
+
+
 }
