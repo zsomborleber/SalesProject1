@@ -17,7 +17,7 @@ public class TestDataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        User user = new User("Gyula KFT", "kiscica", "Budapest", "Gyula@sales.com", 12345678L);
+        User user = new User("Gyula KFT.", "kiscica", "Budapest", "Gyula@sales.com", 12345678L);
         userService.saveUser(user);
 
     }
