@@ -35,7 +35,6 @@ public class UserControllerTest {
     }
 
     /// Nem futnak le. Bad credentials issue.
-
   /*  @Test
     void login_as_user() throws Exception {
         mockMvc.perform(
