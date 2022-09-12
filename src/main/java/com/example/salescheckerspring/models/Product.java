@@ -37,6 +37,7 @@ public class Product {
         this.price = price;
         this.supplier = supplier;
         this.year = year;
+
     }
 
 
