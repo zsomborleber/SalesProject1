@@ -50,6 +50,15 @@ public class User  implements UserDetails {
         this.taxNumber = taxNumber;
     }
 
+    public User(String companyName, String password, String address, String email, Long taxNumber, Roles role) {
+        this.companyName = companyName;
+        this.password = password;
+        this.address = address;
+        this.email = email;
+        this.taxNumber = taxNumber;
+        this.role = role;
+    }
+
     public String getCompanyName() {
         return companyName;
     }

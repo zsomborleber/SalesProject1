@@ -1,5 +1,6 @@
 package com.example.salescheckerspring.configs;
 
+import com.example.salescheckerspring.models.Roles;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.services.UserService;
 import org.springframework.boot.ApplicationArguments;
@@ -17,7 +18,7 @@ public class TestDataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        User user = new User("Gyula KFT.", "kiscica", "Budapest", "Gyula@sales.com", 12345678L);
+        User user = new User("Gyula KFT.", "kiscica", "Budapest", "Gyula@sales.com", 12345678L, Roles.USER);
         userService.saveUser(user);
 
     }
