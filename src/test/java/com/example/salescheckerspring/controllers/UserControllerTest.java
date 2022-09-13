@@ -35,12 +35,12 @@ public class UserControllerTest {
     }
 
     /// Nem futnak le. Bad credentials issue.
-  /*  @Test
+    @Test
     void login_as_user() throws Exception {
         mockMvc.perform(
-                        SecurityMockMvcRequestBuilders.formLogin().user("Gyula@sales.com").password("kiscica"))
+                        SecurityMockMvcRequestBuilders.formLogin().user("email", "Gyula@sales.com").password("kiscica"))
                 .andExpect(SecurityMockMvcResultMatchers.authenticated());
-    } */
+    }
    @Test
     void login_with_invalid_credentials() throws Exception {
         mockMvc.perform(
