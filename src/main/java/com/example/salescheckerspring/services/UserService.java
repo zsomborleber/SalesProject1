@@ -68,15 +68,19 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
 
     }
+    @Transactional
     public boolean verify(String verificationCode){
         User user = userRepository.findByVerificationCode(verificationCode);
         if (user == null || user.isEnabled()) {
-            return true;
-        }else {
-            userRepository.enable(Math.toIntExact(user.getId()));
             return false;
+        }else {
+            user.setEnabled(true);
+            user.setVerificationCode(null);
+            return true;
+
         }
     }
+
 
     public void sendVerificationEmail(User user,String siteUrl) throws UnsupportedEncodingException, MessagingException {
         String subject = "Please verify your registration";
@@ -94,6 +98,7 @@ public class UserService implements UserDetailsService {
         helper.setTo(user.getEmail());
         helper.setSubject(subject);
         helper.setText(mailContent,true);
+
 
         mailSender.send(message);
     }

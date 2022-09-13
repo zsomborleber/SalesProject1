@@ -28,11 +28,11 @@ public class User  implements UserDetails {
     private String address;
     @Column(nullable = false,unique = true)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false,length = 10,unique = true)
     private Long taxNumber;
 
     private boolean enabled;
-    @Column(name = "verification_code", updatable = false)
+    @Column(name = "verification_code")
     private String verificationCode;
 
     public void setId(Long id) {
@@ -98,7 +98,7 @@ public class User  implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
     public String getFullName() {
         return this.companyName;

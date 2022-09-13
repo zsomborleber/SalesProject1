@@ -57,11 +57,18 @@ public class UserController {
 
     }
     @GetMapping("/verify")
-    public String verifyAccount(@Param("code") String code,Model model){
-        boolean verified = userService.verify(code);
+    public String verifyAccount(@Param("code") String code){
+        if (userService.verify(code)){
+            return "verify_success";
+        }else {
+            return "verify_fail";
+        }
+
+
+        /*boolean verified = userService.verify(code);
         String pageTitle = verified ? "Verification Succeeded!" : "Verification Failed";
         model.addAttribute("pageTitle", pageTitle);
 
-        return (verified ? "verify_success" : "verify_fail");
+        return (verified ? "verify_success" : "verify_fail");*/
     }
 }

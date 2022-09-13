@@ -12,8 +12,8 @@ public interface UserRepository extends CrudRepository<User,Long> {
     Optional<User> findByEmail(String email);
     @Query("UPDATE User c SET c.enabled = true where c.id = ?1")
     @Modifying
-    public void enable(Integer Id);
+    public void enable(Long Id);
     @Query("SELECT c FROM User c WHERE c.verificationCode = ?1")
-    public User findByVerificationCode(String code);
+    User findByVerificationCode(String code);
 }
 
