@@ -68,13 +68,22 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
 
     }
+    public boolean verify(String verificationCode){
+        User user = userRepository.findByVerificationCode(verificationCode);
+        if (user == null || user.isEnabled()) {
+            return true;
+        }else {
+            userRepository.enable(Math.toIntExact(user.getId()));
+            return false;
+        }
+    }
 
     public void sendVerificationEmail(User user,String siteUrl) throws UnsupportedEncodingException, MessagingException {
         String subject = "Please verify your registration";
         String senderName = "Point of Sale Team";
         String mailContent = "<p>Dear " + user.getCompanyName() + "</p>";
         mailContent += "<p>Please click the link below to verify to your registration:</p>";
-        String verifyUrl = siteUrl + "/";
+        String verifyUrl = siteUrl + "/verify?code=" + user.getVerificationCode();
         mailContent += "<h3><a href=\"" + verifyUrl + "\">Verify</a></h3>";
         mailContent += "<p>Thank you<br>The Point of Sale Team </p>";
 

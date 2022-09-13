@@ -1,4 +1,4 @@
-package com.example.salescheckerspring.models;
+package com.example.salescheckerspring.models.emailVerification;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

@@ -2,8 +2,9 @@ package com.example.salescheckerspring.controllers;
 
 import com.example.salescheckerspring.configs.WebSecurityConfig;
 import com.example.salescheckerspring.models.User;
-import com.example.salescheckerspring.models.Utility;
+import com.example.salescheckerspring.models.emailVerification.Utility;
 import com.example.salescheckerspring.services.UserService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,14 +46,22 @@ public class UserController {
     @PostMapping("/process-register")
     public String processRegistration(User user, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         String siteUrl = Utility.getSiteUrl(request);
-        userService.sendVerificationEmail(user,siteUrl);
 
        if (!(userService.isEmailAlreadyInUse(user))) {
             userService.saveUser(user);
+            userService.sendVerificationEmail(user,siteUrl);
 
             return "register_success";
         }
        return "redirect:/login";
 
+    }
+    @GetMapping("/verify")
+    public String verifyAccount(@Param("code") String code,Model model){
+        boolean verified = userService.verify(code);
+        String pageTitle = verified ? "Verification Succeeded!" : "Verification Failed";
+        model.addAttribute("pageTitle", pageTitle);
+
+        return (verified ? "verify_success" : "verify_fail");
     }
 }
