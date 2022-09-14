@@ -72,6 +72,20 @@ public class User  implements UserDetails {
         this.enabled = enabled;
     }
 
+    public User(String companyName, String password, String address, String email, Long taxNumber, Roles role, boolean enabled, String verificationCode) {
+        this.companyName = companyName;
+        this.password = password;
+        this.address = address;
+        this.email = email;
+        this.taxNumber = taxNumber;
+        this.role = role;
+        this.enabled = enabled;
+        this.verificationCode = verificationCode;
+    }
+
+
+
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }

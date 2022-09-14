@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(false);
+       // user.setEnabled(false);
 
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
