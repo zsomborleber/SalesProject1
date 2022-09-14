@@ -9,7 +9,7 @@
 <div>
 </div>
 <div>
-    <form th:action="@{/process-register}" method="post"
+    <form data-th-action="@{/process-register}" method="post"
         data-th-object="${user}">
         <h3>Regisztráció</h3>
         <div>
@@ -17,14 +17,6 @@
                 <label>Cég név:</label>
                 <div>
                     <input type="text" data-th-field="*{companyName}" required />
-                </div>
-            </div>
-        </div>
-        <div>
-            <div>
-                <label>Felhasználó név:</label>
-                <div>
-                    <input type="text" data-th-field="*{username}" required/>
                 </div>
             </div>
         </div>
@@ -62,7 +54,7 @@
         </div>
         <div>
             <button >Regisztráció</button>
-            <span>Már regisztráltál?<a href="/static" th:href="@{/login}">Jelentkezz be itt</a></span>
+            <span>Már regisztráltál?<a href="/"th:href="@{/login}">Jelentkezz be itt</a></span>
         </div>
     </form>
 </div>
