@@ -1,6 +1,7 @@
 package com.example.salescheckerspring.controllers;
 
 import com.example.salescheckerspring.configs.WebSecurityConfig;
+import com.example.salescheckerspring.models.Roles;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.models.emailVerification.Utility;
 import com.example.salescheckerspring.services.UserService;
@@ -56,6 +57,7 @@ public class UserController {
         String siteUrl = Utility.getSiteUrl(request);
 
        if (!(userService.isEmailAlreadyInUse(user))) {
+           user.setRole(Roles.USER);
             userService.saveUser(user);
             userService.sendVerificationEmail(user,siteUrl);
 
