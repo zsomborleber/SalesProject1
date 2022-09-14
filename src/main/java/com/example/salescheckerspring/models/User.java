@@ -21,15 +21,19 @@ public class User  implements UserDetails {
     @Column(nullable = false)
     private String companyName;
     @Column(nullable = false)
+    private String username;
+    @Column(nullable = false)
     private String password;
     @Column(nullable = false)
     private String address;
     @Column(nullable = false,unique = true)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false,length = 10,unique = true)
     private Long taxNumber;
 
-    private Roles role;
+    private boolean enabled;
+    @Column(name = "verification_code")
+    private String verificationCode;
 
     public void setId(Long id) {
         this.id = id;
@@ -42,21 +46,26 @@ public class User  implements UserDetails {
     public User() {
     }
 
-    public User(String companyName, String password, String address, String email, Long taxNumber) {
+    public User(String companyName, String username, String password, String address, String email, Long taxNumber,boolean enabled) {
         this.companyName = companyName;
+        this.username = username;
         this.password = password;
         this.address = address;
         this.email = email;
         this.taxNumber = taxNumber;
+        this.enabled = enabled;
     }
 
-    public User(String companyName, String password, String address, String email, Long taxNumber, Roles role) {
-        this.companyName = companyName;
-        this.password = password;
-        this.address = address;
-        this.email = email;
-        this.taxNumber = taxNumber;
-        this.role = role;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
     }
 
     public String getCompanyName() {
@@ -65,6 +74,10 @@ public class User  implements UserDetails {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
 
@@ -85,36 +98,27 @@ public class User  implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.enabled;
     }
     public String getFullName() {
         return this.companyName;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 
-        list.add(new SimpleGrantedAuthority(role.name()));
+        list.add(new SimpleGrantedAuthority("USER"));
 
         return list;
     }
 
-    public Roles getRole() {
-        return role;
-    }
-
-    public void setRole(Roles role) {
-        this.role = role;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
     }
 
     public void setPassword(String password) {
