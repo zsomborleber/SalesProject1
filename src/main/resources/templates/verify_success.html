@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Verify Succeeded</title>
+    <link rel="stylesheet" href="/loginstyle.css">
 </head>
 <body>
-<div>
-    <h2>Customer Verification</h2>
-    <h4>Congratulations! Your account has been verified</h4>
-    <p><a th:href="@{/login}">Login Now</a></p>
+<div id="container">
+    <div class="form">
+        <form class="form" data-th-action="@{/login}" method="post">
+            <h3>Regisztráció sikeresen megerősítve</h3>
+            <button class="button" onclick="location.href= '/login'" type="button">
+                Belépés</button>
+        </form>
+    </div>
 </div>
-
 </body>
 </html>

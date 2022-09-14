@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Verify Failed</title>
+  <link rel="stylesheet" href="/loginstyle.css">
 </head>
 <body>
-<div>
-  <h2>Customer Verification</h2>
-  <h4>Your account was already verified, or the verification code is invalid.</h4>
-
+<div id="container">
+  <div class="form">
+    <form class="form" data-th-action="@{/login}" method="post">
+      <h3>Regisztráció már megerősítve</h3>
+      <button class="button" onclick="location.href= '/home'" type="button">
+        Főoldal</button>
+    </form>
+  </div>
 </div>
-
 </body>
 </html>

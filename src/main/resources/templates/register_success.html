@@ -3,13 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Registration Succeeded</title>
+  <link rel="stylesheet" href="/loginstyle.css">
 </head>
 <body>
-<div>
-  <div>
-    <h3 >You have registered succesfully</h3>
-    <p>Please check your email to verify your account</p>
-    <h4><a th:href="@{/index}">Click here to Log IN</a></h4>
+<div id="container">
+  <div class="form">
+    <form class="form" data-th-action="@{/login}" method="post">
+      <h3>Sikeres regisztráció</h3>
+      <p style="text-align:center" >Kérlek ellenőrizd az e-mailed a regisztráció megerősítéséhez</p>
+      <button class="button" onclick="location.href= '/login'" type="button">
+        Belépés</button>
+    </form>
   </div>
 </div>
 </body>
