@@ -35,11 +35,16 @@ public class AppController {
         return "index";
     }
 
+    @GetMapping(value={"/admin"})
+    private String adminPage(){
+        return "admin";
+    }
+
     @GetMapping(value={"/admin/{year}"})
     private String adminPage(@PathVariable(name = "year") int year ,
                              Model model){
         model.addAttribute("income",
-                productPastService.totalCashFlow(productPastRepository.findProductPastByYear(year)));
+                productPastService.totalCashFlow(year));
         return "admin";
     }
 
