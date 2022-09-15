@@ -28,7 +28,7 @@ import java.util.UUID;
 @Service
 public class UserService implements UserDetailsService {
 
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     private User user;
     private final UserRepository userRepository;

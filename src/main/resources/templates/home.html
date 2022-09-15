@@ -8,24 +8,23 @@
 <body>
 <div class="banner">
   <div class="navbar">
-    <img data-th-src="@{sales2.png}" class="logo">
+   <a href="/home"><img data-th-src="@{sales2.png}" class="logo"></a>
     <ul>
       <li><a href="#">Home</a></li>
       <li><a href="#">Home</a></li>
       <li><a data-th-href="@{/userprofile}">Account</a></li>
     </ul>
+    <div class="welcomemessage">
+      <form th:action="@{/logout}" method="post">
+        <p>
+          Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
+        </p>
+        <footer>
+          <input type="submit" class="btn" value="Sign Out">
+        </footer>
+      </form>
+    </div>
   </div>
-  <div class="welcomemessage">
-    <form th:action="@{/logout}" method="post">
-      <p>
-        Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
-      </p>
-
-    </form>
-  </div>
-  <footer>
-    <input type="submit" class="btn" value="Sign Out">
-  </footer>
 </div>
 
 </body>
