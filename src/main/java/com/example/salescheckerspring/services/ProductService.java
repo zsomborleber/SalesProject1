@@ -21,7 +21,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getProducts(){
+   /* public List<Product> getProducts(){
         List<Product> products = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(
@@ -49,7 +49,7 @@ public class ProductService {
     public void saveProducts (){
         productRepository.saveAll(getProducts());
     }
-
+*/
 
 
 }

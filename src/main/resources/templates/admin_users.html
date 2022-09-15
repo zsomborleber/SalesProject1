@@ -5,6 +5,23 @@
     <title>Felhasználók</title>
 </head>
 <body>
-
+</table>
+<h1>Felhasználók</h1>
+<table>
+    <tr>
+        <th>Cégnév</th>
+        <th>Cím</th>
+        <th>E-mail</th>
+        <th>Adószám</th>
+        <th>Aktivált</th>
+    </tr>
+    <tr data-th-each="user: ${users}">
+        <td data-th-text="${user.companyName}"></td>
+        <td data-th-text="${user.address}"></td>
+        <td data-th-text="${user.email}"></td>
+        <td data-th-text="${user.taxNumber}"></td>
+        <td data-th-text="${user.enabled}"></td>
+    </tr>
+</table>
 </body>
 </html>
