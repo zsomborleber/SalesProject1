@@ -15,13 +15,13 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    private ProductRepository productRepository;
+   private ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getProducts(){
+  /*  public List<Product> getProducts(){
         List<Product> products = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(
@@ -44,11 +44,11 @@ public class ProductService {
             System.out.println("Error" + exception);
         }
         return products;
-    }
+    }*/
 
-    public void saveProducts (){
+   /* public void saveProducts (){
         productRepository.saveAll(getProducts());
-    }
+    }*/
 
 
 
