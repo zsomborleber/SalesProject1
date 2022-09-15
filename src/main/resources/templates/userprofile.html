@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Account</h1>
+
+<table>
+    <tr>
+        <td>Name: <span data-th-text="${currentuser.companyName}" ></span></td>
+    </tr>
+    <tr>
+        <td>Email: <span data-th-text="${currentuser.email}" ></span> </td>
+    </tr>
+    <tr>
+        <td>Address: <span data-th-text="${currentuser.address}" ></span></td>
+    </tr>
+    <tr>
+        <td>Taxnumber: <span data-th-text="${currentuser.taxNumber}" ></span></td>
+    </tr>
+    <tr>
+        <td>Password: <span></span></td>
+        <td><a data-th-href="@{/changepassword}">change password</a></td>
+    </tr>
+</table>
+</body>
+</html>
