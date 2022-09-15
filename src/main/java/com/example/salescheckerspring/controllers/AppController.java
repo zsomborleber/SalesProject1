@@ -20,7 +20,6 @@ public class AppController {
     @GetMapping(value={"/","/index"})
     private String index(Model model){
         productPastService.saveProducts();
-        productService.saveProducts();
         return "index";
     }
 
