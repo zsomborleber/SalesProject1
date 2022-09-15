@@ -1,5 +1,6 @@
 package com.example.salescheckerspring.controllers;
 
+import com.example.salescheckerspring.Form.NewPasswordForm;
 import com.example.salescheckerspring.configs.WebSecurityConfig;
 import com.example.salescheckerspring.models.Roles;
 import com.example.salescheckerspring.models.User;
@@ -18,6 +19,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class UserController {
@@ -80,5 +82,31 @@ public class UserController {
         model.addAttribute("pageTitle", pageTitle);
 
         return (verified ? "verify_success" : "verify_fail");*/
+    }
+
+    @GetMapping("userprofile")
+    public String getuserprofile(Model model){
+
+        User user = userService.getLoggedInUser();
+        model.addAttribute("currentuser", user);
+
+        return "userprofile";
+    }
+    @GetMapping("/changepassword")
+    public String changepassword(Model model){
+        model.addAttribute("form", new NewPasswordForm());
+
+        return "changepassword";
+    }
+    @PostMapping("/changepassword")
+    public String changepasswo(Model model, NewPasswordForm newPasswordForm){
+        if(Objects.equals(userService.getLoggedInUser().getPassword(), newPasswordForm.getCurrentpassword()) &&
+                Objects.equals(newPasswordForm.getNewpassword1(), newPasswordForm.getNewpassword2())){
+            userService.getLoggedInUser().setPassword(newPasswordForm.getNewpassword2());
+            return "home";
+        }
+        else{
+            return "changepassword";
+        }
     }
 }
