@@ -10,4 +10,6 @@ import java.util.List;
 public interface ProductPastRepository extends CrudRepository<ProductPast, Long> {
 
     List<ProductPast> findProductPastByYear(int year);
+
+
 }

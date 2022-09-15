@@ -1,5 +1,7 @@
 package com.example.salescheckerspring.controllers;
 
+import com.example.salescheckerspring.models.Product;
+import com.example.salescheckerspring.models.ProductPast;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.repos.ProductPastRepository;
 import com.example.salescheckerspring.services.ProductPastService;
@@ -8,7 +10,9 @@ import com.example.salescheckerspring.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -54,5 +58,21 @@ public class AppController {
         model.addAttribute("users",users);
 
         return "admin_users";
+    }
+
+
+    @GetMapping("/test")
+    public String add(Model model) {
+        List<ProductPast> listemployee = productPastService.getProducts();
+        model.addAttribute("product", new ProductPast());
+        return "test";
+    }
+
+
+    @PostMapping("/search")
+    public String doSearchEmployee(@ModelAttribute("employeeSearchFormData") ProductPast formData, Model model) {
+        ProductPast emp = productPastService.get(formData.getId());
+        model.addAttribute("product", emp);
+        return "test";
     }
 }

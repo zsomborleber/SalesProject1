@@ -57,4 +57,8 @@ public class ProductPastService {
         return sum;
     }
 
+    public ProductPast get(long id) {
+        return productPastRepository.findById(id).get();
+    }
+
 }
