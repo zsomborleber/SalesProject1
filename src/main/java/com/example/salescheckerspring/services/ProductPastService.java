@@ -48,4 +48,12 @@ public class ProductPastService {
         productPastRepository.saveAll(getProducts());
     }
 
+    public long totalCashFlow(List<ProductPast> products) {
+        long sum = 0;
+        for (ProductPast product : products) {
+            sum += product.getValue();
+        }
+        return sum;
+    }
+
 }
