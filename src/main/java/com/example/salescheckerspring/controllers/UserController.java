@@ -81,4 +81,5 @@ public class UserController {
 
         return (verified ? "verify_success" : "verify_fail");*/
     }
+
 }
