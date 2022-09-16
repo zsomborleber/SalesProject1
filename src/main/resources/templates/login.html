@@ -14,7 +14,7 @@
         <form class="form" data-th-action="@{/login}" method="post">
             <h3>Belépés</h3>
             <div class="alert-danger" th:if="${param.error}">
-                Hibás e-mail vagy jelszó.
+                Hibás e-mail vagy jelszó.<br>(Erősítsd meg az email-ed)
             </div>
             <input type="text" data-th-name="email" placeholder="E-mail">
             <input type="password" data-th-name="password" placeholder="Jelszó">
