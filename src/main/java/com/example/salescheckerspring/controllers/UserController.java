@@ -6,6 +6,7 @@ import com.example.salescheckerspring.models.Roles;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.models.emailVerification.Utility;
 import com.example.salescheckerspring.services.UserService;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -95,18 +97,18 @@ public class UserController {
     @GetMapping("/changepassword")
     public String changepassword(Model model){
         model.addAttribute("form", new NewPasswordForm());
-
         return "changepassword";
     }
     @PostMapping("/changepassword")
     public String changepasswo(Model model, NewPasswordForm newPasswordForm){
-        if(Objects.equals(userService.getLoggedInUser().getPassword(), newPasswordForm.getCurrentpassword()) &&
+        if(webSecurityConfig.passwordEncoder().matches(newPasswordForm.getCurrentpassword(), userService.getLoggedInUser().getPassword()) &&
                 Objects.equals(newPasswordForm.getNewpassword1(), newPasswordForm.getNewpassword2())){
             userService.getLoggedInUser().setPassword(newPasswordForm.getNewpassword2());
             return "home";
         }
         else{
-            return "changepassword";
+            model.addAttribute("loginError", true);
+            return "redirect:/changepassword";
         }
     }
 }
