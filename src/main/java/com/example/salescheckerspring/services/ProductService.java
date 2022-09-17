@@ -15,17 +15,17 @@ import java.util.List;
 @Service
 public class ProductService {
 
-   private ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-  /*  public List<Product> getProducts(){
+    public List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(
-                    new FileReader("actualdata.txt"));
+                    new FileReader("products.txt"));
             String line;
             while ((line = br.readLine()) != null) {
                 String[] pieces = line.split(";");
@@ -36,7 +36,7 @@ public class ProductService {
                 int price = Integer.parseInt(pieces[4].replaceAll(" ", ""));
                 String supplier = pieces[5];
                 int year = Integer.parseInt(pieces[6]);
-                Product product = new Product(articleNumber, EANCode, articleName, quantity, price, supplier,year);
+                Product product = new Product(articleNumber, EANCode, articleName, quantity, price, supplier, year);
                 products.add(product);
             }
             br.close();
@@ -44,12 +44,10 @@ public class ProductService {
             System.out.println("Error" + exception);
         }
         return products;
-    }*/
+    }
 
-   /* public void saveProducts (){
+    public void saveProducts() {
         productRepository.saveAll(getProducts());
-    }*/
-
-
+    }
 
 }
