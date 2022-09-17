@@ -19,6 +19,23 @@
         <p>
           Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
         </p>
+        <table>
+          <tr>
+            <th>Cikkszám</th>
+            <th>EAN kód</th>
+            <th>Terméknév</th>
+            <th>Mennyiség</th>
+            <th>Ár</th>
+          </tr>
+          <tr data-th-each="question: ${products}">
+            <td data-th-text="${question.articleNumber}"></td>
+            <td data-th-text="${question.EANCode}"></td>
+            <td data-th-text="${question.articleName}"></td>
+            <td data-th-text="${question.quantity}"></td>
+            <td data-th-text="${question.value}"></td>
+          </tr>
+        </table>
+
         <footer>
           <input type="submit" class="btn" value="Sign Out">
         </footer>
