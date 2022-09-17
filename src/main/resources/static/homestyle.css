@@ -3,9 +3,15 @@
     padding: 0;
     font-family: sans-serif;
 }
-.social-icons h5{
-    color: white;
-}
+
+.tableFixHead          { overflow: auto; height: 100px; }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+
+/* Just common table stuff. Really. */
+table  { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 16px; }
+th     { background:#eee; }
+
 .social-icons{
     position: absolute;
     right: 4%;

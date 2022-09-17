@@ -2,12 +2,14 @@
 <html lang="en" xmlns:C="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
+  <style></style>
   <title>Főoldal</title>
   <link rel="stylesheet" href="/homestyle.css">
 </head>
 <body>
 <div class="banner">
   <div class="navbar">
+    <header>
    <a href="/home"><img data-th-src="@{sales2.png}" class="logo"></a>
     <ul>
       <li><a href="#">Home</a></li>
@@ -19,36 +21,43 @@
         <p>
           Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
         </p>
-        <table>
-          <tr>
-            <th>Cikkszám</th>
-            <th>EAN kód</th>
-            <th>Terméknév</th>
-            <th>Mennyiség</th>
-            <th>Ár</th>
-          </tr>
-          <tr data-th-each="question: ${products}">
-            <td data-th-text="${question.articleNumber}"></td>
-            <td data-th-text="${question.EANCode}"></td>
-            <td data-th-text="${question.articleName}"></td>
-            <td data-th-text="${question.quantity}"></td>
-            <td data-th-text="${question.value}"></td>
-          </tr>
-        </table>
+        <div class="tableFixHead">
+         <table>
+           <thead>
+           <tr>
+             <th>Cikkszám</th>
+             <th>EAN kód</th>
+             <th>Terméknév</th>
+             <th>Mennyiség</th>
+             <th>Ár</th>
+           </tr>
+           </thead>
+           <tbody>
+           <tr data-th-each="product: ${products}">
+             <td data-th-text="${product.articleNumber}"></td>
+             <td data-th-text="${product.EANCode}"></td>
+             <td data-th-text="${product.articleName}"></td>
+             <td data-th-text="${product.quantity}"></td>
+             <td data-th-text="${product.price}"></td>
+           </tr>
+           </tbody>
+         </table>
+        </div>
 
-        <footer>
-          <input type="submit" class="btn" value="Sign Out">
-        </footer>
-      </form>
-    </div>
-  </div>
-  <div class="social-icons">
-    <h5>Kövess minket!</h5>
-    <a href="https://facebook.com/"> <img data-th-src="@{facebook.png}"> </a>
-    <a href="https://www.instagram.com/"> <img data-th-src="@{instagram.png}"> </a>
-    <a href="https://www.linkedin.com/"> <img data-th-src="@{linkedin.png}"> </a>
-  </div>
-</div>
 
-</body>
-</html>
+         <footer>
+           <input type="submit" class="btn" value="Sign Out">
+         </footer>
+       </form>
+     </div>
+   </div>
+   <div class="social-icons">
+     <h5>Kövess minket!</h5>
+     <a href="https://facebook.com/"> <img data-th-src="@{facebook.png}"> </a>
+     <a href="https://www.instagram.com/"> <img data-th-src="@{instagram.png}"> </a>
+     <a href="https://www.linkedin.com/"> <img data-th-src="@{linkedin.png}"> </a>
+   </div>
+ </div>
+
+ </body>
+ </html>

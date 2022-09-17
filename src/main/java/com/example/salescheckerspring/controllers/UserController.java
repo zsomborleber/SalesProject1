@@ -2,9 +2,11 @@ package com.example.salescheckerspring.controllers;
 
 import com.example.salescheckerspring.Form.NewPasswordForm;
 import com.example.salescheckerspring.configs.WebSecurityConfig;
+import com.example.salescheckerspring.models.Product;
 import com.example.salescheckerspring.models.Roles;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.models.emailVerification.Utility;
+import com.example.salescheckerspring.services.ProductService;
 import com.example.salescheckerspring.services.UserService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -26,14 +28,21 @@ public class UserController {
     private final UserService userService;
     private WebSecurityConfig webSecurityConfig;
 
-    public UserController(UserService userService, WebSecurityConfig webSecurityConfig) {
+    private ProductService productService;
+
+    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService) {
         this.userService = userService;
         this.webSecurityConfig = webSecurityConfig;
+        this.productService = productService;
     }
+
     @GetMapping("/home")
     public String home(Model model) {
         List<User> users = userService.findAllUser();
         model.addAttribute("users",users);
+        List<Product> questions = productService.getProducts();
+        model.addAttribute("products", questions);
+
         return "home";
     }
 
