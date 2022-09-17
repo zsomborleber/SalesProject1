@@ -121,3 +121,7 @@ button{
 .social i{
     margin-right: 4px;
 }
+.alert-danger{
+    color: red;
+    text-align: center;
+}

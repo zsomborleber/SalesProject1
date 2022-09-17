@@ -103,7 +103,8 @@ public class UserController {
     public String changepasswo(Model model, NewPasswordForm newPasswordForm){
         if(webSecurityConfig.passwordEncoder().matches(newPasswordForm.getCurrentpassword(), userService.getLoggedInUser().getPassword()) &&
                 Objects.equals(newPasswordForm.getNewpassword1(), newPasswordForm.getNewpassword2())){
-            userService.getLoggedInUser().setPassword(newPasswordForm.getNewpassword2());
+            userService.getLoggedInUser().setPassword(webSecurityConfig.passwordEncoder().encode(newPasswordForm.getNewpassword2()));
+
             return "home";
         }
         else{

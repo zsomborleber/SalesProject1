@@ -33,6 +33,8 @@ public class User  implements UserDetails {
     @Column(name = "verification_code")
     private String verificationCode;
 
+    private boolean alreadyLoggedIn;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -149,6 +151,7 @@ public class User  implements UserDetails {
         return null;
     }
 
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -199,4 +202,8 @@ public class User  implements UserDetails {
                 ", role=" + role +
                 '}';
     }
+    public void setAlreadyLoggedIn(boolean alreadyLoggedIn) {
+        this.alreadyLoggedIn = alreadyLoggedIn;
+    }
+
 }

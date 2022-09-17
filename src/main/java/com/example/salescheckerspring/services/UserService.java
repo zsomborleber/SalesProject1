@@ -117,4 +117,5 @@ public class UserService implements UserDetailsService {
     public User getLoggedInUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+
 }
