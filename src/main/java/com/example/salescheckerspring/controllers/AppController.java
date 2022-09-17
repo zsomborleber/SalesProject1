@@ -63,16 +63,13 @@ public class AppController {
 
     @GetMapping("/test")
     public String add(Model model) {
-        List<ProductPast> listemployee = productPastService.getProducts();
-        model.addAttribute("product", new ProductPast());
         return "test";
     }
 
 
     @PostMapping("/search")
-    public String doSearchEmployee(@ModelAttribute("employeeSearchFormData") ProductPast formData, Model model) {
-        ProductPast emp = productPastService.get(formData.getId());
-        model.addAttribute("product", emp);
+    public String doSearchEmployee(int year, Model model) {
+        model.addAttribute("income", productPastService.totalCashFlow(year));
         return "test";
     }
 }

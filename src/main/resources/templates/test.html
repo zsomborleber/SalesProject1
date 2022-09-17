@@ -15,12 +15,12 @@
   <br />
   <div class="col-sm-4">
 
-    <form action="#" data-th-action="@{/search}" data-th-object="${product}" method="post">
+    <form action="#" data-th-action="@{/search}" method="post">
       <div alight="left">
         <tr>
-          <label class="form-label" >Employee ID</label>
+          <label class="form-label" >Year</label>
           <td>
-            <input type="text" data-th-field="*{id}" class="form-control" placeholder="Employee ID" />
+            <input type="number" name="year" class="form-control" placeholder="Year" />
           </td>
         </tr>
       </div>
@@ -33,9 +33,9 @@
 
       <div alight="left">
         <tr>
-          <label class="form-label" >Employee Name</label>
+          <label class="form-label" >Income</label>
           <td>
-            <input type="text" data-th-field="${product.articleName}" class="form-control" placeholder="Employee Name" />
+            <p type="text" data-th-text="${income}"></p>
           </td>
         </tr>
       </div>
