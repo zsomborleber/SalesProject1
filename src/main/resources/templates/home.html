@@ -10,12 +10,16 @@
 <div class="banner">
   <div class="navbar">
     <header>
+        <div class="logo">
    <a href="/home"><img data-th-src="@{sales2.png}" class="logo"></a>
+        </div>
+        <div class="nav">
     <ul>
       <li><a href="#">Home</a></li>
       <li><a href="#">Home</a></li>
       <li><a data-th-href="@{/userprofile}">Account</a></li>
     </ul>
+  </div>
     <div class="welcomemessage">
       <form th:action="@{/logout}" method="post">
         <p>
