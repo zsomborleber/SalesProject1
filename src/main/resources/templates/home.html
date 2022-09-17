@@ -1,19 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:C="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Főoldal</title>
+  <link rel="stylesheet" href="/homestyle.css">
 </head>
 <body>
-<div>
-  <div>
-    <form th:action="@{/logout}" method="post">
-      <p>
-        Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
-      </p>
-      <input type="submit" class="btn" value="Sign Out">
-    </form>
+<div class="banner">
+  <div class="navbar">
+   <a href="/home"><img data-th-src="@{sales2.png}" class="logo"></a>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Home</a></li>
+      <li><a data-th-href="@{/userprofile}">Account</a></li>
+    </ul>
+    <div class="welcomemessage">
+      <form th:action="@{/logout}" method="post">
+        <p>
+          Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
+        </p>
+        <footer>
+          <input type="submit" class="btn" value="Sign Out">
+        </footer>
+      </form>
+    </div>
+  </div>
+  <div class="social-icons">
+    <h5>Kövess minket!</h5>
+    <a href="https://facebook.com/"> <img data-th-src="@{facebook.png}"> </a>
+    <a href="https://www.instagram.com/"> <img data-th-src="@{instagram.png}"> </a>
+    <a href="https://www.linkedin.com/"> <img data-th-src="@{linkedin.png}"> </a>
   </div>
 </div>
+
 </body>
 </html>

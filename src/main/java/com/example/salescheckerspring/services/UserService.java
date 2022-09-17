@@ -7,6 +7,7 @@ import com.example.salescheckerspring.repos.UserRepository;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,7 +28,7 @@ import java.util.UUID;
 @Service
 public class UserService implements UserDetailsService {
 
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     private User user;
     private final UserRepository userRepository;
@@ -111,7 +112,9 @@ public class UserService implements UserDetailsService {
                 return true;
             }
         }
-
         return false;
+    }
+    public User getLoggedInUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
