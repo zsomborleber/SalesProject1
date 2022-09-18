@@ -36,6 +36,7 @@ public class AppController {
     @GetMapping(value={"/","/index"})
     private String index(Model model){
         productPastService.saveProducts();
+        productService.loadProducts();
         return "index";
     }
 
@@ -74,5 +75,17 @@ public class AppController {
         ProductPast emp = productPastService.get(formData.getId());
         model.addAttribute("product", emp);
         return "test";
+    }
+
+    @GetMapping(value = {"/admin/upload"})
+    public String saveNewSpaceShip(Model model) {
+        model.addAttribute("newProduct", new Product());
+        return "admin_upload";
+    }
+
+    @PostMapping("/admin/upload")
+    public String addSpaceShip(Product product){
+        productService.saveProducts(product);
+        return "redirect:/home";
     }
 }

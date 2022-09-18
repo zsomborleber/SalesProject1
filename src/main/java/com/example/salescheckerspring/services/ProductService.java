@@ -46,8 +46,12 @@ public class ProductService {
         return products;
     }
 
-    public void saveProducts() {
+    public void loadProducts() {
         productRepository.saveAll(getProducts());
+    }
+
+    public void saveProducts(Product product) {
+        productRepository.save(product);
     }
 
 }
