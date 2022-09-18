@@ -11,31 +11,31 @@
 <body>
 <div align="center">
 
-  <h1>Search Employee</h1>
+  <h1>Bevétel:</h1>
   <br />
   <div class="col-sm-4">
 
-    <form action="#" data-th-action="@{/search}" data-th-object="${product}" method="post">
+    <form action="#" data-th-action="@{/search}" method="post">
       <div alight="left">
         <tr>
-          <label class="form-label" >Employee ID</label>
+          <label class="form-label" >Év</label>
           <td>
-            <input type="text" data-th-field="*{id}" class="form-control" placeholder="Employee ID" />
+            <input type="number" name="year" class="form-control" placeholder="Év" />
           </td>
         </tr>
       </div>
 
       <br>
       <tr>
-        <td colspan="2"><button type="submit" class="btn btn-info">Search</button> </td>
+        <td colspan="2"><button type="submit" class="btn btn-info">Keresés</button> </td>
       </tr>
 
 
       <div alight="left">
         <tr>
-          <label class="form-label" >Employee Name</label>
+          <label class="form-label" >Income</label>
           <td>
-            <input type="text" data-th-field="${product.articleName}" class="form-control" placeholder="Employee Name" />
+            <p type="text" data-th-text="${income}"></p>
           </td>
         </tr>
       </div>
