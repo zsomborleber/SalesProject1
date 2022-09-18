@@ -9,6 +9,11 @@
   Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
   <p data-th-text="${income}"></p>
 </h2>
-
+<button class="button button5" onclick="location.href= '/admin/users'" type="button">
+  Regisztrált felhasználók</button>
+<button class="button button5" onclick="location.href= '/admin/income'" type="button">
+  Bevétel</button>
+<button class="button button5" onclick="location.href= '/admin/upload'" type="button">
+  Új termék hozzáadása</button>
 </body>
 </html>

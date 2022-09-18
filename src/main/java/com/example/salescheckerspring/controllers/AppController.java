@@ -62,11 +62,11 @@ public class AppController {
     }
 
 
-    @GetMapping("/test")
+    @GetMapping("/admin/income")
     public String add(Model model) {
         List<ProductPast> listemployee = productPastService.getProducts();
         model.addAttribute("product", new ProductPast());
-        return "test";
+        return "income";
     }
 
 
@@ -74,7 +74,7 @@ public class AppController {
     public String doSearchEmployee(@ModelAttribute("employeeSearchFormData") ProductPast formData, Model model) {
         ProductPast emp = productPastService.get(formData.getId());
         model.addAttribute("product", emp);
-        return "test";
+        return "income";
     }
 
     @GetMapping(value = {"/admin/upload"})
