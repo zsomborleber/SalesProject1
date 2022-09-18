@@ -64,18 +64,16 @@ public class AppController {
 
     @GetMapping("/admin/income")
     public String add(Model model) {
-        List<ProductPast> listemployee = productPastService.getProducts();
-        model.addAttribute("product", new ProductPast());
         return "income";
     }
 
 
     @PostMapping("/search")
-    public String doSearchEmployee(@ModelAttribute("employeeSearchFormData") ProductPast formData, Model model) {
-        ProductPast emp = productPastService.get(formData.getId());
-        model.addAttribute("product", emp);
+    public String doSearchEmployee(int year, Model model) {
+        model.addAttribute("income", productPastService.totalCashFlow(year));
         return "income";
     }
+
 
     @GetMapping(value = {"/admin/upload"})
     public String saveNewSpaceShip(Model model) {
