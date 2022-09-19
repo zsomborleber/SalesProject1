@@ -9,25 +9,24 @@
 <body>
 <div class="banner">
   <div class="navbar">
-    <header>
         <div class="logo">
    <a href="/home"><img data-th-src="@{sales2.png}" class="logo"></a>
         </div>
-        <div style="position:absolute; left:40%; top:10% " ; class="nav">
+        <div  class="nav">
     <ul>
       <li><a href="#">Home</a></li>
       <li><a href="#">Home</a></li>
       <li><a data-th-href="@{/userprofile}">Account</a></li>
     </ul>
   </div>
-    <div style="position:absolute; left:80%; top:3% "; class="welcomemessage">
-      <form th:action="@{/logout}" method="post">
+    <div class="welcomemessage">
+
         <p>
           Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
         </p>
       </form>
           </div>
-        <div style="position:absolute; left:12%; top:25% " ; class="tableFixHead">
+        <div class="tableFixHead">
          <table>
            <thead>
            <tr>
@@ -51,6 +50,7 @@
         </div>
          <footer>
              <div style = "position:absolute; left:80px; top:92% ">
+                 <form th:action="@{/logout}" method="post">
            <input type="submit" class="btn" value="Sign Out">
              </div>
          </footer>

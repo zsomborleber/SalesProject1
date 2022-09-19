@@ -3,25 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Felhasználók</title>
+    <link rel="stylesheet" href="/homestyle.css">
 </head>
 <body>
-</table>
-<h1>Felhasználók</h1>
-<table>
-    <tr>
-        <th>Cégnév</th>
-        <th>Cím</th>
-        <th>E-mail</th>
-        <th>Adószám</th>
-        <th>Aktivált</th>
-    </tr>
-    <tr data-th-each="user: ${users}">
-        <td data-th-text="${user.companyName}"></td>
-        <td data-th-text="${user.address}"></td>
-        <td data-th-text="${user.email}"></td>
-        <td data-th-text="${user.taxNumber}"></td>
-        <td data-th-text="${user.enabled}"></td>
-    </tr>
-</table>
+<div class="banner">
+    <div class="navbar">
+        <div class="logo">
+            <a href="/home"><img data-th-src="@{sales2.png}" class="logo"></a>
+        </div>
+        <div  class="nav">
+            <ul>
+                <li><a data-th-href="@{/admin/users}">Felhasználók</a></li>
+                <li><a data-th-href="@{/admin/income}">Bevétel</a></li>
+                <li><a data-th-href="@{/admin/upload}">Termék hozzáadása</a></li>
+            </ul>
+        </div>
+        <div class="welcomemessage">
+
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
+            </p>
+            </form>
+        </div>
+        <footer>
+            <div style = "position:absolute; left:80px; top:92% ">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" class="btn" value="Sign Out">
+            </div>
+        </footer>
+        </form>
+    </div>
+    <div class="tableFixHead">
+        <table>
+            <tr>
+                <th>Cégnév</th>
+                <th>Cím</th>
+                <th>E-mail</th>
+                <th>Adószám</th>
+                <th>Aktivált</th>
+            </tr>
+            <tr data-th-each="user: ${users}">
+                <td data-th-text="${user.companyName}"></td>
+                <td data-th-text="${user.address}"></td>
+                <td data-th-text="${user.email}"></td>
+                <td data-th-text="${user.taxNumber}"></td>
+                <td data-th-text="${user.enabled}"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="social-icons">
+        <h5>Kövess minket!</h5>
+        <a href="https://facebook.com/"> <img data-th-src="@{facebook.png}"> </a>
+        <a href="https://www.instagram.com/"> <img data-th-src="@{instagram.png}"> </a>
+        <a href="https://www.linkedin.com/"> <img data-th-src="@{linkedin.png}"> </a>
+    </div>
+
 </body>
 </html>

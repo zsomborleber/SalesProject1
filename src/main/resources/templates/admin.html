@@ -3,17 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <title>Admin oldal</title>
+  <link rel="stylesheet" href="/homestyle.css">
 </head>
 <body>
-<h2>
-  Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
-  <p data-th-text="${income}"></p>
-</h2>
-<button class="button button5" onclick="location.href= '/admin/users'" type="button">
-  Regisztrált felhasználók</button>
-<button class="button button5" onclick="location.href= '/admin/income'" type="button">
-  Bevétel</button>
-<button class="button button5" onclick="location.href= '/admin/upload'" type="button">
-  Új termék hozzáadása</button>
+<div class="banner">
+  <div class="navbar">
+    <div class="logo">
+      <a href="/home"><img data-th-src="@{sales2.png}" class="logo"></a>
+    </div>
+    <div  class="nav">
+      <ul>
+        <li><a data-th-href="@{/admin/users}">Felhasználók</a></li>
+        <li><a data-th-href="@{/admin/income}">Bevétel</a></li>
+        <li><a data-th-href="@{/admin/upload}">Termék hozzáadása</a></li>
+      </ul>
+    </div>
+    <div class="welcomemessage">
+
+      <p>
+        Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
+      </p>
+      </form>
+    </div>
+    <footer>
+      <div style = "position:absolute; left:80px; top:92% ">
+        <form th:action="@{/logout}" method="post">
+          <input type="submit" class="btn" value="Sign Out">
+      </div>
+    </footer>
+    </form>
+  </div>
+  <div class="social-icons">
+    <h5>Kövess minket!</h5>
+    <a href="https://facebook.com/"> <img data-th-src="@{facebook.png}"> </a>
+    <a href="https://www.instagram.com/"> <img data-th-src="@{instagram.png}"> </a>
+    <a href="https://www.linkedin.com/"> <img data-th-src="@{linkedin.png}"> </a>
+  </div>
+
 </body>
 </html>
