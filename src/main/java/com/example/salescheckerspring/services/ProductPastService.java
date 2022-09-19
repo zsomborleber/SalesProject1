@@ -48,4 +48,17 @@ public class ProductPastService {
         productPastRepository.saveAll(getProducts());
     }
 
+    public long totalCashFlow(int year) {
+        List<ProductPast> products = productPastRepository.findProductPastByYear(year);
+        long sum = 0;
+        for (ProductPast product : products) {
+            sum += product.getValue();
+        }
+        return sum;
+    }
+
+    public ProductPast get(long id) {
+        return productPastRepository.findById(id).get();
+    }
+
 }

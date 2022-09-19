@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Termékfeltöltés</title>
+</head>
+<body>
+<form data-th-action="@{/admin/upload}" method="post" data-th-object="${newProduct}">
+    <table>
+        <tr>
+            <th>Cikkszám</th>
+            <td><input type="text" data-th-field="*{articleNumber}"></td>
+        </tr>
+        <tr>
+            <th>EAN kód</th>
+            <td><input type="text" data-th-field="*{EANCode}"></td>
+        </tr>
+        <tr>
+            <th>Terméknév</th>
+            <td><input type="text" data-th-field="*{articleName}"></td>
+        </tr>
+        <tr>
+            <th>Mennyiség</th>
+            <td><input type="text" data-th-field="*{quantity}"></td>
+        </tr>
+        <tr>
+            <th>Ár</th>
+            <td><input type="text" data-th-field="*{price}"></td>
+        </tr>
+        <tr>
+            <th>Beszállító</th>
+            <td><input type="text" data-th-field="*{supplier}"></td>
+        </tr>
+        <tr>
+            <th>Év</th>
+            <td><input type="text" data-th-field="*{year}"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Létrehozás</button>
+            </td>
+        </tr>
+
+    </table>
+</form>
+</body>
+</html>
