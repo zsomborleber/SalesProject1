@@ -16,7 +16,9 @@ th     { background:#5ebc67; }
     position: absolute;
     right: 4%;
     bottom: 0%
-
+}
+.social-icons h5 {
+    color: white;
 }
 .social-icons img{
     width: 30px;
