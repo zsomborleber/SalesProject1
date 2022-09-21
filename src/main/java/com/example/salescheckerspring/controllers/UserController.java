@@ -6,6 +6,7 @@ import com.example.salescheckerspring.models.Product;
 import com.example.salescheckerspring.models.Roles;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.models.emailVerification.Utility;
+import com.example.salescheckerspring.repos.ProductRepository;
 import com.example.salescheckerspring.services.ProductService;
 import com.example.salescheckerspring.services.UserService;
 import org.springframework.data.repository.query.Param;
@@ -15,11 +16,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,10 +33,13 @@ public class UserController {
 
     private ProductService productService;
 
-    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService) {
+    private ProductRepository productRepository;
+
+    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService,ProductRepository productRepository) {
         this.userService = userService;
         this.webSecurityConfig = webSecurityConfig;
         this.productService = productService;
+        this.productRepository = productRepository;
     }
 
     @GetMapping("/home")
@@ -44,6 +50,15 @@ public class UserController {
         model.addAttribute("products", questions);
 
         return "home";
+    }
+
+    @PostMapping("/home/{EANCode}")
+    public String showCreateForm(Model model, @PathVariable long EANCode, int quantity) {
+        /////  model.addAttribute("save", PurchaseRepository.save);
+        /////   model.addAttribute(PurchaseRepository.saveAll(purchies));
+        List<Product> pruchase = new ArrayList<>();
+        pruchase.add(productService.findProduct(EANCode));
+        return "redirect:/home";
     }
 
     @GetMapping(value = {"/login", "/bejelentkezes"})

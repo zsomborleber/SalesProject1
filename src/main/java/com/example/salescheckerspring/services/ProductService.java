@@ -54,4 +54,14 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    public Product findProduct (long EANcode){
+        List<Product> products = productRepository.findAll();
+        for (Product product : products){
+            if (product.getEANCode()==EANcode){
+                return product;
+            }
+        }
+        return null;
+    }
+
 }
