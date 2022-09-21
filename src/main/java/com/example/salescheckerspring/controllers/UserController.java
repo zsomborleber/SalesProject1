@@ -4,9 +4,11 @@ import com.example.salescheckerspring.Form.NewPasswordForm;
 import com.example.salescheckerspring.configs.WebSecurityConfig;
 import com.example.salescheckerspring.models.Product;
 import com.example.salescheckerspring.models.Roles;
+import com.example.salescheckerspring.models.ShoppingCart;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.models.emailVerification.Utility;
 import com.example.salescheckerspring.repos.ProductRepository;
+import com.example.salescheckerspring.repos.Shopcart;
 import com.example.salescheckerspring.services.ProductService;
 import com.example.salescheckerspring.services.UserService;
 import org.springframework.data.repository.query.Param;
@@ -35,11 +37,14 @@ public class UserController {
 
     private ProductRepository productRepository;
 
-    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService,ProductRepository productRepository) {
+    private Shopcart shopcart;
+
+    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService, ProductRepository productRepository, Shopcart shopcart) {
         this.userService = userService;
         this.webSecurityConfig = webSecurityConfig;
         this.productService = productService;
         this.productRepository = productRepository;
+        this.shopcart = shopcart;
     }
 
     @GetMapping("/home")
@@ -54,10 +59,9 @@ public class UserController {
 
     @PostMapping("/home/{EANCode}")
     public String showCreateForm(Model model, @PathVariable long EANCode, int quantity) {
-        /////  model.addAttribute("save", PurchaseRepository.save);
-        /////   model.addAttribute(PurchaseRepository.saveAll(purchies));
-        List<Product> pruchase = new ArrayList<>();
-        pruchase.add(productService.findProduct(EANCode));
+        ShoppingCart shoppingCart = new ShoppingCart(productService.findProduct(EANCode).getId()
+                ,productService.findProduct(EANCode).getArticleName(),quantity,productService.findProduct(EANCode).getPrice()*quantity);
+        shopcart.save(shoppingCart);
         return "redirect:/home";
     }
 
@@ -65,7 +69,7 @@ public class UserController {
     public String getLoginPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-
+            List<Product> products = new ArrayList<>();
             return "login";
         }
         return "loggedin";
@@ -81,7 +85,6 @@ public class UserController {
     @PostMapping("/process-register")
     public String processRegistration(User user, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         String siteUrl = Utility.getSiteUrl(request);
-
        if (!(userService.isEmailAlreadyInUse(user))) {
            user.setRole(Roles.USER);
             userService.saveUser(user);
