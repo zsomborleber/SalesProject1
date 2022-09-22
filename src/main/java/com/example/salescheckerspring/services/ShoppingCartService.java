@@ -17,9 +17,10 @@ public class ShoppingCartService {
         this.userService = userService;
     }
 
-    public void setTrueAfterOrdered(){
+
+    public void setTrueAfterOrdered() {
         List<ShoppingCart> shoppingCarts = shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
-        for (ShoppingCart x: shoppingCarts){
+        for (ShoppingCart x : shoppingCarts) {
             x.setOrdered(true);
         }
         shoppingCartRepository.saveAll(shoppingCarts);
