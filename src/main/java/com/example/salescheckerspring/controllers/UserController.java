@@ -156,11 +156,11 @@ public class UserController {
 
     @PostMapping("/cart")
     public String makeOrder(Order order){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        ShoppingCart shoppingCart = new ShoppingCart();
+        ShoppingCart shoppingCart = new ShoppingCart();*/
         order.setOrderDescription("teszt");
-        order.setCartItems((List<ShoppingCart>) shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser()));
+        order.setCartItems(shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser()));
         order.setCustomer(userService.getLoggedInUser());
         orderRepository.save(order);
         shoppingCartService.setTrueAfterOrdered();
