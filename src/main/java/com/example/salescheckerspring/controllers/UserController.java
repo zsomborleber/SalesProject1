@@ -65,7 +65,9 @@ public class UserController {
     @PostMapping("/home/{EANCode}")
     public String showCreateForm(Model model, @PathVariable long EANCode, int quantity) {
         ShoppingCart shoppingCart = new ShoppingCart(productService.findProduct(EANCode).getId()
-                ,productService.findProduct(EANCode).getArticleName(),quantity,productService.findProduct(EANCode).getPrice()*quantity);
+                ,productService.findProduct(EANCode).getArticleName(),quantity,
+                productService.findProduct(EANCode).getPrice()*quantity,
+                userService.getLoggedInUser());
         shoppingCartRepository.save(shoppingCart);
 
         return "redirect:/home";
@@ -144,8 +146,9 @@ public class UserController {
     }
 
     @GetMapping("/cart")
+    //TODO
     public String cart(Model model) {
-        List<ShoppingCart> products = (List<ShoppingCart>) shoppingCartRepository.findByOrderedIsFalse();
+        List<ShoppingCart> products = (List<ShoppingCart>) shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
         model.addAttribute("products", products);
         Order order = new Order();
         return "cart";
@@ -155,9 +158,9 @@ public class UserController {
     public String makeOrder(Order order){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        //ShoppingCart shoppingCart = new ShoppingCart();
+        ShoppingCart shoppingCart = new ShoppingCart();
         order.setOrderDescription("teszt");
-        order.setCartItems((List<ShoppingCart>) shoppingCartRepository.findByOrderedIsFalse());
+        order.setCartItems((List<ShoppingCart>) shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser()));
         order.setCustomer(userService.getLoggedInUser());
         orderRepository.save(order);
         shoppingCartService.setTrueAfterOrdered();

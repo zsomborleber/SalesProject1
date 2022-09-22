@@ -10,12 +10,15 @@ import java.util.List;
 public class ShoppingCartService {
     private ShoppingCartRepository shoppingCartRepository;
 
-    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository) {
+    private UserService userService;
+
+    public ShoppingCartService(ShoppingCartRepository shoppingCartRepository, UserService userService) {
         this.shoppingCartRepository = shoppingCartRepository;
+        this.userService = userService;
     }
 
     public void setTrueAfterOrdered(){
-        List<ShoppingCart> shoppingCarts = shoppingCartRepository.findByOrderedIsFalse();
+        List<ShoppingCart> shoppingCarts = shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
         for (ShoppingCart x: shoppingCarts){
             x.setOrdered(true);
         }

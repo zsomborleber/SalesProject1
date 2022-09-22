@@ -39,7 +39,7 @@
            </tr>
            </thead>
            <tbody>
-           <tr data-th-each="datas,itemStat:${products}">
+           <tr data-th-each="datas:${products}">
 
                <td th:text="${datas.articleNumber}">Name:</td>
 
@@ -50,8 +50,9 @@
                <td th:text="${datas.quantity}">Name:</td>
 
                <td th:text="${datas.price}">Name:</td>
-
-               <td><form method="post" data-th-action="@{/home/{EANCode}(EANCode=${datas.EANCode})}"><input type="number" name="quantity"><button type="submit">Hozzáadás kosárhoz</button></form></td>
+               <!--TODO Lassú betöltés  -->
+               <td><form method="post" data-th-action="@{/home/{EANCode}(EANCode=${datas.EANCode})}">
+                   <input type="number" name="quantity"><button type="submit">Hozzáadás kosárhoz</button></form></td>
            </tr>
            </tbody>
          </table>
