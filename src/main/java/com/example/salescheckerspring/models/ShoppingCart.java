@@ -17,6 +17,8 @@ public class ShoppingCart {
     private int quantity;
     private float amount;
 
+    private boolean ordered;
+
     public ShoppingCart() {
     }
 
@@ -25,6 +27,14 @@ public class ShoppingCart {
         this.productName = productName;
         this.quantity = quantity;
         this.amount = amount;
+    }
+
+    public ShoppingCart(long productId, String productName, int quantity, float amount, boolean ordered) {
+        this.productId = productId;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.amount = amount;
+        this.ordered = ordered;
     }
 
     public ShoppingCart(int productId, int quantity) {
@@ -70,6 +80,14 @@ public class ShoppingCart {
 
     public void setAmount(float amount) {
         this.amount = amount;
+    }
+
+    public boolean isOrdered() {
+        return ordered;
+    }
+
+    public void setOrdered(boolean ordered) {
+        this.ordered = ordered;
     }
 
     @Override

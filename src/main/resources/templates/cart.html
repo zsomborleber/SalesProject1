@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kosár</title>
+</head>
+<body>
+<table>
+  <tr>
+    <th>Cikkszám</th>
+    <th>Terméknév</th>
+    <th>Mennyiség</th>
+    <th>Érték</th>
+  </tr>
+  <tr data-th-each="product: ${products}">
+    <td data-th-text="${product.productId}"></td>
+    <td data-th-text="${product.productName}"></td>
+    <td data-th-text="${product.quantity}"></td>
+    <td data-th-text="${product.amount}"></td>
+
+  </tr>
+</table>
+<form action="#" data-th-action="@{/cart}" method="post">
+        <button type="submit">Létrehozás</button>
+</form>
+</body>
+</html>

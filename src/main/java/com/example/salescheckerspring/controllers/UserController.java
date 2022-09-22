@@ -2,14 +2,13 @@ package com.example.salescheckerspring.controllers;
 
 import com.example.salescheckerspring.Form.NewPasswordForm;
 import com.example.salescheckerspring.configs.WebSecurityConfig;
-import com.example.salescheckerspring.models.Product;
-import com.example.salescheckerspring.models.Roles;
-import com.example.salescheckerspring.models.ShoppingCart;
-import com.example.salescheckerspring.models.User;
+import com.example.salescheckerspring.models.*;
 import com.example.salescheckerspring.models.emailVerification.Utility;
+import com.example.salescheckerspring.repos.OrderRepository;
 import com.example.salescheckerspring.repos.ProductRepository;
-import com.example.salescheckerspring.repos.Shopcart;
+import com.example.salescheckerspring.repos.ShoppingCartRepository;
 import com.example.salescheckerspring.services.ProductService;
+import com.example.salescheckerspring.services.ShoppingCartService;
 import com.example.salescheckerspring.services.UserService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -37,14 +36,20 @@ public class UserController {
 
     private ProductRepository productRepository;
 
-    private Shopcart shopcart;
+    private ShoppingCartRepository shoppingCartRepository;
 
-    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService, ProductRepository productRepository, Shopcart shopcart) {
+    private OrderRepository orderRepository;
+
+    private ShoppingCartService shoppingCartService;
+
+    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService, ProductRepository productRepository, ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, ShoppingCartService shoppingCartService) {
         this.userService = userService;
         this.webSecurityConfig = webSecurityConfig;
         this.productService = productService;
         this.productRepository = productRepository;
-        this.shopcart = shopcart;
+        this.shoppingCartRepository = shoppingCartRepository;
+        this.orderRepository = orderRepository;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @GetMapping("/home")
@@ -61,7 +66,8 @@ public class UserController {
     public String showCreateForm(Model model, @PathVariable long EANCode, int quantity) {
         ShoppingCart shoppingCart = new ShoppingCart(productService.findProduct(EANCode).getId()
                 ,productService.findProduct(EANCode).getArticleName(),quantity,productService.findProduct(EANCode).getPrice()*quantity);
-        shopcart.save(shoppingCart);
+        shoppingCartRepository.save(shoppingCart);
+
         return "redirect:/home";
     }
 
@@ -135,5 +141,26 @@ public class UserController {
         else{
             return "changepassword";
         }
+    }
+
+    @GetMapping("/cart")
+    public String cart(Model model) {
+        List<ShoppingCart> products = (List<ShoppingCart>) shoppingCartRepository.findByOrderedIsFalse();
+        model.addAttribute("products", products);
+        Order order = new Order();
+        return "cart";
+    }
+
+    @PostMapping("/cart")
+    public String makeOrder(Order order){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        //ShoppingCart shoppingCart = new ShoppingCart();
+        order.setOrderDescription("teszt");
+        order.setCartItems((List<ShoppingCart>) shoppingCartRepository.findByOrderedIsFalse());
+        order.setCustomer(userService.getLoggedInUser());
+        orderRepository.save(order);
+        shoppingCartService.setTrueAfterOrdered();
+        return "redirect:/home";
     }
 }
