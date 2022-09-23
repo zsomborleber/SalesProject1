@@ -10,8 +10,8 @@
 <div>
 </div>
 <div>
-    <form data-th-action="@{/process-register}" method="post"
-        data-th-object="${user}">
+    <form method="post" th:action="@{/process-register}"
+            th:object="${user}">
         <h3>Regisztráció</h3>
         <div>
             <div>
@@ -26,7 +26,7 @@
                 <label>Jelszó:</label>
                 <div class="box">
                     <div class="inputBox">
-                        <input type="password" id="pswrd" data-th-field="*{password}" onkeyup="checkPassword(this.value)" required/>
+                        <input type="password" id="pswrd" data-th-field="*{password}" onkeyup="checkPassword(this.value)" required  th:errorClass="is-invalid"/>
                         <span id="toggleBtn"></span>
                     </div>
                     <div class="validation">
@@ -106,7 +106,7 @@
             <div>
                 <label>E-mail:</label>
                 <div>
-                    <input type="email" data-th-field="*{email}" required/>
+                    <input type="email"  data-th-field="*{email}" required/>
                 </div>
             </div>
         </div>

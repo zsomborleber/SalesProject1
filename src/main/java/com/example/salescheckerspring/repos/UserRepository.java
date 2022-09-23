@@ -15,5 +15,8 @@ public interface UserRepository extends CrudRepository<User,Long> {
     public void enable(Long Id);
     @Query("SELECT c FROM User c WHERE c.verificationCode = ?1")
     User findByVerificationCode(String code);
+
+    User findByTaxNumber(Long taxNumber);
+
 }
 
