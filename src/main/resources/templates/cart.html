@@ -3,8 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Kosár</title>
+    <link rel="stylesheet" href="/homestyle.css">
 </head>
 <body>
+<div class="banner">
+    <div class="navbar">
+        <div class="logo">
+            <a href="/home"><img data-th-src="@{sales2.png}" class="logo"></a>
+        </div>
+        <div  class="nav">
+            <ul>
+                <li><a data-th-href="@{/home}">Kosár</a></li>
+                <li><a data-th-href="@{/cart}">Kosár</a></li>
+                <li><a data-th-href="@{/userprofile}">Profil</a></li>
+            </ul>
+        </div>
+        <div class="welcomemessage">
+
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
+            </p>
+            </form>
+        </div>
+        <div class="tableFixHead">
 <table>
   <tr>
     <th>Cikkszám</th>
@@ -21,7 +42,8 @@
   </tr>
 </table>
 <form action="#" data-th-action="@{/cart}" method="post">
-        <button type="submit">Létrehozás</button>
+        <button type="submit">Megrendelés</button>
 </form>
+        </div>
 </body>
 </html>
