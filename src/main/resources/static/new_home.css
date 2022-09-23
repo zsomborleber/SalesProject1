@@ -69,12 +69,12 @@ nav .container ul:nth-child(2) {
     text-align: right;
 }
 nav .container ul li {
-    display: flex;
+    display: inline-block;
     margin: 0 0.7em;
 }
 nav a {
     text-decoration: none;
-    font-size: 0.9em;
+    font-size: 1.2em;
     transition: 0.3s;
     font-weight: 600;
     color: #fff;
