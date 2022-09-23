@@ -30,10 +30,11 @@ public class UserController {
         this.userService = userService;
         this.webSecurityConfig = webSecurityConfig;
     }
+
     @GetMapping("/home")
     public String home(Model model) {
         List<User> users = userService.findAllUser();
-        model.addAttribute("users",users);
+        model.addAttribute("users", users);
         return "home";
     }
 
@@ -58,21 +59,22 @@ public class UserController {
     public String processRegistration(User user, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         String siteUrl = Utility.getSiteUrl(request);
 
-       if (!(userService.isEmailAlreadyInUse(user))) {
-           user.setRole(Roles.USER);
+        if (!(userService.isEmailAlreadyInUse(user))) {
+            user.setRole(Roles.USER);
             userService.saveUser(user);
-            userService.sendVerificationEmail(user,siteUrl);
+            userService.sendVerificationEmail(user, siteUrl);
 
             return "register_success";
         }
-       return "redirect:/login";
+        return "redirect:/login";
 
     }
+
     @GetMapping("/verify")
-    public String verifyAccount(@Param("code") String code){
-        if (userService.verify(code)){
+    public String verifyAccount(@Param("code") String code) {
+        if (userService.verify(code)) {
             return "verify_success";
-        }else {
+        } else {
             return "verify_fail";
         }
 
@@ -85,28 +87,36 @@ public class UserController {
     }
 
     @GetMapping("userprofile")
-    public String getuserprofile(Model model){
+    public String getuserprofile(Model model) {
 
         User user = userService.getLoggedInUser();
         model.addAttribute("currentuser", user);
 
         return "userprofile";
     }
+
     @GetMapping("/changepassword")
-    public String changepassword(Model model){
+    public String changepassword(Model model) {
         model.addAttribute("form", new NewPasswordForm());
 
         return "changepassword";
     }
+
     @PostMapping("/changepassword")
-    public String changepasswo(Model model, NewPasswordForm newPasswordForm){
-        if(Objects.equals(userService.getLoggedInUser().getPassword(), newPasswordForm.getCurrentpassword()) &&
-                Objects.equals(newPasswordForm.getNewpassword1(), newPasswordForm.getNewpassword2())){
+    public String changepasswo(Model model, NewPasswordForm newPasswordForm) {
+        if (Objects.equals(userService.getLoggedInUser().getPassword(), newPasswordForm.getCurrentpassword()) &&
+                Objects.equals(newPasswordForm.getNewpassword1(), newPasswordForm.getNewpassword2())) {
             userService.getLoggedInUser().setPassword(newPasswordForm.getNewpassword2());
             return "home";
-        }
-        else{
+        } else {
             return "changepassword";
         }
     }
+
+    @GetMapping(value = {"/connections"})
+    public String connections(Model model) {
+
+
+        return"connections";
+}
 }
