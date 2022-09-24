@@ -109,12 +109,10 @@ public class ShoppingCart {
 
     @Override
     public String toString() {
-        return "ShoppingCart{" +
-                "id=" + id +
-                ", productId=" + productId +
-                ", productName='" + productName + '\'' +
-                ", quantity=" + quantity +
-                ", amount=" + amount +
-                '}';
+        return
+                "Cikkszám:= " + productId + "\n" +
+                        "Termék név:= " + productName + "\n" +
+                        "Mennyiség:= " + quantity + "\n" +
+                        "Összeg:= " + amount + "\n";
     }
 }

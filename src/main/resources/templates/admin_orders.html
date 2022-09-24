@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="tableFixHead">
+    <table>
+        <tr>
+            <th>Rendelés szám</th>
+            <th>Rendelés megjegyzés</th>
+            <th>Termékek</th>
+        </tr>
+        <tr data-th-each="order: ${orders}">
+            <td data-th-text="${order.id}"></td>
+            <td data-th-text="${order.orderDescription}"></td>
+            <td data-th-text="${order.cartItems}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
