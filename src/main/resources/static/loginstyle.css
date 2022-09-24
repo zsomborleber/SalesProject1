@@ -12,6 +12,10 @@ body{
     color: red;
     text-align: center;
 }
+.alert-danger{
+    color: red;
+    text-align: center;
+}
 .background{
     width: 430px;
     height: 520px;
