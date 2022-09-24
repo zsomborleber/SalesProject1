@@ -18,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +63,11 @@ public class UserController {
     @GetMapping("/home")
     public String home(Model model) {
         List<User> users = userService.findAllUser();
-        model.addAttribute("users", users);
+        model.addAttribute("users",users);
         List<Product> questions = productService.getProducts();
         model.addAttribute("products", questions);
 
-        return "home";
+        return "new_home";
     }
 
     @PostMapping("/home/{EANCode}")
@@ -96,7 +99,12 @@ public class UserController {
     }
 
     @PostMapping("/process-register")
-    public String processRegistration(User user, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+    public String processRegistration(
+            User user,
+            HttpServletRequest request)
+            throws MessagingException,
+            UnsupportedEncodingException {
+
         String siteUrl = Utility.getSiteUrl(request);
         if (!(userService.isEmailAlreadyInUse(user))) {
             user.setRole(Roles.USER);

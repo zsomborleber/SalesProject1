@@ -153,8 +153,13 @@ button{
     justify-content: center;
     align-items: center;
 }
-.inputBox #toggleBtn::before{
-    content:'\f06e';
+
+.inputBox #toggleAbout::before {
+   content: '\f2bb';
+    font-family: fontAwesome;
+}
+.inputBox #toggleCart::before {
+    content: '\f07a';
     font-family: fontAwesome;
 }
 .inputBox #toggleBtn.hide::before{

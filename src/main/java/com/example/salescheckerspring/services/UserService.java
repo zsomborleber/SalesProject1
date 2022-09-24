@@ -44,7 +44,6 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.mailSender = mailSender;
-
     }
 
 
@@ -61,11 +60,10 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-       // user.setEnabled(false);
+        // user.setEnabled(false);
 
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
-
         return userRepository.save(user);
 
     }
@@ -114,6 +112,14 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
+    @Transactional
+    public Optional<User> findUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+    public boolean userEmailExist(String email){
+        return findUserByEmail(email).isPresent();
+    }
+
     public User getLoggedInUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
