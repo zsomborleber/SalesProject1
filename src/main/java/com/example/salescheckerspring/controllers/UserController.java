@@ -77,7 +77,6 @@ public class UserController {
                 productService.findProduct(EANCode).getPrice() * quantity,
                 userService.getLoggedInUser());
         shoppingCartRepository.save(shoppingCart);
-
         return "redirect:/home";
     }
 

@@ -3,47 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>Kosár</title>
-    <link rel="stylesheet" href="/homestyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="/new_home.css">
 </head>
-<body>
-<div class="banner">
-    <div class="navbar">
-        <div class="logo">
-            <a href="/home"><img data-th-src="@{sales2.png}" class="logo"></a>
+<header>
+    <nav id="navbar">
+        <div class="menu">
+            <div>
+                <img src="sales2.png" class="logo" alt="">
+                <ul>
+                    <li><a href="#">Újdonságok</a></li>
+                </ul>
+                <ul class="inputBox">
+                    <li><span id="toggleProjects">    </span><a href="#">Projektek</a></li>
+                    <li><span id="toggleNews">    </span><a href="#">Újdonságok</a></li>
+                    <li><span id="toggleMarket">    </span><a href="#">Bolt</a></li>
+                    <li><span id="toggleCart">    </span><a href="/cart">Kosár</a></li>
+                    <li><span id="toggleAbout">    </span><a href="#">Rólunk</a></li>
+                    <li><span id="toggleDoor">    </span><a href="/logout">Kijelentkezés</a></li>
+                </ul>
+                <ul class="social-media">
+                    <h5>Kövess minket!</h5>
+                    <li><a href="https://facebook.com/"><img data-th-src="@{facebook.png}"></a></li>
+                    <li><a href="https://www.instagram.com/"><img data-th-src="@{instagram.png}"></a></li>
+                    <li><a href="https://www.linkedin.com/"><img data-th-src="@{linkedin.png}"></a></li>
+                </ul>
+            </div>
         </div>
-        <div  class="nav">
-            <ul>
-                <li><a data-th-href="@{/home}">Kosár</a></li>
-                <li><a data-th-href="@{/cart}">Kosár</a></li>
-                <li><a data-th-href="@{/userprofile}">Profil</a></li>
-            </ul>
-        </div>
-        <div class="welcomemessage">
-
-            <p>
+        <div class="container">
+            <a href="#" class="brand"><p>
                 Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
-            </p>
-            </form>
+            </p></a>
+            <div class="container-inner">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/connections">Contact</a></li>
+                    <li><a href="/cart">Cart</a></li>
+                </ul>
+            </div>
+            <i class="fas fa-bars" id="menu-btn"></i>
         </div>
-        <div class="tableFixHead">
-<table>
-  <tr>
-    <th>Cikkszám</th>
-    <th>Terméknév</th>
-    <th>Mennyiség</th>
-    <th>Érték</th>
-  </tr>
-  <tr data-th-each="product: ${products}">
-    <td data-th-text="${product.productId}"></td>
-    <td data-th-text="${product.productName}"></td>
-    <td data-th-text="${product.quantity}"></td>
-    <td data-th-text="${product.amount}"></td>
+    </nav>
+</header>
+<body>
+<div class="container-back">
+    <div class="tableFixHead">
+        <table>
+            <tr>
+                <th>Cikkszám</th>
+                <th>Terméknév</th>
+                <th>Mennyiség</th>
+                <th>Érték</th>
+            </tr>
+            <tr data-th-each="product: ${products}">
+                <td data-th-text="${product.productId}"></td>
+                <td data-th-text="${product.productName}"></td>
+                <td data-th-text="${product.quantity}"></td>
+                <td data-th-text="${product.amount}"></td>
 
-  </tr>
-</table>
-<form action="#" data-th-action="@{/cart}" method="post">
-        <button type="submit">Megrendelés</button>
-</form>
-        </div>
+            </tr>
+        </table>
+    </div>
+    <form action="#" data-th-action="@{/cart}" method="post">
+        <button class="button3" type="submit">Megrendelés</button>
+    </form>
+</div>
+<script>
+    const menBtn = document.getElementById('menu-btn');
+    const navBar = document.getElementById('navbar');
+    const menu = document.querySelector('.menu');
+
+    const offset = 30;
+    menBtn.addEventListener('click', () => {
+        menu.classList.toggle('menu-open');
+    });
+    window.addEventListener("scroll", () => {
+        if (pageYOffset > offset) {
+            navBar.classList.add('navbar-active');
+        } else {
+            navBar.classList.remove('navbar-active')
+        }
+    });
+    window.addEventListener("scroll", () => {
+        if (pageXOffset > offset) {
+            navBar.classList.add('navbar-active');
+        } else {
+            navBar.classList.remove('navbar-active');
+        }
+    });
+
+
+</script>
 </body>
 </html>
