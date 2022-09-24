@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kosár</title>
+    <link rel="stylesheet" href="/homestyle.css">
+</head>
+<body>
+<div class="banner">
+    <div class="navbar">
+        <div class="logo">
+            <a href="/home"><img data-th-src="@{sales2.png}" class="logo"></a>
+        </div>
+        <div  class="nav">
+            <ul>
+                <li><a data-th-href="@{/home}">Kosár</a></li>
+                <li><a data-th-href="@{/cart}">Kosár</a></li>
+                <li><a data-th-href="@{/userprofile}">Profil</a></li>
+            </ul>
+        </div>
+        <div class="welcomemessage">
+
+            <p>
+                Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
+            </p>
+            </form>
+        </div>
+        <div class="tableFixHead">
+<table>
+  <tr>
+    <th>Cikkszám</th>
+    <th>Terméknév</th>
+    <th>Mennyiség</th>
+    <th>Érték</th>
+  </tr>
+  <tr data-th-each="product: ${products}">
+    <td data-th-text="${product.productId}"></td>
+    <td data-th-text="${product.productName}"></td>
+    <td data-th-text="${product.quantity}"></td>
+    <td data-th-text="${product.amount}"></td>
+
+  </tr>
+</table>
+<form action="#" data-th-action="@{/cart}" method="post">
+        <button type="submit">Megrendelés</button>
+</form>
+        </div>
+</body>
+</html>

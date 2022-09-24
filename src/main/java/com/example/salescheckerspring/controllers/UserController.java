@@ -2,11 +2,13 @@ package com.example.salescheckerspring.controllers;
 
 import com.example.salescheckerspring.Form.NewPasswordForm;
 import com.example.salescheckerspring.configs.WebSecurityConfig;
-import com.example.salescheckerspring.models.Product;
-import com.example.salescheckerspring.models.Roles;
-import com.example.salescheckerspring.models.User;
+import com.example.salescheckerspring.models.*;
 import com.example.salescheckerspring.models.emailVerification.Utility;
+import com.example.salescheckerspring.repos.OrderRepository;
+import com.example.salescheckerspring.repos.ProductRepository;
+import com.example.salescheckerspring.repos.ShoppingCartRepository;
 import com.example.salescheckerspring.services.ProductService;
+import com.example.salescheckerspring.services.ShoppingCartService;
 import com.example.salescheckerspring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,6 +27,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.html.Option;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -35,20 +39,43 @@ public class UserController {
 
     private ProductService productService;
 
-    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService) {
+    private ProductRepository productRepository;
+
+    private ShoppingCartRepository shoppingCartRepository;
+
+    private OrderRepository orderRepository;
+
+    private ShoppingCartService shoppingCartService;
+
+    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService, ProductRepository productRepository, ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, ShoppingCartService shoppingCartService) {
         this.userService = userService;
         this.webSecurityConfig = webSecurityConfig;
         this.productService = productService;
+        this.productRepository = productRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
+        this.orderRepository = orderRepository;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @GetMapping("/home")
     public String home(Model model) {
         List<User> users = userService.findAllUser();
-        model.addAttribute("users",users);
+        model.addAttribute("users", users);
         List<Product> questions = productService.getProducts();
         model.addAttribute("products", questions);
 
         return "home";
+    }
+
+    @PostMapping("/home/{EANCode}")
+    public String showCreateForm(Model model, @PathVariable long EANCode, int quantity) {
+        ShoppingCart shoppingCart = new ShoppingCart(productService.findProduct(EANCode).getId()
+                , productService.findProduct(EANCode).getArticleName(), quantity,
+                productService.findProduct(EANCode).getPrice() * quantity,
+                userService.getLoggedInUser());
+        shoppingCartRepository.save(shoppingCart);
+
+        return "redirect:/home";
     }
 
     @GetMapping(value = {"/login", "/bejelentkezes"})
@@ -71,22 +98,22 @@ public class UserController {
     @PostMapping("/process-register")
     public String processRegistration(User user, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
         String siteUrl = Utility.getSiteUrl(request);
-
-       if (!(userService.isEmailAlreadyInUse(user))) {
-           user.setRole(Roles.USER);
+        if (!(userService.isEmailAlreadyInUse(user))) {
+            user.setRole(Roles.USER);
             userService.saveUser(user);
-            userService.sendVerificationEmail(user,siteUrl);
+            userService.sendVerificationEmail(user, siteUrl);
 
             return "register_success";
         }
-       return "redirect:/login";
+        return "redirect:/login";
 
     }
+
     @GetMapping("/verify")
-    public String verifyAccount(@Param("code") String code){
-        if (userService.verify(code)){
+    public String verifyAccount(@Param("code") String code) {
+        if (userService.verify(code)) {
             return "verify_success";
-        }else {
+        } else {
             return "verify_fail";
         }
 
@@ -99,18 +126,20 @@ public class UserController {
     }
 
     @GetMapping("userprofile")
-    public String getuserprofile(Model model){
+    public String getuserprofile(Model model) {
 
         User user = userService.getLoggedInUser();
         model.addAttribute("currentuser", user);
 
         return "userprofile";
     }
+
     @GetMapping("/changepassword")
     public String changepassword(Model model){
         model.addAttribute("form", new NewPasswordForm());
         return "changepassword";
     }
+
     @PostMapping("/changepassword")
     public String changepasswo(Model model, NewPasswordForm newPasswordForm){
         if(webSecurityConfig.passwordEncoder().matches(newPasswordForm.getCurrentpassword(), userService.getLoggedInUser().getPassword()) &&
@@ -130,5 +159,28 @@ public class UserController {
 
 
         return"connections";
+    }
+
+    @GetMapping("/cart")
+    //TODO
+    public String cart(Model model) {
+        List<ShoppingCart> products = (List<ShoppingCart>)
+                shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
+        model.addAttribute("products", products);
+        Order order = new Order();
+        return "cart";
+    }
+
+    @PostMapping("/cart")
+    public String makeOrder(Order order) {
+        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        ShoppingCart shoppingCart = new ShoppingCart();*/
+        order.setOrderDescription("teszt");
+        order.setCartItems(shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser()));
+        order.setCustomer(userService.getLoggedInUser());
+        orderRepository.save(order);
+        shoppingCartService.setTrueAfterOrdered();
+        return "redirect:/home";
     }
 }

@@ -14,9 +14,9 @@
         </div>
         <div  class="nav">
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Home</a></li>
-      <li><a data-th-href="@{/userprofile}">Account</a></li>
+      <li><a href="#">Kezdőlap</a></li>
+        <li><a data-th-href="@{/cart}">Kosár</a></li>
+      <li><a data-th-href="@{/userprofile}">Profil</a></li>
       <li><a data-th-href="@{/connections}">Kapcsolat</a></li>
     </ul>
   </div>
@@ -34,17 +34,26 @@
              <th>Cikkszám</th>
              <th>EAN kód</th>
              <th>Terméknév</th>
-             <th>Mennyiség</th>
+             <th>Készlet</th>
              <th>Ár</th>
+             <th>Mennyiség</th>
            </tr>
            </thead>
            <tbody>
-           <tr data-th-each="product: ${products}">
-             <td data-th-text="${product.articleNumber}"></td>
-             <td data-th-text="${product.EANCode}"></td>
-             <td data-th-text="${product.articleName}"></td>
-             <td data-th-text="${product.quantity}"></td>
-             <td data-th-text="${product.price}"></td>
+           <tr data-th-each="datas:${products}">
+
+               <td th:text="${datas.articleNumber}">Name:</td>
+
+               <td th:text="${datas.EANCode}">Name:</td>
+
+               <td th:text="${datas.articleName}">Name:</td>
+
+               <td th:text="${datas.quantity}">Name:</td>
+
+               <td th:text="${datas.price}">Name:</td>
+               <!--TODO Lassú betöltés  -->
+               <td><form method="post" data-th-action="@{/home/{EANCode}(EANCode=${datas.EANCode})}">
+                   <input type="number" name="quantity"><button type="submit">Hozzáadás kosárhoz</button></form></td>
            </tr>
            </tbody>
          </table>

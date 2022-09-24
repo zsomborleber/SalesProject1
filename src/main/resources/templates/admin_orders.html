@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="tableFixHead">
+    <table>
+        <tr>
+            <th>Rendelés szám</th>
+            <th>Megrendelő</th>
+            <th>Rendelés megjegyzés</th>
+            <th>Termékek</th>
+            <th>Mennyiség</th>
+            <th>Végösszeg</th>
+        </tr>
+        <tr data-th-each="order: ${orders}">
+            <td data-th-text="${order.id}"></td>
+            <td data-th-text="${order.customer.companyName}"></td>
+            </td>
+            <td data-th-text="${order.orderDescription}"></td>
+            <td><table>
+                <tr data-th-each="order: ${order.cartItems}">
+                    <td data-th-text="${order.productName}"></td>
+            </table>
+            </td>
+            <td><table>
+                <tr data-th-each="order: ${order.cartItems}">
+                    <td data-th-text="${order.quantity}"></td>
+            </table>
+            </td>
+            <td><table>
+                <tr data-th-each="order: ${order.cartItems}">
+                    <td data-th-text="${order.amount}"></td>
+            </table>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

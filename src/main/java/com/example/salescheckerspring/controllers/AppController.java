@@ -1,8 +1,10 @@
 package com.example.salescheckerspring.controllers;
 
+import com.example.salescheckerspring.models.Order;
 import com.example.salescheckerspring.models.Product;
 import com.example.salescheckerspring.models.ProductPast;
 import com.example.salescheckerspring.models.User;
+import com.example.salescheckerspring.repos.OrderRepository;
 import com.example.salescheckerspring.repos.ProductPastRepository;
 import com.example.salescheckerspring.services.ProductPastService;
 import com.example.salescheckerspring.services.ProductService;
@@ -26,11 +28,14 @@ public class AppController {
 
     private ProductPastRepository productPastRepository;
 
-    public AppController(ProductPastService productPastService, ProductService productService, UserService userService, ProductPastRepository productPastRepository) {
+    private OrderRepository orderRepository;
+
+    public AppController(ProductPastService productPastService, ProductService productService, UserService userService, ProductPastRepository productPastRepository, OrderRepository orderRepository) {
         this.productPastService = productPastService;
         this.productService = productService;
         this.userService = userService;
         this.productPastRepository = productPastRepository;
+        this.orderRepository = orderRepository;
     }
 
     @GetMapping(value={"/","/index"})
@@ -59,6 +64,14 @@ public class AppController {
         model.addAttribute("users",users);
 
         return "admin_users";
+    }
+
+    @GetMapping("/admin/orders")
+    private String allOrder(Model model){
+        List<Order> orders = (List<Order>) orderRepository.findAll();
+        model.addAttribute("orders",orders);
+
+        return "admin_orders";
     }
 
 
