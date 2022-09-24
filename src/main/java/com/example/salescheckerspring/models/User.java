@@ -149,6 +149,7 @@ public class User  implements UserDetails {
         return null;
     }
 
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -184,4 +185,20 @@ public class User  implements UserDetails {
     public void setRole(Roles role) {
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", companyName='" + companyName + '\'' +
+                ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", taxNumber=" + taxNumber +
+                ", enabled=" + enabled +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", role=" + role +
+                '}';
+    }
+
 }
