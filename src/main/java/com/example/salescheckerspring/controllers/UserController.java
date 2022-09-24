@@ -102,7 +102,6 @@ public class UserController {
             user.setRole(Roles.USER);
             userService.saveUser(user);
             userService.sendVerificationEmail(user, siteUrl);
-
             return "register_success";
         }
         return "redirect:/login";
