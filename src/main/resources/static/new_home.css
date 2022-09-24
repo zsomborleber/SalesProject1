@@ -14,6 +14,14 @@ ul{
     list-style-type:none;
     padding: 0;
 }
+.tableFixHead          { overflow: auto; height: 500px; text-align: left; color:white ; position:absolute; left:10%; right: 10%; top:8% }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+
+/* Just common table stuff. Really. */
+table  { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 16px; }
+th     { background:#898989; }
+
 header{
     min-height: 15vh;
 }
@@ -90,18 +98,19 @@ nav a:hover {
     padding: 0.5em 0;
 
 }
-form{
-    height: 340px;
-    width: 400px;
-    background-color: rgba(255,255,255,0.13);
+form {
+    height: 680px;
+    width: 1400px;
+    background-color: black;
+    opacity: 88%;
     position: absolute;
     transform: translate(-50%,-50%);
-    top: 380px;
+    top: 480px;
     left: 50%;
     border-radius: 10px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    box-shadow: 0 0 40px rgb(8 7 16 / 60%);
     padding: 50px 35px;
 }
 form *{

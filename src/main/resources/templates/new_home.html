@@ -47,7 +47,28 @@
 <body>
 <form action="">
     <div class="input-wrap">
-        <button >Belépés</button>
+        <div class="tableFixHead">
+            <table>
+                <thead>
+                <tr>
+                    <th>Cikkszám</th>
+                    <th>EAN kód</th>
+                    <th>Terméknév</th>
+                    <th>Mennyiség</th>
+                    <th>Ár</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-th-each="product: ${products}">
+                    <td data-th-text="${product.articleNumber}"></td>
+                    <td data-th-text="${product.EANCode}"></td>
+                    <td data-th-text="${product.articleName}"></td>
+                    <td data-th-text="${product.quantity}"></td>
+                    <td data-th-text="${product.price}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </form>
 <script>
