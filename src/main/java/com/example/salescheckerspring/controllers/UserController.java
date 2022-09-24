@@ -5,7 +5,9 @@ import com.example.salescheckerspring.configs.WebSecurityConfig;
 import com.example.salescheckerspring.models.Roles;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.models.emailVerification.Utility;
+import com.example.salescheckerspring.repos.UserRepository;
 import com.example.salescheckerspring.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -19,14 +21,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.Option;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 public class UserController {
     private final UserService userService;
     private WebSecurityConfig webSecurityConfig;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public UserController(UserService userService, WebSecurityConfig webSecurityConfig) {
         this.userService = userService;
@@ -103,8 +110,8 @@ public class UserController {
     public String changepasswo(Model model, NewPasswordForm newPasswordForm){
         if(webSecurityConfig.passwordEncoder().matches(newPasswordForm.getCurrentpassword(), userService.getLoggedInUser().getPassword()) &&
                 Objects.equals(newPasswordForm.getNewpassword1(), newPasswordForm.getNewpassword2())){
-            userService.getLoggedInUser().setPassword(webSecurityConfig.passwordEncoder().encode(newPasswordForm.getNewpassword2()));
-
+            userService.getLoggedInUser().setPassword(newPasswordForm.getNewpassword2());
+            userService.saveUser(userService.getLoggedInUser());
             return "home";
         }
         else{
