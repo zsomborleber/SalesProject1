@@ -123,5 +123,12 @@ public class UserController {
             model.addAttribute("loginError", true);
             return "redirect:/changepassword";
         }
+
+    }
+    @GetMapping(value = {"/connections"})
+    public String connections(Model model) {
+
+
+        return"connections";
     }
 }
