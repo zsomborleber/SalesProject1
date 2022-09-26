@@ -1,5 +1,6 @@
 package com.example.salescheckerspring.models;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,12 +22,12 @@ public class User  implements UserDetails {
     @GeneratedValue
     private Long id;
     @Column(nullable = false)
-    private String companyName;
+       private String companyName;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
     private String address;
-    @Column(nullable = false,unique = true)
+    @Column(name = "email",nullable = false,unique = true)
     private String email;
     @Column(nullable = false,length = 10,unique = true)
     private Long taxNumber;
@@ -149,6 +152,7 @@ public class User  implements UserDetails {
         return null;
     }
 
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -184,4 +188,20 @@ public class User  implements UserDetails {
     public void setRole(Roles role) {
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", companyName='" + companyName + '\'' +
+                ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", taxNumber=" + taxNumber +
+                ", enabled=" + enabled +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", role=" + role +
+                '}';
+    }
+
 }

@@ -44,7 +44,6 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.mailSender = mailSender;
-
     }
 
 
@@ -61,11 +60,10 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-       // user.setEnabled(false);
+        // user.setEnabled(false);
 
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
-
         return userRepository.save(user);
 
     }
@@ -84,13 +82,13 @@ public class UserService implements UserDetailsService {
 
 
     public void sendVerificationEmail(User user,String siteUrl) throws UnsupportedEncodingException, MessagingException {
-        String subject = "Please verify your registration";
-        String senderName = "Point of Sale Team";
-        String mailContent = "<p>Dear " + user.getCompanyName() + "</p>";
-        mailContent += "<p>Please click the link below to verify to your registration:</p>";
+        String subject = "Regisztráció megerősítése";
+        String senderName = "Project of Sale Team";
+        String mailContent = "<p>Kedves " + user.getCompanyName() + "!</p>";
+        mailContent += "<p>Regisztrációjának megerősítéséhez kérem kattintson a 'Megerősítés'-re.</p>";
         String verifyUrl = siteUrl + "/verify?code=" + user.getVerificationCode();
-        mailContent += "<h3><a href=\"" + verifyUrl + "\">Verify</a></h3>";
-        mailContent += "<p>Thank you<br>The Point of Sale Team </p>";
+        mailContent += "<h3><a href=\"" + verifyUrl + "\">Megerősítés</a></h3>";
+        mailContent += "<p>Köszönettel<br>A Project of Sale csapata! </p>";
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -114,7 +112,16 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
+    @Transactional
+    public Optional<User> findUserByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+    public boolean userEmailExist(String email){
+        return findUserByEmail(email).isPresent();
+    }
+
     public User getLoggedInUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+
 }

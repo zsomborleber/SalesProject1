@@ -1,5 +1,7 @@
 package com.example.salescheckerspring.Form;
 
+import org.springframework.stereotype.Component;
+
 public class NewPasswordForm {
     private String currentpassword;
     private String newpassword1;

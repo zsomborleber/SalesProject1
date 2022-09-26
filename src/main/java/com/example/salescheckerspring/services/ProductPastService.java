@@ -23,7 +23,7 @@ public class ProductPastService {
         List<ProductPast> products = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(
-                    new FileReader("data.txt"));
+                    new FileReader("datas.txt"));
             String line;
             while ((line = br.readLine()) != null) {
                 String[] pieces = line.split(";");

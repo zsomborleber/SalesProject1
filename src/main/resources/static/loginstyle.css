@@ -12,6 +12,10 @@ body{
     color: red;
     text-align: center;
 }
+.alert-danger{
+    color: red;
+    text-align: center;
+}
 .background{
     width: 430px;
     height: 520px;
@@ -124,4 +128,8 @@ button{
 }
 .social i{
     margin-right: 4px;
+}
+.alert-danger{
+    color: red;
+    text-align: center;
 }
