@@ -446,3 +446,10 @@ nav .fa-bars:hover {
     padding:10px;
     font-size: 18px;
 }
+
+.cartEmpty{
+    color: white;
+    font-size: 30px;
+    padding-left: 40%;
+    padding-right: 40%;
+}

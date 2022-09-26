@@ -33,14 +33,14 @@
             </div>
         </div>
         <div class="container">
-            <a href="#" class="brand"><p>
-                Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
+            <a href="/userprofile" class="brand"><p>
+                <b>[[${#request.userPrincipal.principal.companyName}]]</b>
             </p></a>
             <div class="container-inner">
                 <ul>
-                    <li><a href="/home">Home</a></li>
-                    <li><a href="/connections">Contact</a></li>
-                    <li><a href="/cart">Cart</a></li>
+                    <li><a href="/home">Kezdőlap</a></li>
+                    <li><a href="/connections">Kapcsolat</a></li>
+                    <li><a href="/cart">Kosár</a></li>
                 </ul>
             </div>
             <i class="fas fa-bars" id="menu-btn"></i>
@@ -49,7 +49,8 @@
 </header>
 <body>
 <div class="container-back">
-    <div class="tableFixHead">
+    <div><p class="cartEmpty" data-th-if="${#lists.size(products) < 1}" >A kosarad üres!</p></div>
+    <div class="tableFixHead" data-th-if="${#lists.size(products) > 0}">
         <table>
             <tr>
                 <th>Cikkszám</th>
@@ -57,7 +58,7 @@
                 <th>Mennyiség</th>
                 <th>Érték</th>
             </tr>
-            <tr data-th-each="product: ${products}">
+            <tr data-th-each="product: ${products}" >
                 <td data-th-text="${product.productId}"></td>
                 <td data-th-text="${product.productName}"></td>
                 <td data-th-text="${product.quantity}"></td>
@@ -66,7 +67,7 @@
             </tr>
         </table>
     </div>
-    <form action="#" data-th-action="@{/cart}" method="post">
+    <form action="#" data-th-action="@{/cart}" method="post" data-th-if="${#lists.size(products) > 0}">
         <button class="button3" type="submit">Megrendelés</button>
     </form>
 </div>
