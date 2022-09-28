@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:style="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Termékfeltöltés</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Admin oldal</title>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="/new_home.css">
 </head>
 <header>
@@ -12,7 +15,7 @@
             <div>
                 <img src="/sales2.png" class="logo" alt="">
                 <ul>
-                    <li><a href="/home">Vásárlói felület</a> </li>
+                    <li><a href="/home">Vásárlói felület</a></li>
                 </ul>
                 <ul class="inputBox">
                     <li><span id="toggleProjects">    </span><a href="#">Projektek</a></li>
@@ -46,45 +49,40 @@
     </nav>
 </header>
 <body>
-<div class="container-back">
-    <form data-th-action="@{/admin/upload}" method="post" data-th-object="${newProduct}">
-        <table>
-            <tr>
-                <th>Cikkszám</th>
-                <td><input class="input-wrap" placeholder="Cikkszám" type="text" data-th-field="*{articleNumber}"></td>
-            </tr>
-            <tr>
-                <th>EAN kód</th>
-                <td><input class="input-wrap" placeholder="EAN kód" type="text" data-th-field="*{EANCode}"></td>
-            </tr>
-            <tr>
-                <th>Terméknév</th>
-                <td><input class="input-wrap" placeholder="Terméknév" type="text" data-th-field="*{articleName}"></td>
-            </tr>
-            <tr>
-                <th>Mennyiség</th>
-                <td><input class="input-wrap" placeholder="Mennyiség" type="text" data-th-field="*{quantity}"></td>
-            </tr>
-            <tr>
-                <th>Ár</th>
-                <td><input class="input-wrap" placeholder="Ár" type="text" data-th-field="*{price}"></td>
-            </tr>
-            <tr>
-                <th>Beszállító</th>
-                <td><input class="input-wrap" placeholder="Beszállító" type="text" data-th-field="*{supplier}"></td>
-            </tr>
-            <tr>
-                <th>Év</th>
-                <td><input class="input-wrap" placeholder="Év" type="text" data-th-field="*{year}"></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button class="button3" type="submit">Létrehozás</button>
-                </td>
-            </tr>
+<div class="container-income">
+    <div class="container-income_inside">
 
-        </table>
-    </form>
+        <h1>Bevétel:</h1>
+        <br/>
+        <div class="col-sm-4">
+
+            <form class="form-income" action="#" data-th-action="@{/search}" method="post">
+                <div alight="left">
+                    <tr>
+                        <td>
+                            <input class="input-wrap-income" type="number" name="year" placeholder="Év"/>
+                        </td>
+                    </tr>
+                </div>
+
+                <br>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="button2">Keresés</button>
+                    </td>
+                </tr>
+
+
+                <div alight="left">
+                    <tr>
+                        <td>
+                            <p type="text" data-th-text="${income}"></p>
+                        </td>
+                    </tr>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <script>
     const menBtn = document.getElementById('menu-btn');

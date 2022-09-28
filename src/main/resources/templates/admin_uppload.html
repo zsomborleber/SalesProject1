@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Termékfeltöltés</title>
+    <title>Admin oldal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/new_home.css">
 </head>
@@ -10,7 +10,7 @@
     <nav id="navbar">
         <div class="menu">
             <div>
-                <img src="/sales2.png" class="logo" alt="">
+                <img src="sales2.png" class="logo" alt="">
                 <ul>
                     <li><a href="/home">Vásárlói felület</a> </li>
                 </ul>
@@ -24,9 +24,9 @@
                 </ul>
                 <ul class="social-media">
                     <h5>Kövess minket!</h5>
-                    <li><a href="https://facebook.com/"><img data-th-src="@{/facebook.png}"></a></li>
-                    <li><a href="https://www.instagram.com/"><img data-th-src="@{/instagram.png}"></a></li>
-                    <li><a href="https://www.linkedin.com/"><img data-th-src="@{/linkedin.png}"></a></li>
+                    <li><a href="https://facebook.com/"><img data-th-src="@{facebook.png}"></a></li>
+                    <li><a href="https://www.instagram.com/"><img data-th-src="@{instagram.png}"></a></li>
+                    <li><a href="https://www.linkedin.com/"><img data-th-src="@{linkedin.png}"></a></li>
                 </ul>
             </div>
         </div>
@@ -47,44 +47,42 @@
 </header>
 <body>
 <div class="container-back">
-    <form data-th-action="@{/admin/upload}" method="post" data-th-object="${newProduct}">
+    <div class="tableFixHead">
         <table>
             <tr>
-                <th>Cikkszám</th>
-                <td><input class="input-wrap" placeholder="Cikkszám" type="text" data-th-field="*{articleNumber}"></td>
-            </tr>
-            <tr>
-                <th>EAN kód</th>
-                <td><input class="input-wrap" placeholder="EAN kód" type="text" data-th-field="*{EANCode}"></td>
-            </tr>
-            <tr>
-                <th>Terméknév</th>
-                <td><input class="input-wrap" placeholder="Terméknév" type="text" data-th-field="*{articleName}"></td>
-            </tr>
-            <tr>
+                <th>Rendelés szám</th>
+                <th>Megrendelő</th>
+                <th>Rendelés megjegyzés</th>
+                <th>Termékek</th>
                 <th>Mennyiség</th>
-                <td><input class="input-wrap" placeholder="Mennyiség" type="text" data-th-field="*{quantity}"></td>
+                <th>Végösszeg</th>
             </tr>
-            <tr>
-                <th>Ár</th>
-                <td><input class="input-wrap" placeholder="Ár" type="text" data-th-field="*{price}"></td>
-            </tr>
-            <tr>
-                <th>Beszállító</th>
-                <td><input class="input-wrap" placeholder="Beszállító" type="text" data-th-field="*{supplier}"></td>
-            </tr>
-            <tr>
-                <th>Év</th>
-                <td><input class="input-wrap" placeholder="Év" type="text" data-th-field="*{year}"></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button class="button3" type="submit">Létrehozás</button>
+            <tr data-th-each="order: ${orders}">
+                <td data-th-text="${order.id}"></td>
+                <td data-th-text="${order.customer.companyName}"></td>
+                </td>
+                <td data-th-text="${order.orderDescription}"></td>
+                <td>
+                    <table>
+                        <tr data-th-each="order: ${order.cartItems}">
+                            <td data-th-text="${order.productName}"></td>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr data-th-each="order: ${order.cartItems}">
+                            <td data-th-text="${order.quantity}"></td>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        <tr data-th-each="order: ${order.cartItems}">
+                            <td data-th-text="${order.amount}"></td>
+                    </table>
                 </td>
             </tr>
-
         </table>
-    </form>
+    </div>
 </div>
 <script>
     const menBtn = document.getElementById('menu-btn');
@@ -92,25 +90,23 @@
     const menu = document.querySelector('.menu');
 
     const offset = 30;
-    menBtn.addEventListener('click', () => {
+    menBtn.addEventListener('click',() => {
         menu.classList.toggle('menu-open');
     });
-    window.addEventListener("scroll", () => {
+    window.addEventListener("scroll",() => {
         if (pageYOffset > offset) {
             navBar.classList.add('navbar-active');
         } else {
             navBar.classList.remove('navbar-active')
         }
     });
-    window.addEventListener("scroll", () => {
+    window.addEventListener("scroll", ()=> {
         if (pageXOffset > offset) {
             navBar.classList.add('navbar-active');
         } else {
             navBar.classList.remove('navbar-active');
         }
     });
-
-
 </script>
 </body>
 </html>

@@ -137,6 +137,7 @@ nav a:hover {
     padding: 0.5em 0;
     color: black;
     border-radius: 8px;
+    text-align: center;
 
 
 }
@@ -452,4 +453,43 @@ nav .fa-bars:hover {
     font-size: 30px;
     padding-left: 40%;
     padding-right: 40%;
+}
+.container-income {
+    height: 380px;
+    width: 400px;
+    background-color: black;
+    opacity: 94%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 480px;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgb(8 7 16 / 60%);
+    padding: 50px 35px;
+}
+.container-income_inside{
+    color: white;
+    text-align: center;
+}
+.input-wrap-income{
+    display: flex;
+    justify-content: center;
+    padding: 0.5em 0;
+    color: black;
+    border-radius: 8px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+}
+
+.form-income {
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+    font-size: 20px;
 }

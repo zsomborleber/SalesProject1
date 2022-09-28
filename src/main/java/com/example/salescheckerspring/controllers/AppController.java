@@ -9,7 +9,6 @@ import com.example.salescheckerspring.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -75,14 +74,14 @@ public class AppController {
 
     @GetMapping("/admin/income")
     public String add(Model model) {
-        return "income";
+        return "admin_income";
     }
 
 
     @PostMapping("/search")
     public String doSearchEmployee(int year, Model model) {
         model.addAttribute("income", productPastService.totalCashFlow(year));
-        return "income";
+        return "admin_income";
     }
 
 
