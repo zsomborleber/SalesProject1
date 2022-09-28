@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Termékfeltöltés</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/new_home.css">
 </head>
 <header>
@@ -14,11 +12,11 @@
             <div>
                 <img src="sales2.png" class="logo" alt="">
                 <ul>
-                    <li><a href="#">Újdonságok</a></li>
+                    <li><a href="#">Újdonságok</a> </li>
                 </ul>
                 <ul class="inputBox">
                     <li><span id="toggleProjects">    </span><a href="#">Projektek</a></li>
-                    <li><span id="toggleNews">    </span><a href="#">Újdonságok</a></li>
+                    <li><span id="toggleNews">    </span><a href="orders">Rendeléseim</a></li>
                     <li><span id="toggleMarket">    </span><a href="#">Bolt</a></li>
                     <li><span id="toggleCart">    </span><a href="/cart">Kosár</a></li>
                     <li><span id="toggleAbout">    </span><a href="#">Rólunk</a></li>
@@ -33,14 +31,14 @@
             </div>
         </div>
         <div class="container">
-            <a href="#" class="brand"><p>
-                Welcome <b>[[${#request.userPrincipal.principal.companyName}]]</b>
+            <a href="/admin" class="brand"><p>
+                ADMIN
             </p></a>
             <div class="container-inner">
                 <ul>
-                    <li><a href="/home">Home</a></li>
-                    <li><a href="/connections">Contact</a></li>
-                    <li><a href="/cart">Cart</a></li>
+                    <li><a href="/admin">Kezdőlap</a></li>
+                    <li><a href="/admin/upload">Termékfeltöltés</a></li>
+                    <li><a href="/admin/users">Felhasználók</a></li>
                 </ul>
             </div>
             <i class="fas fa-bars" id="menu-btn"></i>

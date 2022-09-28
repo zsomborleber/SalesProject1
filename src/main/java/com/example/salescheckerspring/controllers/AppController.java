@@ -43,7 +43,9 @@ public class AppController {
     }
 
     @GetMapping(value={"/admin"})
-    private String adminPage(){
+    private String adminPage(Model model){
+        List<Order> orders = (List<Order>) orderRepository.findAll();
+        model.addAttribute("orders",orders);
         return "admin";
     }
 
@@ -61,14 +63,6 @@ public class AppController {
         model.addAttribute("users",users);
 
         return "admin_users";
-    }
-
-    @GetMapping("/admin/orders")
-    private String allOrder(Model model){
-        List<Order> orders = (List<Order>) orderRepository.findAll();
-        model.addAttribute("orders",orders);
-
-        return "admin_orders";
     }
 
     @GetMapping("/orders")
