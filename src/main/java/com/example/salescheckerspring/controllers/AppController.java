@@ -1,9 +1,6 @@
 package com.example.salescheckerspring.controllers;
 
-import com.example.salescheckerspring.models.Order;
-import com.example.salescheckerspring.models.Product;
-import com.example.salescheckerspring.models.ProductPast;
-import com.example.salescheckerspring.models.User;
+import com.example.salescheckerspring.models.*;
 import com.example.salescheckerspring.repos.OrderRepository;
 import com.example.salescheckerspring.repos.ProductPastRepository;
 import com.example.salescheckerspring.services.ProductPastService;
@@ -72,6 +69,13 @@ public class AppController {
         model.addAttribute("orders",orders);
 
         return "admin_orders";
+    }
+
+    @GetMapping("/orders")
+    private String orders(Model model){
+        List<Order> orders = (List<Order>) orderRepository.findAllByUserIs(userService.getLoggedInUser());
+        model.addAttribute("orders",orders);
+        return "orders";
     }
 
 

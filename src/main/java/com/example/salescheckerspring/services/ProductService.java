@@ -25,7 +25,7 @@ public class ProductService {
         List<Product> products = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(
-                    new FileReader("testdata.txt"));
+                    new FileReader("testdatas.txt"));
             String line;
             while ((line = br.readLine()) != null) {
                 String[] pieces = line.split(";");
