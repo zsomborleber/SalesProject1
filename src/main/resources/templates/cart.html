@@ -63,8 +63,14 @@
                 <td data-th-text="${product.productName}"></td>
                 <td data-th-text="${product.quantity}"></td>
                 <td data-th-text="${product.amount}"></td>
-
+            <tr>
+                <th>Összesen:</th>
             </tr>
+            <tr data-th-each="product: ${products}">
+                <td data-th-text="${product.sumAmount}"></td>
+            </tr>
+            </tr>
+
         </table>
     </div>
     <form action="#" data-th-action="@{/cart}" method="post" data-th-if="${#lists.size(products) > 0}">

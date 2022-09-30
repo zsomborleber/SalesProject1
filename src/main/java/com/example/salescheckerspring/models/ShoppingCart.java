@@ -10,11 +10,11 @@ public class ShoppingCart {
 
     private long productId;
     private String productName;
-
     private int quantity;
     private float amount;
-
     private boolean ordered;
+
+    private float sumAmount;
 
     @OneToOne
     private User user;
@@ -22,11 +22,12 @@ public class ShoppingCart {
     public ShoppingCart() {
     }
 
-    public ShoppingCart(long productId, String productName, int quantity, float amount) {
+    public ShoppingCart(long productId, String productName, int quantity, float amount,float sumAmount) {
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
         this.amount = amount;
+        this.sumAmount = sumAmount;
     }
 
     public ShoppingCart(long productId, String productName, int quantity, float amount, User user) {
@@ -49,7 +50,6 @@ public class ShoppingCart {
         this.productId = productId;
         this.quantity = quantity;
     }
-
 
     public long getId() {
         return id;
@@ -107,12 +107,21 @@ public class ShoppingCart {
         this.user = user;
     }
 
+    public float getSumAmount() {
+        return sumAmount;
+    }
+
+    public void setSumAmount(float sumAmount) {
+        this.sumAmount = sumAmount;
+    }
+
     @Override
     public String toString() {
         return
                 "Cikkszám:= " + productId + "\n" +
                         "Termék név:= " + productName + "\n" +
                         "Mennyiség:= " + quantity + "\n" +
-                        "Összeg:= " + amount + "\n";
+                        "Összeg:= " + amount + "\n" +
+                        "Összesen:= " + sumAmount;
     }
 }

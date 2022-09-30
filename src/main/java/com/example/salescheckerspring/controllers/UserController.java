@@ -172,6 +172,7 @@ public class UserController {
     public String cart(Model model) {
         List<ShoppingCart> products = (List<ShoppingCart>)
                 shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
+        shoppingCartService.ShoppingCartSumOrderedAmount();
         model.addAttribute("products", products);
         Order order = new Order();
         return "cart";
@@ -187,6 +188,7 @@ public class UserController {
         order.setCustomer(userService.getLoggedInUser());
         orderRepository.save(order);
         shoppingCartService.setTrueAfterOrdered();
+
         return "redirect:/home";
     }
 }
