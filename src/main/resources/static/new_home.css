@@ -24,7 +24,7 @@ ul {
     position: absolute;
     left: 10%;
     right: 10%;
-    top: 8%
+    top: 8%;
 }
 
 .tableFixHead thead th {
@@ -49,6 +49,26 @@ th {
 
 header {
     min-height: 15vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 main {
@@ -451,8 +471,7 @@ nav .fa-bars:hover {
 .cartEmpty{
     color: white;
     font-size: 30px;
-    padding-left: 40%;
-    padding-right: 40%;
+    text-align: center;
 }
 .container-income {
     height: 380px;
@@ -492,4 +511,29 @@ nav .fa-bars:hover {
     outline: none;
     border: none;
     font-size: 20px;
+}
+.input-wrap-upload{
+    display: flex;
+    justify-content: center;
+    padding: 0.5em 0;
+    color: black;
+    border-radius: 8px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 13px;
+}
+.container-profile {
+    height: 380px;
+    width: 400px;
+    background-color: black;
+    opacity: 94%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 480px;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgb(8 7 16 / 60%);
 }

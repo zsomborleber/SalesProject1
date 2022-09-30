@@ -3,28 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/new_home.css">
 </head>
+<header>
+    <nav id="navbar">
+        <div class="menu">
+            <div>
+                <img src="sales2.png" class="logo" alt="">
+                <ul>
+                    <li><a data-th-if="${#request.userPrincipal.principal.email =='admin'}" href="/admin">Admin felület</a> </li>
+                    <li><a data-th-unless="${#request.userPrincipal.principal.email =='admin'}" href="#">Újdonságok</a> </li>
+                </ul>
+                <ul class="inputBox">
+                    <li><span id="toggleNews">    </span><a href="/orders">Rendeléseim</a></li>
+                    <li><span id="toggleMarket">    </span><a href="/home">Bolt</a></li>
+                    <li><span id="toggleCart">    </span><a href="/cart">Kosár</a></li>
+                    <li><span id="toggleAbout">    </span><a href="#">Üres</a></li>
+                    <li><span id="toggleProjects">    </span><a href="#">Üres</a></li>
+                    <li><span id="toggleDoor">    </span><a href="/logout">Kijelentkezés</a></li>
+                </ul>
+                <ul class="social-media">
+                    <h5>Kövess minket!</h5>
+                    <li><a href="https://facebook.com/"><img data-th-src="@{facebook.png}"></a></li>
+                    <li><a href="https://www.instagram.com/"><img data-th-src="@{instagram.png}"></a></li>
+                    <li><a href="https://www.linkedin.com/"><img data-th-src="@{linkedin.png}"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <a href="/userprofile" class="brand"><p>
+                <b>[[${#request.userPrincipal.principal.companyName}]]</b>
+            </p></a>
+            <div class="container-inner">
+                <ul>
+                    <li><a href="/home">Kezdőlap</a></li>
+                    <li><a href="/connections">Kapcsolat</a></li>
+                    <li><a href="/cart">Kosár</a></li>
+                </ul>
+            </div>
+            <i class="fas fa-bars" id="menu-btn"></i>
+        </div>
+    </nav>
+</header>
 <body>
-<h1>Your Profile</h1>
+<div class="container-profile">
+    <div class="container-income_inside">
+        <h1>Adataid:</h1>
 
-<table>
-    <tr>
-        <td>Name: <span data-th-text="${currentuser.companyName}" ></span></td>
-    </tr>
-    <tr>
-        <td>Email: <span data-th-text="${currentuser.email}" ></span> </td>
-    </tr>
-    <tr>
-        <td>Address: <span data-th-text="${currentuser.address}" ></span></td>
-    </tr>
-    <tr>
-        <td>Taxnumber: <span data-th-text="${currentuser.taxNumber}" ></span></td>
-    </tr>
-    <tr>
-        <td>Password: <span></span></td>
-        <td><a data-th-href="@{/changepassword}">change password</a></td>
-    </tr>
-</table>
+        <table>
+            <tr>
+                <td>Név: <span data-th-text="${currentuser.companyName}"></span></td>
+            </tr>
+            <tr>
+                <td>E-mail cím: <span data-th-text="${currentuser.email}"></span></td>
+            </tr>
+            <tr>
+                <td>Cím: <span data-th-text="${currentuser.address}"></span></td>
+            </tr>
+            <tr>
+                <td>Adószám: <span data-th-text="${currentuser.taxNumber}"></span></td>
+            </tr>
+            <tr>
+                <td><a class="button2" data-th-href="@{/changepassword}">Jelszócsere</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    const menBtn = document.getElementById('menu-btn');
+    const navBar = document.getElementById('navbar');
+    const menu = document.querySelector('.menu');
+
+    const offset = 30;
+    menBtn.addEventListener('click', () => {
+        menu.classList.toggle('menu-open');
+    });
+    window.addEventListener("scroll", () => {
+        if (pageYOffset > offset) {
+            navBar.classList.add('navbar-active');
+        } else {
+            navBar.classList.remove('navbar-active')
+        }
+    });
+    window.addEventListener("scroll", () => {
+        if (pageXOffset > offset) {
+            navBar.classList.add('navbar-active');
+        } else {
+            navBar.classList.remove('navbar-active');
+        }
+    });
+
+
+</script>
 </body>
 </html>

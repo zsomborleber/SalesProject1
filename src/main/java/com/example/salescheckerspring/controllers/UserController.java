@@ -152,7 +152,7 @@ public class UserController {
                 Objects.equals(newPasswordForm.getNewpassword1(), newPasswordForm.getNewpassword2())){
             userService.getLoggedInUser().setPassword(newPasswordForm.getNewpassword2());
             userService.saveUser(userService.getLoggedInUser());
-            return "home";
+            return "new_home";
         }
         else{
             model.addAttribute("loginError", true);

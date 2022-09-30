@@ -14,14 +14,15 @@
             <div>
                 <img src="sales2.png" class="logo" alt="">
                 <ul>
-                    <li><a href="#">Újdonságok</a></li>
+                    <li><a data-th-if="${#request.userPrincipal.principal.email =='admin'}" href="/admin">Admin felület</a> </li>
+                    <li><a data-th-unless="${#request.userPrincipal.principal.email =='admin'}" href="#">Újdonságok</a> </li>
                 </ul>
                 <ul class="inputBox">
-                    <li><span id="toggleProjects">    </span><a href="#">Projektek</a></li>
-                    <li><span id="toggleNews">    </span><a href="#">Újdonságok</a></li>
-                    <li><span id="toggleMarket">    </span><a href="#">Bolt</a></li>
+                    <li><span id="toggleNews">    </span><a href="/orders">Rendeléseim</a></li>
+                    <li><span id="toggleMarket">    </span><a href="/home">Bolt</a></li>
                     <li><span id="toggleCart">    </span><a href="/cart">Kosár</a></li>
-                    <li><span id="toggleAbout">    </span><a href="#">Rólunk</a></li>
+                    <li><span id="toggleAbout">    </span><a href="#">Üres</a></li>
+                    <li><span id="toggleProjects">    </span><a href="#">Üres</a></li>
                     <li><span id="toggleDoor">    </span><a href="/logout">Kijelentkezés</a></li>
                 </ul>
                 <ul class="social-media">
@@ -49,7 +50,8 @@
 </header>
 <body>
 <div class="container-back">
-    <div class="tableFixHead">
+    <div><p class="cartEmpty" data-th-if="${#lists.size(orders) < 1}" >Nincs leadott rendelésed</p></div>
+    <div class="tableFixHead" data-th-if="${#lists.size(orders) > 0}">
         <table>
             <tr>
                 <th>Rendelés szám</th>
