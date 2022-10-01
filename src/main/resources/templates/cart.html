@@ -49,7 +49,7 @@
 </header>
 <body>
 <div class="container-back">
-    <div><p class="cartEmpty" data-th-if="${#lists.size(products) < 1}" >A kosarad üres!</p></div>
+    <div><p class="cartEmpty" data-th-if="${#lists.size(products) < 1}">A kosarad üres!</p></div>
     <div class="tableFixHead" data-th-if="${#lists.size(products) > 0}">
         <table>
             <tr>
@@ -58,7 +58,7 @@
                 <th>Mennyiség</th>
                 <th>Érték</th>
             </tr>
-            <tr data-th-each="product: ${products}" >
+            <tr data-th-each="product: ${products}">
                 <td data-th-text="${product.productId}"></td>
                 <td data-th-text="${product.productName}"></td>
                 <td data-th-text="${product.quantity}"></td>
@@ -66,11 +66,9 @@
             <tr>
                 <th>Összesen:</th>
             </tr>
-            <tr data-th-each="product: ${products}">
-                <td data-th-text="${product.sumAmount}"></td>
+            <tr>
+                <td data-th-text="${amount}"></td>
             </tr>
-            </tr>
-
         </table>
     </div>
     <form action="#" data-th-action="@{/cart}" method="post" data-th-if="${#lists.size(products) > 0}">

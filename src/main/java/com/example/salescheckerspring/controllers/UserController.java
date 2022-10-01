@@ -64,7 +64,7 @@ public class UserController {
     public String home(Model model) {
         List<User> users = userService.findAllUser();
         model.addAttribute("users",users);
-        List<Product> questions = productService.getProducts();
+        List<Product> questions = productRepository.findAll();
         model.addAttribute("products", questions);
 
         return "new_home";
@@ -172,7 +172,7 @@ public class UserController {
     public String cart(Model model) {
         List<ShoppingCart> products = (List<ShoppingCart>)
                 shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
-        shoppingCartService.ShoppingCartSumOrderedAmount();
+        model.addAttribute("amount",shoppingCartService.ShoppingCartSumOrderedAmount());
         model.addAttribute("products", products);
         Order order = new Order();
         return "cart";
