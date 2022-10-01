@@ -32,7 +32,6 @@ public class ShoppingCartService {
         float sumAmount = 0;
         for (ShoppingCart x : shoppingCarts) {
             sumAmount += x.getAmount();
-            x.setSumAmount(sumAmount);
         }
         return sumAmount;
     }
