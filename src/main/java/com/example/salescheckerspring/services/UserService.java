@@ -60,12 +60,9 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        // user.setEnabled(false);
-
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
         return userRepository.save(user);
-
     }
     @Transactional
     public boolean verify(String verificationCode){
@@ -97,8 +94,6 @@ public class UserService implements UserDetailsService {
         helper.setTo(user.getEmail());
         helper.setSubject(subject);
         helper.setText(mailContent,true);
-
-
         mailSender.send(message);
     }
 

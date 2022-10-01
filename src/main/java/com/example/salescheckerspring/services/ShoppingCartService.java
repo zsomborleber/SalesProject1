@@ -27,4 +27,14 @@ public class ShoppingCartService {
         }
         shoppingCartRepository.saveAll(shoppingCarts);
     }
+    public float ShoppingCartSumOrderedAmount() {
+        List<ShoppingCart> shoppingCarts = shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
+        float sumAmount = 0;
+        for (ShoppingCart x : shoppingCarts) {
+            sumAmount += x.getAmount();
+            x.setSumAmount(sumAmount);
+        }
+        return sumAmount;
+    }
+   
 }
