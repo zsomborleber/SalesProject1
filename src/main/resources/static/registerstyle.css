@@ -140,7 +140,7 @@ button{
     padding: 10px 5px;
 }
 
-.inputBox #toggleBtn{
+.box .inputBox #toggleBtn{
     position: absolute;
     top: 14px;
     right: -18px;
@@ -154,17 +154,14 @@ button{
     align-items: center;
 }
 
-.inputBox #toggleAbout::before {
-   content: '\f2bb';
+.box .inputBox #toggleBtn::before {
+   content: '\f06e';
     font-family: fontAwesome;
 }
-.inputBox #toggleCart::before {
-    content: '\f07a';
-    font-family: fontAwesome;
-}
-.inputBox #toggleBtn.hide::before{
+.box .inputBox #toggleBtn.hide::before{
     content:'\f070';
-}.validation{
+}
+.validation{
     padding: 10px;
     margin-top: 10px;
     border-radius: 8px;
@@ -196,5 +193,10 @@ button{
 .validation ul li.valid::before {
     content: '\f00c';
     color: #0f0;
+
+}
+.alert-danger{
+    color: red;
+    text-align: center;
 }
 

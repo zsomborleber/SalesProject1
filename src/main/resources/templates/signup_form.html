@@ -10,7 +10,7 @@
 <div>
 </div>
 <div>
-    <form method="post" th:action="@{/process-register}"
+    <form id="signUpForm" method="post" th:action="@{/process-register}"
             th:object="${user}">
         <h3>Regisztráció</h3>
         <div>
@@ -27,7 +27,10 @@
                 <div class="box">
                     <div class="inputBox">
                         <input type="password" id="pswrd" data-th-field="*{password}" onkeyup="checkPassword(this.value)" required  th:errorClass="is-invalid"/>
-                        <span id="toggleBtn"></span>
+                         <span id="toggleBtn"></span>
+                    </div>
+                    <div class="alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+
                     </div>
                     <div class="validation">
                         <ul>
@@ -39,26 +42,27 @@
                         </ul>
                     </div>
                 </div>
-                <script> //show, hide password
-                    let pswrd = document.getElementById('pswrd')
-                    let toggleBtn = document.getElementById('toggleBtn')
-                    let lowerCase = document.getElementById('lower')
-                    let upperCase = document.getElementById('upper')
-                    let digit = document.getElementById('number')
-                    let specialChar = document.getElementById('special')
-                    let minLength = document.getElementById('length')
+                <script>
+                let pswrd = document.getElementById('pswrd')
+                let toggleBtn = document.getElementById('toggleBtn')
+                let lowerCase = document.getElementById('lower')
+                let upperCase = document.getElementById('upper')
+                let digit = document.getElementById('number')
+                let specialChar = document.getElementById('special')
+                let minLength = document.getElementById('length')
 
                 function checkPassword(data){
-                        const lower = new RegExp('(?=.*[a-z])')
-                        const upper = new RegExp('(?=.*[A-Z])')
-                        const number = new RegExp('(?=.*[0-9])')
-                        const special = new RegExp('(?=.*[!@#\$%\^&\*])')
-                        const length = new RegExp('(?=.{8,})')
+                    const lower = new RegExp('(?=.*[a-z])')
+                    const upper = new RegExp('(?=.*[A-Z])')
+                    const number = new RegExp('(?=.*[0-9])')
+                    const special = new RegExp('(?=.*[!@#\$%\^&\*])')
+                    const length = new RegExp('(?=.{8,})')
 
+                    //lowerCase validitaion check
                     if (lower.test(data)){
                         lowerCase.classList.add('valid');
                     }else{
-                        lowerCase.classList.remove('valid');
+                        lowerCase.classList.remove('valid')
                     }
                     if (upper.test(data)){
                         upperCase.classList.add('valid');
@@ -80,16 +84,17 @@
                     }else{
                         minLength.classList.remove('valid');
                     }
+
                 }
-                //lowerCase validitaion check
+                //show, hide password
                 toggleBtn.onclick = function (){
-                        if (pswrd.type === 'password'){
-                            pswrd.setAttribute('type','text');
-                            toggleBtn.classList.add('hide')
-                        }else {
-                            pswrd.setAttribute('type','password');
-                            toggleBtn.classList.remove('hide')
-                        }
+                    if (pswrd.type === 'password'){
+                        pswrd.setAttribute('type','text');
+                        toggleBtn.classList.add('hide')
+                    }else {
+                        pswrd.setAttribute('type','password');
+                        toggleBtn.classList.remove('hide')
+                    }
                 }
                 </script>
             </div>
@@ -119,7 +124,7 @@
             </div>
         </div>
         <div>
-            <button >Regisztráció</button>
+            <button type="submit" id="regBtn">Regisztráció</button>
             <span>Már regisztráltál?<a href="/"th:href="@{/login}">Jelentkezz be itt</a></span>
         </div>
     </form>
