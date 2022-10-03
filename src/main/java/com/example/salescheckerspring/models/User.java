@@ -36,6 +36,8 @@ public class User  implements UserDetails {
     @Column(name = "verification_code")
     private String verificationCode;
 
+    private float discount;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -187,6 +189,14 @@ public class User  implements UserDetails {
 
     public void setRole(Roles role) {
         this.role = role;
+    }
+
+    public float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
     }
 
     @Override

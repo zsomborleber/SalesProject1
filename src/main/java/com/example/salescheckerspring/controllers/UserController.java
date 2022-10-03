@@ -170,16 +170,19 @@ public class UserController {
     @GetMapping("/cart")
     //TODO
     public String cart(Model model) {
+        userService.getLoggedInUser().setDiscount(25);
         List<ShoppingCart> products = (List<ShoppingCart>)
                 shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
         model.addAttribute("amount",shoppingCartService.ShoppingCartSumOrderedAmount());
+        model.addAttribute("amountwd",shoppingCartService.ShoppingCartSumOrderedAmount()*
+                Math.abs((userService.getLoggedInUser().getDiscount()/100)-1));
         model.addAttribute("products", products);
         Order order = new Order();
         return "cart";
     }
 
     @PostMapping("/cart")
-    public String makeOrder(Order order) {
+    public String makeOrder(Order order) throws MessagingException, UnsupportedEncodingException {
         /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         ShoppingCart shoppingCart = new ShoppingCart();*/
@@ -188,7 +191,7 @@ public class UserController {
         order.setCustomer(userService.getLoggedInUser());
         orderRepository.save(order);
         shoppingCartService.setTrueAfterOrdered();
-
+        userService.sendOrderVerificationEmail(userService.getLoggedInUser());
         return "redirect:/home";
     }
 }

@@ -97,6 +97,23 @@ public class UserService implements UserDetailsService {
         mailSender.send(message);
     }
 
+    public void sendOrderVerificationEmail(User user) throws UnsupportedEncodingException, MessagingException {
+        String subject = "Rendelés visszaigazolás";
+        String senderName = "Project of Sale Team";
+        String mailContent = "<p>Kedves " + user.getCompanyName() + "!</p>";
+        mailContent += "<p>Rendelését sikeresen rögzítettük.</p>";
+        mailContent += "<p>Köszönettel<br>A Project of Sale csapata! </p>";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("pointofsales2022@gmail.com",senderName);
+        helper.setTo(user.getEmail());
+        helper.setSubject(subject);
+        helper.setText(mailContent,true);
+        mailSender.send(message);
+    }
+
     public boolean isEmailAlreadyInUse(User newuser) {
         List<User> users = findAllUser();
 
