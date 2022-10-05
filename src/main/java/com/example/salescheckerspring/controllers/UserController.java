@@ -99,10 +99,17 @@ public class UserController {
 
     @PostMapping("/process-register")
     public String processRegistration(
+            @Valid
             User user,
+            BindingResult bindingResult,
+            Model model,
             HttpServletRequest request)
             throws MessagingException,
             UnsupportedEncodingException {
+        if (bindingResult.hasErrors()){
+            model.addAttribute("error",bindingResult.getFieldError());
+            return "signup_form";
+        }
 
         String siteUrl = Utility.getSiteUrl(request);
         if (!(userService.isEmailAlreadyInUse(user))) {
