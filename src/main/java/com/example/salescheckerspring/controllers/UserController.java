@@ -1,5 +1,6 @@
 package com.example.salescheckerspring.controllers;
 
+import com.example.salescheckerspring.DTO.UserDto;
 import com.example.salescheckerspring.Form.NewPasswordForm;
 import com.example.salescheckerspring.configs.WebSecurityConfig;
 import com.example.salescheckerspring.models.*;
@@ -10,27 +11,19 @@ import com.example.salescheckerspring.repos.ShoppingCartRepository;
 import com.example.salescheckerspring.services.ProductService;
 import com.example.salescheckerspring.services.ShoppingCartService;
 import com.example.salescheckerspring.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
-import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -79,6 +72,32 @@ public class UserController {
         shoppingCartRepository.save(shoppingCart);
         return "redirect:/home";
     }
+
+    @GetMapping("/admin/user/{email}")
+    public String userProfileForAdminCheck(@PathVariable("email") String email, Model model) {
+        Optional<User> user = userService.findUserByEmail(email);
+        UserDto userDto = new UserDto();
+        model.addAttribute("user",user.orElseThrow());
+        return "admin_discount";
+    }
+
+    @PostMapping(value={"/admin/user/update"})
+    public String updateDiscount(UserDto userDto){
+        Optional<User> user = userService.findUserByEmail(userDto.getEmail());
+        userService.updateUser(user.orElseThrow(),userDto);
+        return "redirect:/admin/user/" + user.get().getEmail();
+    }
+
+
+   /* @PostMapping("/admin/user/discount")
+    public String userProfileForAdminCheck(User user){
+        user.setDiscount(25);
+        userService.saveUser(user);
+        return "redirect:/admin/users";
+    }*/
+
+
+    //Post mappingbe a usert magát adom át csak
 
     @GetMapping(value = {"/login", "/bejelentkezes"})
     public String getLoginPage() {
@@ -177,12 +196,13 @@ public class UserController {
     @GetMapping("/cart")
     //TODO
     public String cart(Model model) {
-        userService.getLoggedInUser().setDiscount(25);
+        String email = userService.getLoggedInUser().getEmail();
+        User user = userService.findUserByEmail(email).orElseThrow();
         List<ShoppingCart> products = (List<ShoppingCart>)
                 shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
         model.addAttribute("amount",shoppingCartService.ShoppingCartSumOrderedAmount());
         model.addAttribute("amountwd",shoppingCartService.ShoppingCartSumOrderedAmount()*
-                Math.abs((userService.getLoggedInUser().getDiscount()/100)-1));
+                Math.abs((user.getDiscount()/100)-1));
         model.addAttribute("products", products);
         Order order = new Order();
         return "cart";
