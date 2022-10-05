@@ -1,6 +1,5 @@
 package com.example.salescheckerspring.controllers;
 
-import com.example.salescheckerspring.DTO.UserDto;
 import com.example.salescheckerspring.Form.NewPasswordForm;
 import com.example.salescheckerspring.configs.WebSecurityConfig;
 import com.example.salescheckerspring.models.*;
@@ -8,6 +7,7 @@ import com.example.salescheckerspring.models.emailVerification.Utility;
 import com.example.salescheckerspring.repos.OrderRepository;
 import com.example.salescheckerspring.repos.ProductRepository;
 import com.example.salescheckerspring.repos.ShoppingCartRepository;
+import com.example.salescheckerspring.repos.UserRepository;
 import com.example.salescheckerspring.services.ProductService;
 import com.example.salescheckerspring.services.ShoppingCartService;
 import com.example.salescheckerspring.services.UserService;
@@ -17,12 +17,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;
@@ -76,16 +78,16 @@ public class UserController {
     @GetMapping("/admin/user/{email}")
     public String userProfileForAdminCheck(@PathVariable("email") String email, Model model) {
         Optional<User> user = userService.findUserByEmail(email);
-        UserDto userDto = new UserDto();
         model.addAttribute("user",user.orElseThrow());
         return "admin_discount";
     }
 
     @PostMapping(value={"/admin/user/update"})
-    public String updateDiscount(UserDto userDto){
-        Optional<User> user = userService.findUserByEmail(userDto.getEmail());
-        userService.updateUser(user.orElseThrow(),userDto);
-        return "redirect:/admin/user/" + user.get().getEmail();
+    public String updateDiscount(String email, float discount){
+        User user = userService.findUserByEmail(email).orElseThrow();
+        user.setDiscount(discount);
+        userService.saveUser(user);
+        return "redirect:/admin/user/" + user.getEmail();
     }
 
 
@@ -133,7 +135,7 @@ public class UserController {
         String siteUrl = Utility.getSiteUrl(request);
         if (!(userService.isEmailAlreadyInUse(user))) {
             user.setRole(Roles.USER);
-            userService.saveUser(user);
+            userService.saveUserReg(user);
             userService.sendVerificationEmail(user, siteUrl);
             return "register_success";
         }
@@ -177,7 +179,7 @@ public class UserController {
         if(webSecurityConfig.passwordEncoder().matches(newPasswordForm.getCurrentpassword(), userService.getLoggedInUser().getPassword()) &&
                 Objects.equals(newPasswordForm.getNewpassword1(), newPasswordForm.getNewpassword2())){
             userService.getLoggedInUser().setPassword(newPasswordForm.getNewpassword2());
-            userService.saveUser(userService.getLoggedInUser());
+            userService.saveUserReg(userService.getLoggedInUser());
             return "new_home";
         }
         else{

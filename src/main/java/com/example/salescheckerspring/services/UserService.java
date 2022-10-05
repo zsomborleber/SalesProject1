@@ -57,11 +57,15 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User saveUser(User user) {
+    public User saveUserReg(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
         return userRepository.save(user);
+    }
+
+    public void saveUser(User user){
+        userRepository.save(user);
     }
     @Transactional
     public boolean verify(String verificationCode){
@@ -137,7 +141,7 @@ public class UserService implements UserDetailsService {
 
     public void updateUser(User user, UserDto userDto) {
         user.setDiscount(userDto.getDiscount());
-        saveUser(user);
+        saveUserReg(user);
     }
 
 }

@@ -21,8 +21,8 @@ public class TestDataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         User user = new User("Gyula KFT.", "1aA!1aA!1", "Budapest", "Gyula@sales.com", 12345678L, Roles.USER,true);
         User admin = new User("Tulajdonos", "1aA!1aA!1", "Budapest", "admin", 1234578L, Roles.ADMIN,true);
-        userService.saveUser(user);
-        userService.saveUser(admin);
+        userService.saveUserReg(user);
+        userService.saveUserReg(admin);
 
     }
 
