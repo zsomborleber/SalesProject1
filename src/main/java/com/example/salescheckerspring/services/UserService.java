@@ -2,6 +2,7 @@ package com.example.salescheckerspring.services;
 
 
 
+import com.example.salescheckerspring.DTO.UserDto;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.repos.UserRepository;
 import net.bytebuddy.utility.RandomString;
@@ -22,8 +23,6 @@ import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
-
-import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -134,6 +133,11 @@ public class UserService implements UserDetailsService {
 
     public User getLoggedInUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    public void updateUser(User user, UserDto userDto) {
+        user.setDiscount(userDto.getDiscount());
+        saveUser(user);
     }
 
 }

@@ -51,16 +51,24 @@
         <table>
             <tr>
                 <th>Cégnév</th>
+                <th>Cím</th>
                 <th>E-mail</th>
+                <th>Adószám</th>
+                <th>Aktivált</th>
+                <th>Kedvezmény</th>
             </tr>
-            <tr data-th-each="user:${users}">
-
-                <td th:text="${user.companyName}">Name:</td>
-
-                <td><a th:text="${user.email}" th:href="@{/admin/user/{email}(email = ${user.email})}" ></a></td>
-
+            <tr>
+                <td data-th-text="${user.companyName}"></td>
+                <td data-th-text="${user.address}"></td>
+                <td data-th-text="${user.email}"></td>
+                <td data-th-text="${user.taxNumber}"></td>
+                <td data-th-text="${user.enabled}"></td>
+                <td data-th-text="${user.discount}"></td>
             </tr>
         </table>
+        <td><form method="post" data-th-action="@{/admin/user/update}" th:object="${user}">
+            <input class="input-wrap" type="hidden" data-th-field="*{email}">
+            <input class="input-wrap" type="number" data-th-field="*{discount}"><button class="button2" type="submit">Hozzáadás</button></form></td>
     </div>
 </div>
 <script>
