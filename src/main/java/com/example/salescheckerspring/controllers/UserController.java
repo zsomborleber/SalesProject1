@@ -26,6 +26,8 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -161,10 +163,9 @@ public class UserController {
 
     @GetMapping("userprofile")
     public String getuserprofile(Model model) {
-
-        User user = userService.getLoggedInUser();
+        String email = userService.getLoggedInUser().getEmail();
+        User user = userService.findUserByEmail(email).orElseThrow();
         model.addAttribute("currentuser", user);
-
         return "userprofile";
     }
 
@@ -202,6 +203,8 @@ public class UserController {
         User user = userService.findUserByEmail(email).orElseThrow();
         List<ShoppingCart> products = (List<ShoppingCart>)
                 shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
+        float discount = shoppingCartService.ShoppingCartSumOrderedAmount()*
+                Math.abs((user.getDiscount()/100)-1);
         model.addAttribute("amount",shoppingCartService.ShoppingCartSumOrderedAmount());
         model.addAttribute("amountwd",shoppingCartService.ShoppingCartSumOrderedAmount()*
                 Math.abs((user.getDiscount()/100)-1));
@@ -218,6 +221,7 @@ public class UserController {
         order.setOrderDescription("teszt");
         order.setCartItems(shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser()));
         order.setCustomer(userService.getLoggedInUser());
+        order.setLocalDate(LocalDate.now());
         orderRepository.save(order);
         shoppingCartService.setTrueAfterOrdered();
         userService.sendOrderVerificationEmail(userService.getLoggedInUser());

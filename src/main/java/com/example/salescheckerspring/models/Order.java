@@ -1,6 +1,7 @@
 package com.example.salescheckerspring.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,8 @@ public class Order {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = ShoppingCart.class)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private List<ShoppingCart> cartItems;
+
+    private LocalDate localDate;
 
     public Order() {
     }
@@ -61,6 +64,14 @@ public class Order {
 
     public void setCartItems(List<ShoppingCart> cartItems) {
         this.cartItems = cartItems;
+    }
+
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
+
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
     }
 }
 

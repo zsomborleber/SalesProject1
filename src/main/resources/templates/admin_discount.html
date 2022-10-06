@@ -72,7 +72,7 @@
             <tr>
                 <td><form method="post" data-th-action="@{/admin/user/update}" th:object="${user}">
                     <input class="input-wrap-discount" type="hidden" data-th-field="*{email}">
-                    <input placeholder="Kedvezmény" class="input-wrap-discount" type="number" data-th-field="*{discount}"><button class="button2" type="submit">Módosítás</button></form></td>
+                    <input placeholder="Kedvezmény" class="input-wrap-discount" type="number" name="discount"><button class="button2" type="submit">Módosítás</button></form></td>
             </tr>
         </table>
     </div>

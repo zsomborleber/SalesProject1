@@ -55,12 +55,14 @@
         <table>
             <tr>
                 <th>Rendelés szám</th>
+                <th>Rendelés dátuma</th>
                 <th>Termékek</th>
                 <th>Mennyiség</th>
                 <th>Végösszeg</th>
             </tr>
             <tr data-th-each="order: ${orders}">
                 <td data-th-text="${order.id}"></td>
+                <td data-th-text="${order.localDate}" ></td>
                 <td>
                     <table>
                         <tr data-th-each="order: ${order.cartItems}">

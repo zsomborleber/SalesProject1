@@ -64,6 +64,9 @@
             <tr>
                 <td>Adószám: <span data-th-text="${currentuser.taxNumber}"></span></td>
             </tr>
+            <tr data-th-if="${currentuser.discount > 0}">
+                <td>Kedvezmény: <span data-th-text="${currentuser.discount}"></span></td>
+            </tr>
             <tr>
                 <td><a class="button2" data-th-href="@{/changepassword}">Jelszócsere</a></td>
             </tr>
