@@ -203,8 +203,6 @@ public class UserController {
         User user = userService.findUserByEmail(email).orElseThrow();
         List<ShoppingCart> products = (List<ShoppingCart>)
                 shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
-        float discount = shoppingCartService.ShoppingCartSumOrderedAmount()*
-                Math.abs((user.getDiscount()/100)-1);
         model.addAttribute("amount",shoppingCartService.ShoppingCartSumOrderedAmount());
         model.addAttribute("amountwd",shoppingCartService.ShoppingCartSumOrderedAmount()*
                 Math.abs((user.getDiscount()/100)-1));

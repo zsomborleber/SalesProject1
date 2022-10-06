@@ -3,6 +3,7 @@ package com.example.salescheckerspring.services;
 
 
 import com.example.salescheckerspring.DTO.UserDto;
+import com.example.salescheckerspring.models.Order;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.repos.UserRepository;
 import net.bytebuddy.utility.RandomString;
@@ -112,6 +113,26 @@ public class UserService implements UserDetailsService {
 
         helper.setFrom("pointofsales2022@gmail.com",senderName);
         helper.setTo(user.getEmail());
+        helper.setSubject(subject);
+        helper.setText(mailContent,true);
+        mailSender.send(message);
+    }
+
+    public void sendOrderCompletedEmail(Order order) throws UnsupportedEncodingException, MessagingException {
+        String subject = "Megrendelés teljesítve";
+        String senderName = "Project of Sale Team";
+        String mailContent = "<p>Kedves " + order.getUser().getCompanyName() + "!</p>";
+        mailContent += "<p>Az " +order.getId() + " számú megrendelését melynek végösszege "+order.getSumValue(order.getCartItems()) +"Ft sikeresen teljesítettük,</p>";
+        mailContent += "<p>a mai napon kiszállításra kerül</p>";
+        mailContent += "<p>A rendelés további részleteit az alábbi linkre kattintva tekintheti meg:</p>";
+        mailContent += "<h3><a href=\"http://localhost:8080/orders\">Rendeléseim</a></h3>";
+        mailContent += "<p>Köszönettel<br>A Project of Sale csapata! </p>";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom("pointofsales2022@gmail.com",senderName);
+        helper.setTo(order.getUser().getEmail());
         helper.setSubject(subject);
         helper.setText(mailContent,true);
         mailSender.send(message);

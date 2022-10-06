@@ -11,7 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Controller
@@ -46,6 +49,20 @@ public class AppController {
         List<Order> orders = (List<Order>) orderRepository.findAll();
         model.addAttribute("orders",orders);
         return "admin";
+    }
+
+    @PostMapping(value={"/admin/completed"})
+    public String updateDiscount(boolean isCompleted, long id) throws MessagingException, UnsupportedEncodingException {
+        Order order = orderRepository.findById(id).orElseThrow();
+        if (isCompleted){
+            order.setCompleted(true);
+            orderRepository.save(order);
+            userService.sendOrderCompletedEmail(order);
+        }else{
+            order.setCompleted(false);
+            orderRepository.save(order);
+        }
+        return "redirect:/admin";
     }
 
     @GetMapping(value={"/admin/{year}"})

@@ -25,6 +25,8 @@ public class Order {
 
     private LocalDate localDate;
 
+    private boolean isCompleted;
+
     public Order() {
     }
 
@@ -72,6 +74,30 @@ public class Order {
 
     public void setLocalDate(LocalDate localDate) {
         this.localDate = localDate;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public float getSumValue(List<ShoppingCart> cartItems){
+        float sum = 0;
+        for (ShoppingCart x : cartItems){
+            sum+=x.getAmount();
+        }
+        return sum;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 

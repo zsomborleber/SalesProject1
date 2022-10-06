@@ -50,6 +50,7 @@
             <tr>
                 <th>Rendelés szám</th>
                 <th>Megrendelő</th>
+                <th>Teljesítve</th>
                 <th>Rendelés megjegyzés</th>
                 <th>Termékek</th>
                 <th>Mennyiség</th>
@@ -58,7 +59,16 @@
             <tr data-th-each="order: ${orders}">
                 <td data-th-text="${order.id}"></td>
                 <td data-th-text="${order.customer.companyName}"></td>
+                <td>
+                    <form method="post" data-th-action="@{/admin/completed}">
+                        <input type="hidden" name="id" data-th-value="${order.id}">
+                        <input type="checkbox" name="isCompleted" th:checked="${order.isCompleted}" onchange="this.form.submit()"
+                        /></form>
                 </td>
+                <!--<td><form method="post" data-th-action="@{/admin/completed}">
+                    <input class="input-wrap-discount" type="hidden" data-th-field="{order.id}">
+                    <input type="checkbox" name="isCompleted" th:checked="${order.isCompleted}" /></form></td>
+                </td>-->
                 <td data-th-text="${order.orderDescription}"></td>
                 <td>
                     <table>
