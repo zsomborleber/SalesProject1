@@ -33,8 +33,6 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final PasswordEncoder passwordEncoder;
-
-
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder
                        ,BCryptPasswordEncoder bCryptPasswordEncoder,
@@ -44,8 +42,6 @@ public class UserService implements UserDetailsService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.mailSender = mailSender;
     }
-
-
     public List<User> findAllUser(){
         return (List<User>) userRepository.findAll();
     }
@@ -55,7 +51,6 @@ public class UserService implements UserDetailsService {
         Optional<User> optional = userRepository.findByEmail(email);
         return optional.orElseThrow(() -> new UsernameNotFoundException("User not found."));
     }
-
     @Transactional
     public User saveUserReg(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -63,7 +58,6 @@ public class UserService implements UserDetailsService {
         user.setVerificationCode(randomCode);
         return userRepository.save(user);
     }
-
     public void saveUser(User user){
         userRepository.save(user);
     }
@@ -76,11 +70,8 @@ public class UserService implements UserDetailsService {
             user.setEnabled(true);
             user.setVerificationCode(null);
             return true;
-
         }
     }
-
-
     public void sendVerificationEmail(User user,String siteUrl) throws UnsupportedEncodingException, MessagingException {
         String subject = "Regisztráció megerősítése";
         String senderName = "Project of Sale Team";
@@ -99,7 +90,6 @@ public class UserService implements UserDetailsService {
         helper.setText(mailContent,true);
         mailSender.send(message);
     }
-
     public void sendOrderVerificationEmail(User user) throws UnsupportedEncodingException, MessagingException {
         String subject = "Rendelés visszaigazolás";
         String senderName = "Project of Sale Team";
@@ -116,7 +106,6 @@ public class UserService implements UserDetailsService {
         helper.setText(mailContent,true);
         mailSender.send(message);
     }
-
     public boolean isEmailAlreadyInUse(User newuser) {
         List<User> users = findAllUser();
 
@@ -134,14 +123,11 @@ public class UserService implements UserDetailsService {
     public boolean userEmailExist(String email){
         return findUserByEmail(email).isPresent();
     }
-
     public User getLoggedInUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
-
     public void updateUser(User user, UserDto userDto) {
         user.setDiscount(userDto.getDiscount());
         saveUserReg(user);
     }
-
 }

@@ -56,17 +56,16 @@ public class UserController {
         this.orderRepository = orderRepository;
         this.shoppingCartService = shoppingCartService;
     }
-
     @GetMapping("/home")
-    public String home(Model model) {
+    public String home(Model model,
+                       @Param("keyword") String keyword) {
         List<User> users = userService.findAllUser();
         model.addAttribute("users",users);
-        List<Product> questions = productRepository.findAll();
+        List<Product> questions = productService.listAll(keyword);
         model.addAttribute("products", questions);
-
+        model.addAttribute("keyword",keyword);
         return "new_home";
     }
-
     @PostMapping("/home/{EANCode}")
     public String showCreateForm(Model model, @PathVariable long EANCode, int quantity) {
         ShoppingCart shoppingCart = new ShoppingCart(productService.findProduct(EANCode).getId()
@@ -76,14 +75,12 @@ public class UserController {
         shoppingCartRepository.save(shoppingCart);
         return "redirect:/home";
     }
-
     @GetMapping("/admin/user/{email}")
     public String userProfileForAdminCheck(@PathVariable("email") String email, Model model) {
         Optional<User> user = userService.findUserByEmail(email);
         model.addAttribute("user",user.orElseThrow());
         return "admin_discount";
     }
-
     @PostMapping(value={"/admin/user/update"})
     public String updateDiscount(String email, float discount){
         User user = userService.findUserByEmail(email).orElseThrow();
@@ -91,35 +88,26 @@ public class UserController {
         userService.saveUser(user);
         return "redirect:/admin/user/" + user.getEmail();
     }
-
-
    /* @PostMapping("/admin/user/discount")
     public String userProfileForAdminCheck(User user){
         user.setDiscount(25);
         userService.saveUser(user);
         return "redirect:/admin/users";
     }*/
-
-
     //Post mappingbe a usert magát adom át csak
-
     @GetMapping(value = {"/login", "/bejelentkezes"})
     public String getLoginPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-
             return "login";
         }
         return "loggedin";
     }
-
-
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
         return "signup_form";
     }
-
     @PostMapping("/process-register")
     public String processRegistration(
             @Valid
@@ -133,7 +121,6 @@ public class UserController {
             model.addAttribute("error",bindingResult.getFieldError());
             return "signup_form";
         }
-
         String siteUrl = Utility.getSiteUrl(request);
         if (!(userService.isEmailAlreadyInUse(user))) {
             user.setRole(Roles.USER);
@@ -142,9 +129,7 @@ public class UserController {
             return "register_success";
         }
         return "redirect:/login";
-
     }
-
     @GetMapping("/verify")
     public String verifyAccount(@Param("code") String code) {
         if (userService.verify(code)) {
@@ -152,15 +137,12 @@ public class UserController {
         } else {
             return "verify_fail";
         }
-
-
         /*boolean verified = userService.verify(code);
         String pageTitle = verified ? "Verification Succeeded!" : "Verification Failed";
         model.addAttribute("pageTitle", pageTitle);
 
         return (verified ? "verify_success" : "verify_fail");*/
     }
-
     @GetMapping("userprofile")
     public String getuserprofile(Model model) {
         String email = userService.getLoggedInUser().getEmail();
@@ -168,13 +150,11 @@ public class UserController {
         model.addAttribute("currentuser", user);
         return "userprofile";
     }
-
     @GetMapping("/changepassword")
     public String changepassword(Model model){
         model.addAttribute("form", new NewPasswordForm());
         return "changepassword";
     }
-
     @PostMapping("/changepassword")
     public String changepasswo(Model model, NewPasswordForm newPasswordForm){
         if(webSecurityConfig.passwordEncoder().matches(newPasswordForm.getCurrentpassword(), userService.getLoggedInUser().getPassword()) &&
@@ -187,15 +167,11 @@ public class UserController {
             model.addAttribute("loginError", true);
             return "redirect:/changepassword";
         }
-
     }
     @GetMapping(value = {"/connections"})
     public String connections(Model model) {
-
-
         return"connections";
     }
-
     @GetMapping("/cart")
     //TODO
     public String cart(Model model) {
@@ -212,7 +188,6 @@ public class UserController {
         Order order = new Order();
         return "cart";
     }
-
     @PostMapping("/cart")
     public String makeOrder(Order order) throws MessagingException, UnsupportedEncodingException {
         /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

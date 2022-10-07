@@ -112,11 +112,9 @@ nav {
     transition: 0.7s;
     color: #fff;
 }
-
 .brand {
     font-size: 1.6em;
 }
-
 nav .container-inner {
     display: flex;
     justify-content: space-between;
@@ -125,7 +123,6 @@ nav .container-inner {
 }
 
 nav .container ul {
-    width: 100%;
     margin: 0 1em;
 }
 
@@ -156,10 +153,17 @@ nav a:hover {
     align-items: center;
     padding: 0.5em 0;
     color: black;
-    border-radius: 8px;
-    text-align: center;
-
-
+}
+form button {
+    background: none;
+    color: #fff;
+    cursor: pointer;
+}
+form input::placeholder {
+    color: #fff;
+}
+form input:focus {
+    outline: none;
 }
 
 .button2 {
@@ -240,6 +244,12 @@ nav.fa-bars {
     transition: 0.3s;
     text-align: right;
 }
+nav .fa-bars {
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: right;
+}
 
 nav .fa-bars:hover {
     color: #e54416;
@@ -311,6 +321,10 @@ nav .fa-bars:hover {
 .navbar-active {
     background: #111;
     padding: 1em;
+}
+#homeCart::before {
+    content: '\f07a';
+    font-family: fontAwesome;
 }
 
 .inputBox #toggleCart::before {
@@ -516,7 +530,7 @@ nav .fa-bars:hover {
     display: flex;
     justify-content: center;
     padding: 0.5em 0;
-    color: black;
+    color: white;
     border-radius: 8px;
     text-align: center;
     margin-left: auto;
@@ -547,4 +561,10 @@ nav .fa-bars:hover {
     margin-left: auto;
     margin-right: auto;
     font-size: 13px;
+}
+.input-wrap-search,
+input button{
+    background: none;
+    border: none;
+    color: #fff;
 }

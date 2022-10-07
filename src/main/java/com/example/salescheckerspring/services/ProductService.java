@@ -45,15 +45,12 @@ public class ProductService {
         }
         return products;
     }
-
     public void loadProducts() {
         productRepository.saveAll(getProducts());
     }
-
     public void saveProducts(Product product) {
         productRepository.save(product);
     }
-
     public Product findProduct (long EANcode){
         List<Product> products = productRepository.findAll();
         for (Product product : products){
@@ -62,6 +59,12 @@ public class ProductService {
             }
         }
         return null;
+    }
+    public List<Product> listAll(String searching) {
+        if (searching != null) {
+            return productRepository.findAll(searching);
+        }
+        return productRepository.findAll();
     }
 
 }
