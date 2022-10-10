@@ -71,7 +71,9 @@ public class AppController {
     private String orders(Model model,
                           @Param("keyword") String keyword){
         List<Order> orders = (List<Order>) orderRepository.findAllByUserIs(userService.getLoggedInUser());
+        List<Order> orders2 = orderRepository.findAllByUserIs(userService.getLoggedInUser());
         model.addAttribute("orders",orders);
+        model.addAttribute("keyword",keyword);
         return "orders";
     }
 
