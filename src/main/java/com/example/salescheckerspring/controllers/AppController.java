@@ -68,11 +68,9 @@ public class AppController {
     }
 
     @GetMapping("/orders")
-    private String orders(Model model,
-                          @Param("keyword") String keyword){
-        List<Order> orders = (List<Order>) orderRepository.findAllByUserIs(userService.getLoggedInUser());
-        List<Order> orders2 = orderRepository.findAllByUserIs(userService.getLoggedInUser());
-        model.addAttribute("orders",orders);
+    private String orders(Model model, @Param("keyword") String keyword){
+        List<Order> orders2 = orderService.listAll(keyword,userService.getLoggedInUser());
+        model.addAttribute("orders",orders2);
         model.addAttribute("keyword",keyword);
         return "orders";
     }

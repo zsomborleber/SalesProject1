@@ -6,7 +6,9 @@ import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.repos.OrderRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class OrderService {
@@ -18,10 +20,17 @@ public class OrderService {
         this.service = service;
     }
 
-    public List<Order> listAll(String searching) {
+    public List<Order> listAll(String searching,User user) {
         if (searching != null) {
-            return repository.findAll(searching);
+            List<Order> completedList = new ArrayList<>();
+            List<Order> order = repository.findAll(searching);
+            for (Order x: order){
+                if (x.getCustomer().getId().equals(user.getId())){
+                    completedList.add(x);
+                }
+            }
+            return completedList;
         }
-        return repository.findAll();
+        return repository.findAllByUserIs(user);
     }
 }
