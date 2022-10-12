@@ -39,8 +39,14 @@
                 <ul>
                     <li><a href="/home">Kezdőlap</a></li>
                     <li><a href="/connections">Kapcsolat</a></li>
-                    <li><a href="/cart">Kosár</a></li>
+                    <li><a href="/cart"><span id="homeCart"></span></a></li>
                 </ul>
+                <form th:action="@{/home}">
+                    <input  class="input-wrap-search" type="text" placeholder="search..." name="keyword" th:value="${keyword}" />
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
             <i class="fas fa-bars" id="menu-btn"></i>
         </div>
@@ -100,9 +106,6 @@
             navBar.classList.remove('navbar-active');
         }
     });
-
-
-
 </script>
 </body>
 </html>

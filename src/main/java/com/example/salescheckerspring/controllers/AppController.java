@@ -3,9 +3,11 @@ package com.example.salescheckerspring.controllers;
 import com.example.salescheckerspring.models.*;
 import com.example.salescheckerspring.repos.OrderRepository;
 import com.example.salescheckerspring.repos.ProductPastRepository;
+import com.example.salescheckerspring.services.OrderService;
 import com.example.salescheckerspring.services.ProductPastService;
 import com.example.salescheckerspring.services.ProductService;
 import com.example.salescheckerspring.services.UserService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +21,7 @@ import java.util.List;
 
 @Controller
 public class AppController {
-
+    private OrderService orderService;
     private ProductPastService productPastService;
     private ProductService productService;
 
@@ -29,12 +31,13 @@ public class AppController {
 
     private OrderRepository orderRepository;
 
-    public AppController(ProductPastService productPastService, ProductService productService, UserService userService, ProductPastRepository productPastRepository, OrderRepository orderRepository) {
+    public AppController(ProductPastService productPastService, ProductService productService, UserService userService, ProductPastRepository productPastRepository, OrderRepository orderRepository,OrderService orderService) {
         this.productPastService = productPastService;
         this.productService = productService;
         this.userService = userService;
         this.productPastRepository = productPastRepository;
         this.orderRepository = orderRepository;
+        this.orderService = orderService;
     }
 
     @GetMapping(value={"/","/index"})
@@ -82,9 +85,10 @@ public class AppController {
     }
 
     @GetMapping("/orders")
-    private String orders(Model model){
-        List<Order> orders = (List<Order>) orderRepository.findAllByUserIs(userService.getLoggedInUser());
-        model.addAttribute("orders",orders);
+    private String orders(Model model, @Param("keyword") String keyword){
+        List<Order> orders2 = orderService.listAll(keyword,userService.getLoggedInUser());
+        model.addAttribute("orders",orders2);
+        model.addAttribute("keyword",keyword);
         return "orders";
     }
 

@@ -18,6 +18,7 @@ public class Product {
     private String supplier;
     private int year;
 
+
     public void setId(Long id) {
         this.id = id;
     }
