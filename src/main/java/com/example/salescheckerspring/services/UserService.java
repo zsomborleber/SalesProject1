@@ -116,6 +116,17 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
+
+    public boolean isTAXNumberAlreadyInUse(User newuser) {
+        List<User> users = findAllUser();
+
+        for (User user : users) {
+            if (newuser.getTaxNumber().equals(user.getTaxNumber())) {
+                return true;
+            }
+        }
+        return false;
+    }
     @Transactional
     public Optional<User> findUserByEmail(String email){
         return userRepository.findByEmail(email);

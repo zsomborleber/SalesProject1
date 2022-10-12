@@ -13,6 +13,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import javax.websocket.OnError;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,8 +32,10 @@ public class User  implements UserDetails {
     private String password;
     @Column(nullable = false)
     private String address;
+
     @Column(name = "email",nullable = false,unique = true)
     private String email;
+    
     @Column(nullable = false,length = 10,unique = true)
     private Long taxNumber;
 

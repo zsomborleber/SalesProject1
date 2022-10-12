@@ -88,13 +88,6 @@ public class UserController {
         userService.saveUser(user);
         return "redirect:/admin/user/" + user.getEmail();
     }
-   /* @PostMapping("/admin/user/discount")
-    public String userProfileForAdminCheck(User user){
-        user.setDiscount(25);
-        userService.saveUser(user);
-        return "redirect:/admin/users";
-    }*/
-    //Post mappingbe a usert magát adom át csak
     @GetMapping(value = {"/login", "/bejelentkezes"})
     public String getLoginPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -122,11 +115,19 @@ public class UserController {
             return "signup_form";
         }
         String siteUrl = Utility.getSiteUrl(request);
-        if (!(userService.isEmailAlreadyInUse(user))) {
-            user.setRole(Roles.USER);
-            userService.saveUserReg(user);
-            userService.sendVerificationEmail(user, siteUrl);
-            return "register_success";
+        try {
+            if (!(userService.isEmailAlreadyInUse(user))) {
+                user.setRole(Roles.USER);
+                userService.saveUserReg(user);
+                userService.sendVerificationEmail(user, siteUrl);
+                return "register_success";
+            } else if (userService.isEmailAlreadyInUse(user)) {
+                bindingResult.rejectValue("email", "error.email", "Ez az email cím már használtaban van");
+                return "signup_form";
+            }
+        }catch(Exception e){
+            bindingResult.rejectValue("taxNumber", "error.taxNumber", "Ez az adószám már használtaban van");
+            return "signup_form";
         }
         return "redirect:/login";
     }
@@ -190,9 +191,6 @@ public class UserController {
     }
     @PostMapping("/cart")
     public String makeOrder(Order order) throws MessagingException, UnsupportedEncodingException {
-        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        ShoppingCart shoppingCart = new ShoppingCart();*/
         order.setOrderDescription("teszt");
         order.setCartItems(shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser()));
         order.setCustomer(userService.getLoggedInUser());
