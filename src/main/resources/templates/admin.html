@@ -38,6 +38,12 @@
                 <ul>
                     <li><a href="/admin">Megrendelések</a></li>
                 </ul>
+                <form th:action="@{/admin}">
+                    <input  class="input-wrap-search" type="text" placeholder="rendelés szám" name="keyword" th:value="${keyword}" />
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
             <i class="fas fa-bars" id="menu-btn"></i>
         </div>
