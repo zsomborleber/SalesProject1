@@ -1,15 +1,12 @@
 package com.example.salescheckerspring.services;
 
 import com.example.salescheckerspring.models.Order;
-import com.example.salescheckerspring.models.Product;
-import com.example.salescheckerspring.models.ShoppingCart;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.repos.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class OrderService {
@@ -33,6 +30,35 @@ public class OrderService {
             return completedList;
         }
         return repository.findAllByUserIs(user);
+    }
+
+    public List<Order> listById (String searching) {
+        if (searching != null) {
+            List<Order> completedList = new ArrayList<>();
+            List<Order> order = repository.findAllById(searching);
+            for (Order x : order) {
+                if (x.isCompleted()) {
+                    completedList.add(x);
+                }
+            }
+            return completedList;
+        }
+        return repository.findAllByIsCompletedIsTrue();
+
+    }
+    public List<Order> notOrderedList (String searching) {
+        if (searching != null) {
+            List<Order> completedList = new ArrayList<>();
+            List<Order> order = repository.findAllById(searching);
+            for (Order x : order) {
+                if (!x.isCompleted()) {
+                    completedList.add(x);
+                }
+            }
+            return completedList;
+        }
+        return repository.findAllByIsCompletedIsFalse();
+
     }
 
 }

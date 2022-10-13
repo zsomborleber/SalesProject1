@@ -7,6 +7,7 @@ import com.example.salescheckerspring.services.OrderService;
 import com.example.salescheckerspring.services.ProductPastService;
 import com.example.salescheckerspring.services.ProductService;
 import com.example.salescheckerspring.services.UserService;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,15 +41,19 @@ public class AdminController {
     }
 
     @GetMapping(value = {"/admin"})
-    private String uncompletedOrders(Model model) {
-        List<Order> orders = orderRepository.findAllByIsCompletedIsFalse();
-        model.addAttribute("orders", orders);
+    private String uncompletedOrders(Model model,@Param("keyword") String keyword) {
+
+        List<Order> notComletedOrders = orderService.notOrderedList(keyword);
+        model.addAttribute("orders",notComletedOrders);
+        model.addAttribute("keyword",keyword);
         return "admin";
     }
     @GetMapping(value = {"/admin/completedOrders"})
-    private String completedOrders(Model model) {
-        List<Order> orders = orderRepository.findAllByIsCompletedIsTrue();
-        model.addAttribute("orders", orders);
+    private String completedOrders(Model model,@Param("keyword") String keyword) {
+
+        List<Order> completedOrders = orderService.listById(keyword);
+        model.addAttribute("orders", completedOrders);
+        model.addAttribute("keyword",keyword);
         return "admin_completedorders";
     }
 

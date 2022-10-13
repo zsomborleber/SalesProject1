@@ -20,5 +20,7 @@ public interface OrderRepository extends CrudRepository <Order,Long> {
     @Query("select p from Order p where " + " concat(p.id,p.localDate) " + "like %?1%")
     List<Order> findAll(String keyword);
     List<Order> findAll();
+    @Query("select p from Order p where " + "concat(p.id,p.orderDescription) " + "like %?1%")
+    List<Order> findAllById(String keyword);
 
 }
