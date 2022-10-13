@@ -71,21 +71,24 @@ public class UserController {
     @GetMapping("/home")
     public String home(Model model,
                        @Param("keyword") String keyword) {
-        List<User> users = userService.findAllUser();
-        model.addAttribute("users", users);
-        List<Product> questions = productService.listAll(keyword);
-        model.addAttribute("products", questions);
-        model.addAttribute("keyword", keyword);
+            List<User> users = userService.findAllUser();
+            model.addAttribute("users", users);
+            List<Product> questions = productService.listAll(keyword);
+            model.addAttribute("products", questions);
+            model.addAttribute("keyword", keyword);
         return "new_home";
     }
 
     @PostMapping("/home/{EANCode}")
-    public String showCreateForm(Model model, @PathVariable long EANCode, int quantity) {
-        ShoppingCart shoppingCart = new ShoppingCart(productService.findProduct(EANCode).getId()
-                , productService.findProduct(EANCode).getArticleName(), quantity,
-                productService.findProduct(EANCode).getPrice() * quantity,
-                userService.getLoggedInUser());
-        shoppingCartRepository.save(shoppingCart);
+    public String showCreateForm(Model model, @PathVariable long EANCode, Integer quantity) {
+        if (quantity == null){
+            return "redirect:/home";
+        }
+            ShoppingCart shoppingCart = new ShoppingCart(productService.findProduct(EANCode).getId()
+                    , productService.findProduct(EANCode).getArticleName(), quantity,
+                    productService.findProduct(EANCode).getPrice() * quantity,
+                    userService.getLoggedInUser());
+            shoppingCartRepository.save(shoppingCart);
         return "redirect:/home";
     }
     @GetMapping(value = {"/login", "/bejelentkezes"})

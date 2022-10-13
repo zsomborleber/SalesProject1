@@ -40,6 +40,12 @@
                 <ul>
                     <li><a href="/admin">Megrendelések</a></li>
                 </ul>
+                <form th:action="@{/admin/pastproducts}">
+                    <input  class="input-wrap-search" type="text" placeholder="search..." name="keyword" th:value="${keyword}" />
+                    <button type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
             <i class="fas fa-bars" id="menu-btn"></i>
         </div>
@@ -49,17 +55,29 @@
 <div class="container-back">
     <div class="tableFixHead">
         <table>
+            <thead>
             <tr>
-                <th>Cégnév</th>
-                <th>E-mail</th>
+                <th>Cikkszám</th>
+                <th>EAN kód</th>
+                <th>Terméknév</th>
+                <th>Mennyiség</th>
+                <th>Érték</th>
+                <th>Beszállító</th>
+                <th>Év</th>
             </tr>
-            <tr data-th-each="user:${users}">
-
-                <td th:text="${user.companyName}">Name:</td>
-
-                <td><a th:text="${user.email}" th:href="@{/admin/user/{email}(email = ${user.email})}" ></a></td>
+            </thead>
+            <tbody>
+            <tr data-th-each="product: ${products}">
+                <td data-th-text="${product.articleNumber}"></td>
+                <td data-th-text="${product.EANCode}"></td>
+                <td data-th-text="${product.articleName}"></td>
+                <td data-th-text="${product.quantity}"></td>
+                <td data-th-text="${product.value}"></td>
+                <td data-th-text="${product.supplier}"></td>
+                <td data-th-text="${product.year}"></td>
 
             </tr>
+            </tbody>
         </table>
     </div>
 </div>

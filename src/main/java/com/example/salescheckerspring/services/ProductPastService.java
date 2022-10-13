@@ -61,4 +61,11 @@ public class ProductPastService {
         return productPastRepository.findById(id).get();
     }
 
+    public List<ProductPast> listAll(String searching) {
+        if (searching != null) {
+            return productPastRepository.findAll(searching);
+        }
+        return productPastRepository.findAll();
+    }
+
 }

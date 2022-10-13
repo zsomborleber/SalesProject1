@@ -126,4 +126,12 @@ public class AdminController {
         userService.saveUser(user);
         return "redirect:/admin/user/" + user.getEmail();
     }
+    @GetMapping("/admin/pastproducts")
+    public String home(Model model,
+                       @Param("keyword") String keyword) {
+        List<ProductPast> questions = productPastService.listAll(keyword);
+        model.addAttribute("products", questions);
+        model.addAttribute("keyword", keyword);
+        return "admin_pastproducts";
+    }
 }
