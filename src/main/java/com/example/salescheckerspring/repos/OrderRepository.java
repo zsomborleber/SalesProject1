@@ -13,7 +13,12 @@ import java.util.List;
 public interface OrderRepository extends CrudRepository <Order,Long> {
 
     List<Order> findAllByUserIs(User user);
+
+    List<Order> findAllByIsCompletedIsFalse();
+
+    List<Order> findAllByIsCompletedIsTrue();
     @Query("select p from Order p where " + " concat(p.id,p.localDate) " + "like %?1%")
     List<Order> findAll(String keyword);
     List<Order> findAll();
+
 }

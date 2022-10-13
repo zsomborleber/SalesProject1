@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin oldal</title>
+    <meta charset="UTF-8">
+    <title>Teljesített rendelések</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/new_home.css">
 </head>
@@ -92,29 +92,29 @@
         </table>
     </div>
 </div>
-    <script>
-        const menBtn = document.getElementById('menu-btn');
-        const navBar = document.getElementById('navbar');
-        const menu = document.querySelector('.menu');
+<script>
+    const menBtn = document.getElementById('menu-btn');
+    const navBar = document.getElementById('navbar');
+    const menu = document.querySelector('.menu');
 
-        const offset = 30;
-        menBtn.addEventListener('click',() => {
-            menu.classList.toggle('menu-open');
-        });
-        window.addEventListener("scroll",() => {
-            if (pageYOffset > offset) {
-                navBar.classList.add('navbar-active');
-            } else {
-                navBar.classList.remove('navbar-active')
-            }
-        });
-        window.addEventListener("scroll", ()=> {
-            if (pageXOffset > offset) {
-                navBar.classList.add('navbar-active');
-            } else {
-                navBar.classList.remove('navbar-active');
-            }
-        });
-    </script>
+    const offset = 30;
+    menBtn.addEventListener('click',() => {
+        menu.classList.toggle('menu-open');
+    });
+    window.addEventListener("scroll",() => {
+        if (pageYOffset > offset) {
+            navBar.classList.add('navbar-active');
+        } else {
+            navBar.classList.remove('navbar-active')
+        }
+    });
+    window.addEventListener("scroll", ()=> {
+        if (pageXOffset > offset) {
+            navBar.classList.add('navbar-active');
+        } else {
+            navBar.classList.remove('navbar-active');
+        }
+    });
+</script>
 </body>
 </html>

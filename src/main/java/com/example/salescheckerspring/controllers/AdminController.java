@@ -7,31 +7,30 @@ import com.example.salescheckerspring.services.OrderService;
 import com.example.salescheckerspring.services.ProductPastService;
 import com.example.salescheckerspring.services.ProductService;
 import com.example.salescheckerspring.services.UserService;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
-public class AppController {
-    private OrderService orderService;
-    private ProductPastService productPastService;
-    private ProductService productService;
+public class AdminController {
+    private final OrderService orderService;
+    private final ProductPastService productPastService;
+    private final ProductService productService;
 
-    private UserService userService;
+    private final UserService userService;
 
-    private ProductPastRepository productPastRepository;
+    private final ProductPastRepository productPastRepository;
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    public AppController(ProductPastService productPastService, ProductService productService, UserService userService, ProductPastRepository productPastRepository, OrderRepository orderRepository,OrderService orderService) {
+    public AdminController(ProductPastService productPastService, ProductService productService, UserService userService, ProductPastRepository productPastRepository, OrderRepository orderRepository, OrderService orderService) {
         this.productPastService = productPastService;
         this.productService = productService;
         this.userService = userService;
@@ -40,61 +39,51 @@ public class AppController {
         this.orderService = orderService;
     }
 
-    @GetMapping(value={"/","/index"})
-    private String index(Model model){
-        productPastService.saveProducts();
-        productService.loadProducts();
-        return "index";
-    }
-
-    @GetMapping(value={"/admin"})
-    private String adminPage(Model model){
-        List<Order> orders = (List<Order>) orderRepository.findAll();
-        model.addAttribute("orders",orders);
+    @GetMapping(value = {"/admin"})
+    private String uncompletedOrders(Model model) {
+        List<Order> orders = orderRepository.findAllByIsCompletedIsFalse();
+        model.addAttribute("orders", orders);
         return "admin";
     }
+    @GetMapping(value = {"/admin/completedOrders"})
+    private String completedOrders(Model model) {
+        List<Order> orders = orderRepository.findAllByIsCompletedIsTrue();
+        model.addAttribute("orders", orders);
+        return "admin_completedorders";
+    }
 
-    @PostMapping(value={"/admin/completed"})
+    @PostMapping(value = {"/admin/completed"})
     public String updateDiscount(boolean isCompleted, long id) throws MessagingException, UnsupportedEncodingException {
         Order order = orderRepository.findById(id).orElseThrow();
-        if (isCompleted){
+        if (isCompleted) {
             order.setCompleted(true);
             orderRepository.save(order);
             userService.sendOrderCompletedEmail(order);
-        }else{
+        } else {
             order.setCompleted(false);
             orderRepository.save(order);
         }
         return "redirect:/admin";
     }
 
-    @GetMapping(value={"/admin/{year}"})
-    private String adminPage(@PathVariable(name = "year") int year ,
-                             Model model){
+    @GetMapping(value = {"/admin/{year}"})
+    private String adminPage(@PathVariable(name = "year") int year,
+                             Model model) {
         model.addAttribute("income",
                 productPastService.totalCashFlow(year));
         return "admin";
     }
 
     @GetMapping("/admin/users")
-    private String allUser(Model model){
+    private String allUser(Model model) {
         List<User> users = userService.findAllUser();
-        model.addAttribute("users",users);
+        model.addAttribute("users", users);
 
         return "admin_users";
     }
 
-    @GetMapping("/orders")
-    private String orders(Model model, @Param("keyword") String keyword){
-        List<Order> orders2 = orderService.listAll(keyword,userService.getLoggedInUser());
-        model.addAttribute("orders",orders2);
-        model.addAttribute("keyword",keyword);
-        return "orders";
-    }
-
-
     @GetMapping("/admin/income")
-    public String add(Model model) {
+    public String add() {
         return "admin_income";
     }
 
@@ -113,8 +102,23 @@ public class AppController {
     }
 
     @PostMapping("/admin/upload")
-    public String addSpaceShip(Product product){
+    public String addSpaceShip(Product product) {
         productService.saveProducts(product);
         return "redirect:/home";
+    }
+
+    @GetMapping("/admin/user/{email}")
+    public String userProfileForAdminCheck(@PathVariable("email") String email, Model model) {
+        Optional<User> user = userService.findUserByEmail(email);
+        model.addAttribute("user", user.orElseThrow());
+        return "admin_discount";
+    }
+
+    @PostMapping(value = {"/admin/user/update"})
+    public String updateDiscount(String email, float discount) {
+        User user = userService.findUserByEmail(email).orElseThrow();
+        user.setDiscount(discount);
+        userService.saveUser(user);
+        return "redirect:/admin/user/" + user.getEmail();
     }
 }

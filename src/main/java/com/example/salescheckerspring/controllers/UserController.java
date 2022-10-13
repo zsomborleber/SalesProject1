@@ -8,9 +8,7 @@ import com.example.salescheckerspring.repos.OrderRepository;
 import com.example.salescheckerspring.repos.ProductRepository;
 import com.example.salescheckerspring.repos.ShoppingCartRepository;
 import com.example.salescheckerspring.repos.UserRepository;
-import com.example.salescheckerspring.services.ProductService;
-import com.example.salescheckerspring.services.ShoppingCartService;
-import com.example.salescheckerspring.services.UserService;
+import com.example.salescheckerspring.services.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,7 +45,11 @@ public class UserController {
 
     private ShoppingCartService shoppingCartService;
 
-    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService, ProductRepository productRepository, ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, ShoppingCartService shoppingCartService) {
+    private ProductPastService productPastService;
+
+    private OrderService orderService;
+
+    public UserController(UserService userService, WebSecurityConfig webSecurityConfig, ProductService productService, ProductRepository productRepository, ShoppingCartRepository shoppingCartRepository, OrderRepository orderRepository, ShoppingCartService shoppingCartService, ProductPastService productPastService, OrderService orderService) {
         this.userService = userService;
         this.webSecurityConfig = webSecurityConfig;
         this.productService = productService;
@@ -55,17 +57,28 @@ public class UserController {
         this.shoppingCartRepository = shoppingCartRepository;
         this.orderRepository = orderRepository;
         this.shoppingCartService = shoppingCartService;
+        this.productPastService = productPastService;
+        this.orderService = orderService;
     }
+
+    @GetMapping(value = {"/", "/index"})
+    private String index() {
+        productPastService.saveProducts();
+        productService.loadProducts();
+        return "index";
+    }
+
     @GetMapping("/home")
     public String home(Model model,
                        @Param("keyword") String keyword) {
         List<User> users = userService.findAllUser();
-        model.addAttribute("users",users);
+        model.addAttribute("users", users);
         List<Product> questions = productService.listAll(keyword);
         model.addAttribute("products", questions);
-        model.addAttribute("keyword",keyword);
+        model.addAttribute("keyword", keyword);
         return "new_home";
     }
+
     @PostMapping("/home/{EANCode}")
     public String showCreateForm(Model model, @PathVariable long EANCode, int quantity) {
         ShoppingCart shoppingCart = new ShoppingCart(productService.findProduct(EANCode).getId()
@@ -75,19 +88,6 @@ public class UserController {
         shoppingCartRepository.save(shoppingCart);
         return "redirect:/home";
     }
-    @GetMapping("/admin/user/{email}")
-    public String userProfileForAdminCheck(@PathVariable("email") String email, Model model) {
-        Optional<User> user = userService.findUserByEmail(email);
-        model.addAttribute("user",user.orElseThrow());
-        return "admin_discount";
-    }
-    @PostMapping(value={"/admin/user/update"})
-    public String updateDiscount(String email, float discount){
-        User user = userService.findUserByEmail(email).orElseThrow();
-        user.setDiscount(discount);
-        userService.saveUser(user);
-        return "redirect:/admin/user/" + user.getEmail();
-    }
     @GetMapping(value = {"/login", "/bejelentkezes"})
     public String getLoginPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -96,11 +96,13 @@ public class UserController {
         }
         return "loggedin";
     }
+
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
         return "signup_form";
     }
+
     @PostMapping("/process-register")
     public String processRegistration(
             @Valid
@@ -110,27 +112,26 @@ public class UserController {
             HttpServletRequest request)
             throws MessagingException,
             UnsupportedEncodingException {
-        if (bindingResult.hasErrors()){
-            model.addAttribute("error",bindingResult.getFieldError());
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("error", bindingResult.getFieldError());
             return "signup_form";
         }
         String siteUrl = Utility.getSiteUrl(request);
-        try {
-            if (!(userService.isEmailAlreadyInUse(user))) {
-                user.setRole(Roles.USER);
-                userService.saveUserReg(user);
-                userService.sendVerificationEmail(user, siteUrl);
-                return "register_success";
-            } else if (userService.isEmailAlreadyInUse(user)) {
-                bindingResult.rejectValue("email", "error.email", "Ez az email cím már használtaban van");
-                return "signup_form";
-            }
-        }catch(Exception e){
+        if (!(userService.isEmailAlreadyInUse(user)) && !userService.isTAXNumberAlreadyInUse(user)) {
+            user.setRole(Roles.USER);
+            userService.saveUserReg(user);
+            userService.sendVerificationEmail(user, siteUrl);
+            return "register_success";
+        } else if (userService.isEmailAlreadyInUse(user)) {
+            bindingResult.rejectValue("email", "error.email", "Ez az email cím már használtaban van");
+            return "signup_form";
+        } else if (userService.isTAXNumberAlreadyInUse(user)) {
             bindingResult.rejectValue("taxNumber", "error.taxNumber", "Ez az adószám már használtaban van");
             return "signup_form";
         }
         return "redirect:/login";
     }
+
     @GetMapping("/verify")
     public String verifyAccount(@Param("code") String code) {
         if (userService.verify(code)) {
@@ -138,12 +139,8 @@ public class UserController {
         } else {
             return "verify_fail";
         }
-        /*boolean verified = userService.verify(code);
-        String pageTitle = verified ? "Verification Succeeded!" : "Verification Failed";
-        model.addAttribute("pageTitle", pageTitle);
-
-        return (verified ? "verify_success" : "verify_fail");*/
     }
+
     @GetMapping("userprofile")
     public String getuserprofile(Model model) {
         String email = userService.getLoggedInUser().getEmail();
@@ -151,28 +148,31 @@ public class UserController {
         model.addAttribute("currentuser", user);
         return "userprofile";
     }
+
     @GetMapping("/changepassword")
-    public String changepassword(Model model){
+    public String changepassword(Model model) {
         model.addAttribute("form", new NewPasswordForm());
         return "changepassword";
     }
+
     @PostMapping("/changepassword")
-    public String changepasswo(Model model, NewPasswordForm newPasswordForm){
-        if(webSecurityConfig.passwordEncoder().matches(newPasswordForm.getCurrentpassword(), userService.getLoggedInUser().getPassword()) &&
-                Objects.equals(newPasswordForm.getNewpassword1(), newPasswordForm.getNewpassword2())){
+    public String changepasswo(Model model, NewPasswordForm newPasswordForm) {
+        if (webSecurityConfig.passwordEncoder().matches(newPasswordForm.getCurrentpassword(), userService.getLoggedInUser().getPassword()) &&
+                Objects.equals(newPasswordForm.getNewpassword1(), newPasswordForm.getNewpassword2())) {
             userService.getLoggedInUser().setPassword(newPasswordForm.getNewpassword2());
             userService.saveUserReg(userService.getLoggedInUser());
             return "new_home";
-        }
-        else{
+        } else {
             model.addAttribute("loginError", true);
             return "redirect:/changepassword";
         }
     }
+
     @GetMapping(value = {"/connections"})
     public String connections(Model model) {
-        return"connections";
+        return "connections";
     }
+
     @GetMapping("/cart")
     //TODO
     public String cart(Model model) {
@@ -180,13 +180,14 @@ public class UserController {
         User user = userService.findUserByEmail(email).orElseThrow();
         List<ShoppingCart> products = (List<ShoppingCart>)
                 shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser());
-        model.addAttribute("amount",shoppingCartService.ShoppingCartSumOrderedAmount());
-        model.addAttribute("amountwd",shoppingCartService.ShoppingCartSumOrderedAmount()*
-                Math.abs((user.getDiscount()/100)-1));
+        model.addAttribute("amount", shoppingCartService.ShoppingCartSumOrderedAmount());
+        model.addAttribute("amountwd", shoppingCartService.ShoppingCartSumOrderedAmount() *
+                Math.abs((user.getDiscount() / 100) - 1));
         model.addAttribute("products", products);
         Order order = new Order();
         return "cart";
     }
+
     @PostMapping("/cart")
     public String makeOrder(Order order) throws MessagingException, UnsupportedEncodingException {
         order.setOrderDescription("teszt");
@@ -198,4 +199,13 @@ public class UserController {
         userService.sendOrderVerificationEmail(userService.getLoggedInUser());
         return "redirect:/home";
     }
+
+    @GetMapping("/orders")
+    private String orders(Model model, @Param("keyword") String keyword) {
+        List<Order> orders2 = orderService.listAll(keyword, userService.getLoggedInUser());
+        model.addAttribute("orders", orders2);
+        model.addAttribute("keyword", keyword);
+        return "orders";
+    }
+
 }

@@ -2,6 +2,7 @@ package com.example.salescheckerspring.services;
 
 import com.example.salescheckerspring.models.Order;
 import com.example.salescheckerspring.models.Product;
+import com.example.salescheckerspring.models.ShoppingCart;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.repos.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -33,4 +34,5 @@ public class OrderService {
         }
         return repository.findAllByUserIs(user);
     }
+
 }

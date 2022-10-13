@@ -75,10 +75,13 @@
         </table>
     </div>
     <form action="#" data-th-action="@{/cart}" method="post" data-th-if="${#lists.size(products) > 0}">
-        <button class="button3" type="submit">Megrendelés</button>
+        <button onclick="myFunction()" class="button3" type="submit">Megrendelés</button>
     </form>
 </div>
 <script>
+    function myFunction() {
+        alert("Rendelését rögzítettük");
+    }
     const menBtn = document.getElementById('menu-btn');
     const navBar = document.getElementById('navbar');
     const menu = document.querySelector('.menu');

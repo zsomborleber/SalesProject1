@@ -112,7 +112,7 @@
                 <label>E-mail:</label>
                 <div>
                     <input type="email"  data-th-field="*{email}" required/>
-                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error!</span>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
                 <label>Adószám:</label>
                 <div>
                     <input type="text" data-th-field="*{taxNumber}" required/>
-                    <p th:if="${#fields.hasErrors('taxNumber')}" th:errors="*{taxNumber}">Error!</p>
+                    <span th:if="${#fields.hasErrors('taxNumber')}" th:errors="*{taxNumber}"></span>
                 </div>
             </div>
         </div>
