@@ -74,14 +74,28 @@
             </tr>
         </table>
     </div>
-    <form action="#" data-th-action="@{/cart}" method="post" data-th-if="${#lists.size(products) > 0}">
-        <button onclick="myFunction()" class="button3" type="submit">Megrendelés</button>
-    </form>
+        <button  class="button3" type="submit" onclick="openPopup()">Megrendelés</button>
+        <div class="popup" id="popup">
+            <img data-th-src="@{tick.png}">
+            <h2>
+                Köszönjük rendelését!
+            </h2>
+            <p>A rendelés részleteiről email-t küldtünk Önnek!</p>
+            <form  data-th-action="@{/cart}" method="post" data-th-if="${#lists.size(products) > 0}">
+                <button type="submit"  onclick="closePopup()" >OK</button>
+            </form>
+
+        </div>
 </div>
 <script>
-    function myFunction() {
-        alert("Rendelését rögzítettük");
+    let popup = document.getElementById("popup");
+    function openPopup() {
+        popup.classList.add("open-popup");
     }
+    function closePopup() {
+        popup.classList.remove("open-popup");
+    }
+
     const menBtn = document.getElementById('menu-btn');
     const navBar = document.getElementById('navbar');
     const menu = document.querySelector('.menu');
