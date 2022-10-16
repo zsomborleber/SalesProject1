@@ -500,6 +500,9 @@ nav .fa-bars:hover {
     outline: none;
     resize:none;
 }
+.inputBox li {
+    opacity: 0;
+}
 .contactForm .inputBox span {
     position: absolute;
     left:0;
@@ -615,4 +618,15 @@ input button{
     background: none;
     border: none;
     color: #fff;
+}
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+
 }
