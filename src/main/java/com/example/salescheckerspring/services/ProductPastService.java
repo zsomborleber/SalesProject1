@@ -33,7 +33,7 @@ public class ProductPastService {
                 int quantity = Integer.parseInt(pieces[3].replaceAll(" ", ""));
                 int value = Integer.parseInt(pieces[4].replaceAll(" ", ""));
                 String supplier = pieces[5];
-                int year = Integer.parseInt(pieces[6]);
+                Long year = Long.valueOf((pieces[6]));
                 ProductPast product = new ProductPast(articleNumber, EANCode, articleName, quantity, value, supplier,year);
                 products.add(product);
             }
@@ -48,7 +48,7 @@ public class ProductPastService {
         productPastRepository.saveAll(getProducts());
     }
 
-    public long totalCashFlow(int year) {
+    public long totalCashFlow(Long year) {
         List<ProductPast> products = productPastRepository.findProductPastByYear(year);
         long sum = 0;
         for (ProductPast product : products) {

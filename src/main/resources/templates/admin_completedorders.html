@@ -19,7 +19,7 @@
                     <li><span id="toggleMarket">    </span><a href="/admin/income">Bevétel</a></li>
                     <li><span id="toggleAbout">    </span><a href="/admin/users">Felhasználók</a></li>
                     <li><span id="toggleProjects">    </span><a href="/admin/completedOrders">Teljesített megrendelések</a></li>
-                    <li><span id="toggleCart">    </span><a href="/cart">Kosár</a></li>
+                    <li><span id="toggleCart">    </span><a href="/admin/pastproducts">Előző évi adatok</a></li>
                     <li><span id="toggleDoor">    </span><a href="/logout">Kijelentkezés</a></li>
                 </ul>
                 <ul class="social-media">
@@ -90,8 +90,7 @@
                 </td>
                 <td>
                     <table>
-                        <tr data-th-each="order: ${order.cartItems}">
-                            <td data-th-text="${order.amount}"></td>
+                        <td data-th-text="${order.amount}"></td>
                     </table>
                 </td>
             </tr>
@@ -99,6 +98,7 @@
     </div>
 </div>
 <script>
+    const navLinks = document.querySelectorAll('.inputBox li');
     const menBtn = document.getElementById('menu-btn');
     const navBar = document.getElementById('navbar');
     const menu = document.querySelector('.menu');
@@ -106,6 +106,14 @@
     const offset = 30;
     menBtn.addEventListener('click',() => {
         menu.classList.toggle('menu-open');
+        navLinks.forEach((link,index) => {
+            if (link.style.animation) {
+                link.style.animation = ''
+            } else {
+                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.7}s`
+            }
+        });
+
     });
     window.addEventListener("scroll",() => {
         if (pageYOffset > offset) {

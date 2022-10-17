@@ -72,7 +72,7 @@ public class AdminController {
     }
 
     @GetMapping(value = {"/admin/{year}"})
-    private String adminPage(@PathVariable(name = "year") int year,
+    private String adminPage(@PathVariable(name = "year") Long year,
                              Model model) {
         model.addAttribute("income",
                 productPastService.totalCashFlow(year));
@@ -88,13 +88,16 @@ public class AdminController {
     }
 
     @GetMapping("/admin/income")
-    public String add() {
+    public String income() {
         return "admin_income";
     }
 
 
     @PostMapping("/search")
-    public String doSearchEmployee(int year, Model model) {
+    public String income(Long year, Model model) {
+        if (year == null){
+            return "redirect:/admin/income";
+        }
         model.addAttribute("income", productPastService.totalCashFlow(year));
         return "admin_income";
     }

@@ -22,7 +22,7 @@ public class ProductPast {
 
     private String supplier;
 
-    private int year;
+    private Long year;
 
     public ProductPast(Long id) {
         this.id = id;
@@ -30,7 +30,7 @@ public class ProductPast {
     public ProductPast (){}
 
 
-    public ProductPast(Long articleNumber, long EANCode, String articleName, int quantity, int value, String supplier, int year) {
+    public ProductPast(Long articleNumber, long EANCode, String articleName, int quantity, int value, String supplier, Long year) {
         this.articleNumber = articleNumber;
         this.EANCode = EANCode;
         this.articleName = articleName;
@@ -105,11 +105,11 @@ public class ProductPast {
         this.supplier = supplier;
     }
 
-    public int getYear() {
+    public Long getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Long year) {
         this.year = year;
     }
 }

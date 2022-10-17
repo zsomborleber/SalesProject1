@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ProductPastRepository extends CrudRepository<ProductPast, Long> {
 
-    List<ProductPast> findProductPastByYear(int year);
+    List<ProductPast> findProductPastByYear(Long year);
 
     List<ProductPast> findAll();
 
