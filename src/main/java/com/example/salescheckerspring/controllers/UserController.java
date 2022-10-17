@@ -29,6 +29,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 @Controller
 public class UserController {
@@ -208,6 +210,7 @@ public class UserController {
         orderRepository.save(order);
         shoppingCartService.setTrueAfterOrdered();
         userService.sendOrderVerificationEmail(userService.getLoggedInUser());
+
         return "redirect:/home";
     }
 
