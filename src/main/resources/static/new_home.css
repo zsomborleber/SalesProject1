@@ -383,12 +383,12 @@ nav .fa-bars:hover {
 }
 .line1 {
     width: 20px;
-    transform: translate(-22px,-20px);
+    transform: translate(-22px,-15px);
     transform-origin: 0 0;
 }
 .line3 {
     width: 20px;
-    transform: translate(0px, 18px);
+    transform: translate(0px, 13px);
     transform-origin: 100% 0;
 }
 .openmenu .line1{
@@ -406,6 +406,7 @@ nav .fa-bars:hover {
 #homeCart::before {
     content: '\f07a';
     font-family: fontAwesome;
+    padding-right: 300px;
 }
 
 .inputBox #toggleCart::before {
@@ -651,6 +652,7 @@ input button{
     background: none;
     border: none;
     color: #fff;
+
 }
 @keyframes navLinkFade {
     from {

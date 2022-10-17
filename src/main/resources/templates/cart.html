@@ -76,26 +76,33 @@
             </tr>
         </table>
     </div>
-        <button  class="button3" type="submit" onclick="openPopup()">Megrendelés</button>
+        <button  class="button3" type="submit" onclick="openPopup()" data-th-if="${#lists.size(products) > 0}">Megrendelés</button>
         <div class="popup" id="popup">
             <img data-th-src="@{tick.png}">
             <h2>
                 Köszönjük rendelését!
             </h2>
             <p>A rendelés részleteiről email-t küldtünk Önnek!</p>
-            <form  data-th-action="@{/cart}" method="post" data-th-if="${#lists.size(products) > 0}">
+            <form  data-th-action="@{/cart}" method="post">
                 <button type="submit"  onclick="closePopup()" >OK</button>
             </form>
-
         </div>
 </div>
 <script>
-    const navLinks = document.querySelectorAll('.inputBox li');
+    let popup = document.getElementById("popup");
+
+    function openPopup() {
+        popup.classList.add("open-popup")
+    }function closePopup() {
+        popup.classList.remove("open-popup")
+    }
+
     const menBtn = document.getElementById('menu-btn');
     const navBar = document.getElementById('navbar');
     const menu = document.querySelector('.menu');
-
     const offset = 30;
+
+    const navLinks = document.querySelectorAll('.inputBox li');
     menBtn.addEventListener('click',() => {
         menu.classList.toggle('menu-open');
         navLinks.forEach((link,index) => {
