@@ -24,12 +24,12 @@
                     <li><span id="toggleProjects">    </span><a href="/admin/completedOrders">Teljesített megrendelések</a></li>
                     <li><span id="toggleCart">    </span><a href="/cart">Kosár</a></li>
                     <li><span id="toggleDoor">    </span><a href="/logout">Kijelentkezés</a></li>
-                </ul>
-                <ul class="social-media">
-                    <h5>Kövess minket!</h5>
-                    <li><a href="https://facebook.com/"><img data-th-src="@{/facebook.png}"></a></li>
-                    <li><a href="https://www.instagram.com/"><img data-th-src="@{/instagram.png}"></a></li>
-                    <li><a href="https://www.linkedin.com/"><img data-th-src="@{/linkedin.png}"></a></li>
+                    <li><h5>Kövess minket!</h5></li>
+                    <ul class="social-media">
+                        <li><a href="https://facebook.com/"><img data-th-src="@{/facebook.png}"></a></li>
+                        <li><a href="https://www.instagram.com/"><img data-th-src="@{/instagram.png}"></a></li>
+                        <li><a href="https://www.linkedin.com/"><img data-th-src="@{/linkedin.png}"></a></li>
+                    </ul>
                 </ul>
             </div>
         </div>
@@ -83,30 +83,37 @@
     </div>
 </div>
 <script>
+    const navLinks = document.querySelectorAll('.inputBox li');
     const menBtn = document.getElementById('menu-btn');
     const navBar = document.getElementById('navbar');
     const menu = document.querySelector('.menu');
 
     const offset = 30;
-    menBtn.addEventListener('click', () => {
+    menBtn.addEventListener('click',() => {
         menu.classList.toggle('menu-open');
+        navLinks.forEach((link,index) => {
+            if (link.style.animation) {
+                link.style.animation = ''
+            } else {
+                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.7}s`
+            }
+        });
+
     });
-    window.addEventListener("scroll", () => {
+    window.addEventListener("scroll",() => {
         if (pageYOffset > offset) {
             navBar.classList.add('navbar-active');
         } else {
             navBar.classList.remove('navbar-active')
         }
     });
-    window.addEventListener("scroll", () => {
+    window.addEventListener("scroll", ()=> {
         if (pageXOffset > offset) {
             navBar.classList.add('navbar-active');
         } else {
             navBar.classList.remove('navbar-active');
         }
     });
-
-
 </script>
 </body>
 </html>

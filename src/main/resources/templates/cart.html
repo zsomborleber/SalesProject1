@@ -21,15 +21,17 @@
                     <li><span id="toggleNews">    </span><a href="/orders">Rendeléseim</a></li>
                     <li><span id="toggleMarket">    </span><a href="/home">Bolt</a></li>
                     <li><span id="toggleCart">    </span><a href="/cart">Kosár</a></li>
-                    <li><span id="toggleAbout">    </span><a href="#">Üres</a></li>
+                    <li><span id="toggleAbout">    </span><a href="/userprofile">Fiókom</a></li>
                     <li><span id="toggleProjects">    </span><a href="#">Üres</a></li>
                     <li><span id="toggleDoor">    </span><a href="/logout">Kijelentkezés</a></li>
-                </ul>
-                <ul class="social-media">
-                    <h5>Kövess minket!</h5>
-                    <li><a href="https://facebook.com/"><img data-th-src="@{facebook.png}"></a></li>
-                    <li><a href="https://www.instagram.com/"><img data-th-src="@{instagram.png}"></a></li>
-                    <li><a href="https://www.linkedin.com/"><img data-th-src="@{linkedin.png}"></a></li>
+                    <li><h5>Kövess minket!</h5></li>
+                    <div>
+                        <ul class="social-media">
+                            <li ><a href="https://facebook.com/"><img data-th-src="@{facebook.png}"></a></li>
+                            <li ><a href="https://www.instagram.com/"><img data-th-src="@{instagram.png}"></a></li>
+                            <li ><a href="https://www.linkedin.com/"><img data-th-src="@{linkedin.png}"></a></li>
+                        </ul>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -74,52 +76,58 @@
             </tr>
         </table>
     </div>
-        <button  class="button3" type="submit" onclick="openPopup()">Megrendelés</button>
+        <button  class="button3" type="submit" onclick="openPopup()" data-th-if="${#lists.size(products) > 0}">Megrendelés</button>
         <div class="popup" id="popup">
             <img data-th-src="@{tick.png}">
             <h2>
                 Köszönjük rendelését!
             </h2>
             <p>A rendelés részleteiről email-t küldtünk Önnek!</p>
-            <form  data-th-action="@{/cart}" method="post" data-th-if="${#lists.size(products) > 0}">
+            <form  data-th-action="@{/cart}" method="post">
                 <button type="submit"  onclick="closePopup()" >OK</button>
             </form>
-
         </div>
 </div>
 <script>
     let popup = document.getElementById("popup");
+
     function openPopup() {
-        popup.classList.add("open-popup");
-    }
-    function closePopup() {
-        popup.classList.remove("open-popup");
+        popup.classList.add("open-popup")
+    }function closePopup() {
+        popup.classList.remove("open-popup")
     }
 
     const menBtn = document.getElementById('menu-btn');
     const navBar = document.getElementById('navbar');
     const menu = document.querySelector('.menu');
-
     const offset = 30;
-    menBtn.addEventListener('click', () => {
+
+    const navLinks = document.querySelectorAll('.inputBox li');
+    menBtn.addEventListener('click',() => {
         menu.classList.toggle('menu-open');
+        navLinks.forEach((link,index) => {
+            if (link.style.animation) {
+                link.style.animation = ''
+            } else {
+                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.7}s`
+            }
+        });
+
     });
-    window.addEventListener("scroll", () => {
+    window.addEventListener("scroll",() => {
         if (pageYOffset > offset) {
             navBar.classList.add('navbar-active');
         } else {
             navBar.classList.remove('navbar-active')
         }
     });
-    window.addEventListener("scroll", () => {
+    window.addEventListener("scroll", ()=> {
         if (pageXOffset > offset) {
             navBar.classList.add('navbar-active');
         } else {
             navBar.classList.remove('navbar-active');
         }
     });
-
-
 </script>
 </body>
 </html>

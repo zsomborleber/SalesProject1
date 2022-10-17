@@ -22,12 +22,14 @@
                     <li><span id="toggleAbout">    </span><a href="/userprofile">Fiókom</a></li>
                     <li><span id="toggleProjects">    </span><a href="#">Üres</a></li>
                     <li><span id="toggleDoor">    </span><a href="/logout">Kijelentkezés</a></li>
-                </ul>
-                <h5>Kövess minket!</h5>
-                <ul class="social-media">
-                    <li ><a href="https://facebook.com/"><img data-th-src="@{facebook.png}"></a></li>
-                    <li ><a href="https://www.instagram.com/"><img data-th-src="@{instagram.png}"></a></li>
-                    <li ><a href="https://www.linkedin.com/"><img data-th-src="@{linkedin.png}"></a></li>
+                    <li><h5>Kövess minket!</h5></li>
+                    <div>
+                        <ul class="social-media">
+                            <li ><a href="https://facebook.com/"><img data-th-src="@{facebook.png}"></a></li>
+                            <li ><a href="https://www.instagram.com/"><img data-th-src="@{instagram.png}"></a></li>
+                            <li ><a href="https://www.linkedin.com/"><img data-th-src="@{linkedin.png}"></a></li>
+                        </ul>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -47,8 +49,12 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
+                <div id="menu-btn">
+                    <span class="line1"></span>
+                    <span class="line2"></span>
+                    <span class="line3"></span>
+                </div>
             </div>
-            <i class="fas fa-bars" id="menu-btn"></i>
         </div>
     </nav>
 </header>
@@ -84,6 +90,11 @@
         </div>
     </div>
 <script>
+    let menuX = document.getElementById("menu-btn");
+    menuX.onclick = function () {
+        menuX.classList.toggle("openmenu")
+    }
+    const navLinks = document.querySelectorAll('.inputBox li');
     const menBtn = document.getElementById('menu-btn');
     const navBar = document.getElementById('navbar');
     const menu = document.querySelector('.menu');
@@ -91,6 +102,14 @@
     const offset = 30;
     menBtn.addEventListener('click',() => {
         menu.classList.toggle('menu-open');
+        navLinks.forEach((link,index) => {
+            if (link.style.animation) {
+                link.style.animation = ''
+            } else {
+                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.7}s`
+            }
+        });
+
     });
     window.addEventListener("scroll",() => {
         if (pageYOffset > offset) {
