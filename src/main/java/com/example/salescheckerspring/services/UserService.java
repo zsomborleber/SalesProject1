@@ -2,7 +2,6 @@ package com.example.salescheckerspring.services;
 
 
 
-import com.example.salescheckerspring.DTO.UserDto;
 import com.example.salescheckerspring.models.Order;
 import com.example.salescheckerspring.models.User;
 import com.example.salescheckerspring.repos.UserRepository;
@@ -158,9 +157,5 @@ public class UserService implements UserDetailsService {
     }
     public User getLoggedInUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
-    public void updateUser(User user, UserDto userDto) {
-        user.setDiscount(userDto.getDiscount());
-        saveUserReg(user);
     }
 }

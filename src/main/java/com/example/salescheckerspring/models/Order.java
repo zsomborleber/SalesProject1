@@ -27,6 +27,8 @@ public class Order {
 
     private boolean isCompleted;
 
+    private float amount;
+
     public Order() {
     }
 
@@ -34,6 +36,13 @@ public class Order {
         this.orderDescription = orderDescription;
         this.user = user;
         this.cartItems = cartItems;
+    }
+
+    public Order(String orderDescription, User user, List<ShoppingCart> cartItems, float amount) {
+        this.orderDescription = orderDescription;
+        this.user = user;
+        this.cartItems = cartItems;
+        this.amount = amount;
     }
 
     public long getId() {
@@ -98,6 +107,14 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
 }
 
