@@ -148,6 +148,7 @@ nav a:hover {
 }
 
 .input-wrap {
+    border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -420,6 +421,10 @@ nav .fa-bars:hover {
 }
 
 .inputBox #toggleProjects::before {
+    content: '\f1c0';
+    font-family: fontAwesome;
+}
+.inputBox #togglePastPro::before {
     content: '\f1c0';
     font-family: fontAwesome;
 }

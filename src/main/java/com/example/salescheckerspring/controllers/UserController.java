@@ -209,7 +209,12 @@ public class UserController {
         }
         orderRepository.save(order);
         shoppingCartService.setTrueAfterOrdered();
-        userService.sendOrderVerificationEmail(userService.getLoggedInUser());
+        try{
+            userService.sendOrderVerificationEmail(userService.getLoggedInUser());
+        }catch (Exception e){
+            return "redirect:/home";
+        }
+
 
         return "redirect:/home";
     }

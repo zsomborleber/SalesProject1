@@ -63,7 +63,12 @@ public class AdminController {
         if (isCompleted) {
             order.setCompleted(true);
             orderRepository.save(order);
-            userService.sendOrderCompletedEmail(order);
+            try{
+                userService.sendOrderCompletedEmail(order);
+            }catch(Exception e){
+                return "redirect:/admin";
+            }
+
         } else {
             order.setCompleted(false);
             orderRepository.save(order);

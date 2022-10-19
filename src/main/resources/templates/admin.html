@@ -19,7 +19,7 @@
                     <li><span id="toggleMarket">    </span><a href="/admin/income">Bevétel</a></li>
                     <li><span id="toggleAbout">    </span><a href="/admin/users">Felhasználók</a></li>
                     <li><span id="toggleProjects">    </span><a href="/admin/completedOrders">Teljesített megrendelések</a></li>
-                    <li><span id="toggleCart">    </span><a href="/admin/pastproducts">Előző évi adatok</a></li>
+                    <li><span id="togglePastPro">    </span><a href="/admin/pastproducts">Előző évi adatok</a></li>
                     <li><span id="toggleDoor">    </span><a href="/logout">Kijelentkezés</a></li>
                     <li><h5>Kövess minket!</h5></li>
                     <ul class="social-media">
@@ -85,14 +85,10 @@
                 <td>
                     <table>
                         <tr data-th-each="order: ${order.cartItems}">
-                            <td data-th-text="${order.quantity}"></td>
+                            <td data-th-text="${order.quantity} +' '+db"></td>
                     </table>
                 </td>
-                <td>
-                    <table>
-                            <td data-th-text="${order.amount}"></td>
-                    </table>
-                </td>
+                            <td data-th-text="${order.amount}+' '+Ft"></td>
             </tr>
         </table>
     </div>

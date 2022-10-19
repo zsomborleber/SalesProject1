@@ -22,7 +22,6 @@
                     <li><span id="toggleMarket">    </span><a href="/home">Bolt</a></li>
                     <li><span id="toggleCart">    </span><a href="/cart">Kosár</a></li>
                     <li><span id="toggleAbout">    </span><a href="/userprofile">Fiókom</a></li>
-                    <li><span id="toggleProjects">    </span><a href="#">Üres</a></li>
                     <li><span id="toggleDoor">    </span><a href="/logout">Kijelentkezés</a></li>
                     <li><h5>Kövess minket!</h5></li>
                     <div>
@@ -64,15 +63,15 @@
             <tr data-th-each="product: ${products}">
                 <td data-th-text="${product.productId}"></td>
                 <td data-th-text="${product.productName}"></td>
-                <td data-th-text="${product.quantity}"></td>
-                <td data-th-text="${product.amount}"></td>
+                <td data-th-text="${product.quantity} +' '+db"></td>
+                <td data-th-text="${product.amount} +' '+Ft"></td>
             <tr>
                 <th>Összesen:</th>
             <th data-th-unless="${amount == amountwd}" >Az ön kedvezményes összege:</th>
             </tr>
             <tr>
-                <td data-th-text="${amount}"></td>
-                <td data-th-unless="${amount == amountwd}" data-th-text="${amountwd}"></td>
+                <td data-th-text="${amount} +' '+Ft"></td>
+                <td data-th-unless="${amount == amountwd}" data-th-text="${amountwd} +' '+Ft"></td>
             </tr>
         </table>
     </div>

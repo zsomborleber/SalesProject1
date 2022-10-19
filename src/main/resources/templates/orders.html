@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:color="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Rendeléseim</title>
@@ -22,7 +22,6 @@
                     <li><span id="toggleMarket">    </span><a href="/home">Bolt</a></li>
                     <li><span id="toggleCart">    </span><a href="/cart">Kosár</a></li>
                     <li><span id="toggleAbout">    </span><a href="/userprofile">Fiókom</a></li>
-                    <li><span id="toggleProjects">    </span><a href="#">Üres</a></li>
                     <li><span id="toggleDoor">    </span><a href="/logout">Kijelentkezés</a></li>
                     <li><h5>Kövess minket!</h5></li>
                     <div>
@@ -80,15 +79,10 @@
                 <td>
                     <table>
                         <tr data-th-each="order: ${order.cartItems}">
-                            <td data-th-text="${order.quantity}"></td>
+                            <td data-th-text="${order.quantity}  +' '+db"></td>
                     </table>
                 </td>
-                <td>
-                    <table>
-                        <tr data-th-each="order: ${order.cartItems}">
-                            <td data-th-text="${order.amount}"></td>
-                    </table>
-                </td>
+                            <td data-th-text="${order.amount} +' '+Ft"></td>
             </tr>
         </table>
     </div>
