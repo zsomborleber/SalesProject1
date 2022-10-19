@@ -43,14 +43,13 @@ public class AdminController {
     @GetMapping(value = {"/admin"})
     private String uncompletedOrders(Model model,@Param("keyword") String keyword) {
 
-        List<Order> notComletedOrders = orderService.notOrderedList(keyword);
-        model.addAttribute("orders",notComletedOrders);
+        List<Order> notCompletedOrders = orderService.notOrderedList(keyword);
+        model.addAttribute("orders",notCompletedOrders);
         model.addAttribute("keyword",keyword);
         return "admin";
     }
     @GetMapping(value = {"/admin/completedOrders"})
     private String completedOrders(Model model,@Param("keyword") String keyword) {
-
         List<Order> completedOrders = orderService.listById(keyword);
         model.addAttribute("orders", completedOrders);
         model.addAttribute("keyword",keyword);
@@ -66,14 +65,14 @@ public class AdminController {
             try{
                 userService.sendOrderCompletedEmail(order);
             }catch(Exception e){
-                return "redirect:/admin";
+                return "redirect:/admin/completedOrders";
             }
 
         } else {
             order.setCompleted(false);
             orderRepository.save(order);
         }
-        return "redirect:/admin";
+        return "redirect:/admin/completedOrders";
     }
 
     @GetMapping(value = {"/admin/{year}"})

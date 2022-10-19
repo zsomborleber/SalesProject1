@@ -17,7 +17,7 @@ public interface OrderRepository extends CrudRepository <Order,Long> {
     List<Order> findAllByIsCompletedIsFalse();
 
     List<Order> findAllByIsCompletedIsTrue();
-    @Query("select p from Order p where " + " concat(p.id,p.localDate) " + "like %?1%")
+    @Query("select p from Order p where " + " concat(p.id) " + "like %?1%")
     List<Order> findAll(String keyword);
     List<Order> findAll();
     @Query("select p from Order p where " + "concat(p.id,p.orderDescription) " + "like %?1%")
