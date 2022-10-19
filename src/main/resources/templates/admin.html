@@ -57,7 +57,6 @@
                 <th>Rendelés szám</th>
                 <th>Megrendelő</th>
                 <th>Teljesítve</th>
-                <th>Rendelés megjegyzés</th>
                 <th>Termékek</th>
                 <th>Mennyiség</th>
                 <th>Végösszeg</th>
@@ -75,7 +74,7 @@
                     <input class="input-wrap-discount" type="hidden" data-th-field="{order.id}">
                     <input type="checkbox" name="isCompleted" th:checked="${order.isCompleted}" /></form></td>
                 </td>-->
-                <td data-th-text="${order.orderDescription}"></td>
+                <!--<td data-th-text="${order.orderDescription}"></td>-->
                 <td>
                     <table>
                         <tr data-th-each="order: ${order.cartItems}">

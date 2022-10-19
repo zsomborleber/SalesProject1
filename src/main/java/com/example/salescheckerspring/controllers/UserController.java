@@ -195,7 +195,7 @@ public class UserController {
 
     @PostMapping("/cart")
     public String makeOrder(Order order) throws MessagingException, UnsupportedEncodingException {
-        //order.setOrderDescription("teszt");
+        order.setOrderDescription("");
         String email = userService.getLoggedInUser().getEmail();
         User user = userService.findUserByEmail(email).orElseThrow();
         order.setCartItems(shoppingCartRepository.findByOrderedIsFalseAndUserIsLike(userService.getLoggedInUser()));
