@@ -592,6 +592,37 @@ nav .fa-bars:hover {
     box-shadow: 0 0 40px rgb(8 7 16 / 60%);
     padding: 50px 35px;
 }
+.container-users{
+    color:white;
+    height: 400px;
+    width: 600px;
+    background-color: black;
+    opacity: 94%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 480px;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgb(8 7 16 / 60%);
+    padding: 50px 35px;
+}
+.container-upload {
+    height: 300px;
+    width: 1500px;
+    background-color: black;
+    opacity: 94%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 480px;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgb(8 7 16 / 60%);
+    padding: 50px 35px;
+}
 .container-income_inside{
     color: white;
     text-align: center;
@@ -616,16 +647,14 @@ nav .fa-bars:hover {
     border: none;
     font-size: 20px;
 }
-.input-wrap-upload{
+.input-wrap-upload {
+    border-radius: 8px;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 0.5em 0;
-    color: white;
-    border-radius: 8px;
+    color: black;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 13px;
 }
 .container-profile {
     height: 380px;
@@ -659,6 +688,7 @@ input button{
     color: #fff;
 
 }
+
 @keyframes navLinkFade {
     from {
         opacity: 0;

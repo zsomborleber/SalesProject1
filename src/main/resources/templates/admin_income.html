@@ -74,7 +74,7 @@
                 <div alight="left">
                     <tr>
                         <td>
-                            <p type="text" data-th-text="${income}"></p>
+                            <p data-th-unless="${income =='null'}" type="text" data-th-text="${income}+' '+Ft."></p>
                         </td>
                     </tr>
                 </div>

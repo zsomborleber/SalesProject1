@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,13 +49,19 @@ public class ProductPastService {
         productPastRepository.saveAll(getProducts());
     }
 
-    public long totalCashFlow(Long year) {
+    static public String customFormat(String pattern, long value ) {
+        DecimalFormat myFormatter = new DecimalFormat(pattern);
+        return myFormatter.format(value);
+    }
+
+    public String totalCashFlow(Long year) {
         List<ProductPast> products = productPastRepository.findProductPastByYear(year);
         long sum = 0;
         for (ProductPast product : products) {
             sum += product.getValue();
         }
-        return sum;
+        String sumformat = customFormat("###,###.###", sum);
+        return sumformat;
     }
 
     public ProductPast get(long id) {

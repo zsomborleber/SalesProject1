@@ -20,7 +20,7 @@ public class TestDataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         User user = new User("Gyula KFT.", "1aA!1aA!1", "Budapest", "pointofsales2022@gmail.com", 12345678L, Roles.USER,true);
-        User admin = new User("Tulajdonos", "1aA!1aA!1", "Budapest", "admin", 1234578L, Roles.ADMIN,true);
+            User admin = new User("Tulajdonos", "1aA!1aA!1", "Budapest", "admin", 1234578L, Roles.ADMIN,true);
         userService.saveUserReg(user);
         userService.saveUserReg(admin);
 

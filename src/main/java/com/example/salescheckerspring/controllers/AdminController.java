@@ -65,14 +65,14 @@ public class AdminController {
             try{
                 userService.sendOrderCompletedEmail(order);
             }catch(Exception e){
-                return "redirect:/admin/completedOrders";
+                return "redirect:/admin";
             }
 
         } else {
             order.setCompleted(false);
             orderRepository.save(order);
         }
-        return "redirect:/admin/completedOrders";
+        return "redirect:/admin";
     }
 
     @GetMapping(value = {"/admin/{year}"})
@@ -116,7 +116,7 @@ public class AdminController {
     @PostMapping("/admin/upload")
     public String addSpaceShip(Product product) {
         productService.saveProducts(product);
-        return "redirect:/home";
+        return "redirect:/admin/upload";
     }
 
     @GetMapping("/admin/user/{email}")

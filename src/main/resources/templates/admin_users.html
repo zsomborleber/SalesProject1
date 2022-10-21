@@ -46,7 +46,7 @@
     </nav>
 </header>
 <body>
-<div class="container-back">
+<div class="container-users">
     <div class="tableFixHead">
         <table>
             <tr>
@@ -57,7 +57,7 @@
 
                 <td th:text="${user.companyName}">Name:</td>
 
-                <td><a th:text="${user.email}" th:href="@{/admin/user/{email}(email = ${user.email})}" ></a></td>
+                <td><a style="color: white" th:text="${user.email}" th:href="@{/admin/user/{email}(email = ${user.email})}" ></a></td>
 
             </tr>
         </table>
